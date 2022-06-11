@@ -1,10 +1,13 @@
 import './Card.css';
+import { EditIcon, DeleteIcon, FavouriteIcon } from './Icon';
 
 function Card(props) {
     return (
         <div className='card'>
-            Card
             {props.children}
+            <DeleteIcon/>
+            <EditIcon/>
+            <FavouriteIcon/>
         </div>
     )
 }

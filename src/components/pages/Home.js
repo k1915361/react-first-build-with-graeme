@@ -1,10 +1,11 @@
 import Card from '../ui/Card';
+import Module from '../ui/Module';
 
 function Home() {
     return (
         <div>
             <h1>Home</h1>
-            <Card />
+            <Module />
         </div>
     )
 }

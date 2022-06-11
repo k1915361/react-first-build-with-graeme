@@ -1,6 +1,8 @@
 .card {
-    box-shadow: 0.1px 0.1px 0.1px 1px grey;
+    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
     border-radius: 10px;
-    width: auto;
+    width: 200px;
     height: auto;
+    float: left;
+    margin: 10px;
 }

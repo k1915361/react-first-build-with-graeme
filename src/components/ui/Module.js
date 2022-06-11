@@ -1,18 +1,20 @@
 import './Module.css';
-import DUMMY_DATA from '../../data/data.js';
+import { DUMMY_DATA } from '../../data/data.js';
+import Card from './Card';
 
 function Module() {
     return (
-        <Card>
         <div className='module'>
-            {DUMMY_DATA.map(module => {
-                {key=module.moduleId}
-                {module.moduleName}
-                {module.moduleCode}
-                {module.moduleDetail}
-            })}
+            MODULES
+            {DUMMY_DATA.map((module) => (
+            <Card>
+                <img src={module.image}></img>
+                <p>{module.moduleName}</p>
+                <p className='moduleCode'>{module.moduleCode}</p>
+                <p className='moduleDetail'>{module.moduleDetail}</p>
+            </Card>
+            ))}
         </div>
-        </Card>
     )
 }
 
