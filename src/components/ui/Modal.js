@@ -1,9 +1,9 @@
 function Modal() {
     return (
-        <div>
+        <div className='modal'>
             Are you sure?
-            <button>Yes</button>
-            <button>No</button>
+            <button className='btn'>Yes</button>
+            <button className='btn'>No</button>
         </div>
     )
 }

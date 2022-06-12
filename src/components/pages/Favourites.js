@@ -1,14 +1,7 @@
-import { useState } from "react";
-import { DUMMY_DATA } from '../../data/data.js';
+import React, { useState, useEffect } from "react";
 
 function Favourites() {
-    initialList = DUMMY_DATA;
-    const [ facourite, setFavourite ] = useState(False);
-    const [ facourites, setFavourites ] = useState();
     
-    function setFavourite() {
-        
-    }
 
     return (
         <div>
