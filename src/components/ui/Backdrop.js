@@ -1,6 +1,13 @@
-function Backdrop() {
+import './Backdrop.css';
+
+function Backdrop(props) {
+    function handler(){
+        props.onClick();
+        props.onClickIcon();
+    }
+
     return (
-        <div className='backdrop' />
+        <div className='backdrop' onClick={handler} />
     )
 }
 

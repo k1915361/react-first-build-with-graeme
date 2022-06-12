@@ -3,10 +3,14 @@ import { DUMMY_DATA } from '../../data/data.js';
 import Card from './Card';
 import React, { useState, useEffect } from "react";
 import { EditIcon, DeleteIcon, FavouriteIcon } from './Icon';
-
+import Backdrop from './Backdrop';
+import Modal from './Modal';
 
 function Module() {
-    
+    const initialData = DUMMY_DATA;
+    const [ modalIsOpen, setModalIsOpen ] = useState(false);
+    const [ modules , setModules ] = useState(initialData);
+    const [ selectedModuleId , selectModuleId ] = useState();
     const [ favourites, setFavourites ] = useState();
     
     function setFavourite(module) {
@@ -16,7 +20,13 @@ function Module() {
         }))
     }
 
-    const [ modalIsOpen, setModalIsOpen ] = useState(false);
+    function deleteModule(moduleId) {
+        const newModules = modules.filter((each) => each.moduleId !== moduleId)
+        
+        setModules(newModules);
+        console.log(`${modules.length} module length`);
+    }
+
 
     function closeModalHandler() {
         setModalIsOpen(false);
@@ -26,21 +36,40 @@ function Module() {
         setModalIsOpen(true);
     }
 
+    function doSelectModule(moduleId) {
+        console.log(`${moduleId} doSelectModule`);
+        selectModuleId(moduleId);
+    }
+
+    function setPreviousState(modules) {
+        const previousModulesState = modules;
+        return previousModulesState;
+    }
+
     return (
         <div className='module'>
             MODULES
             <br/>
-            {DUMMY_DATA.map((module) => (
-            <Card>
-                <img src={module.image} alt=''></img>
-                <p>{module.moduleName}</p>
-                <p className='moduleCode'>{module.moduleCode}</p>
-                <p className='moduleDetail'>{module.moduleDetail}</p>
-                <DeleteIcon onClick={deleteHandler} onConfirm={closeModalHandler} onCancel={closeModalHandler}/>
-                <EditIcon/>
-                <FavouriteIcon/>
-            </Card>
+            {modules.map((module) => (
+                <Card>
+                    <img src={module.image} alt=''></img>
+                    <p>{module.moduleName}</p>
+                    <p className='moduleCode'>{module.moduleCode}</p>
+                    <p className='moduleDetail'>{module.moduleDetail}</p>
+                    <DeleteIcon 
+                        onClickIcon={deleteHandler} 
+                        moduleId={module.moduleId}
+                        onClick={() => doSelectModule(module.moduleId)} 
+                    />
+                    <EditIcon/>
+                    <FavouriteIcon/>
+                </Card>
             ))}
+            {modalIsOpen && <Modal 
+                onConfirm={() => deleteModule(selectedModuleId)} 
+                onClose={closeModalHandler} 
+            />}
+            {modalIsOpen && <Backdrop onClick={closeModalHandler}/>}
             
         </div>
     )

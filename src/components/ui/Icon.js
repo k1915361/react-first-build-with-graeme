@@ -3,18 +3,12 @@ import './Icon.css';
 
 
 function DeleteIcon(props) {
-    function cancelHandler() {
-        console.log("click");
-        props.onCancel();
+    function handle() {
+        props.onClickIcon();
+        props.onClick(props.moduleId);
     }
-    
-    function confirmHandler() {
-        console.log("click");
-        props.onConfirm();
-    }
-
     return (
-        <div className='icon' onClick={props.onClick}>
+        <div className='icon' onClick={handle}>
             <img src="https://img.icons8.com/ios-glyphs/344/filled-trash.png" alt='delete icon'></img>
         </div>
     )
