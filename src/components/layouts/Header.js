@@ -12,7 +12,7 @@ function Header() {
             <h1>React First Build</h1>
           </Link>
           <div className="login">
-            <p>Welcome Eugene!</p>
+            <p>Welcome Aang!</p>
           </div>
       </header>
     );

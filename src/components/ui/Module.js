@@ -62,7 +62,6 @@ function Module() {
     }
 
     function doSelectModule(moduleId) {
-        console.log(`${moduleId} doSelectModule`);
         selectModuleId(moduleId);
     }
 
