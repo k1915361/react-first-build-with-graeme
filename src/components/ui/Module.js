@@ -46,10 +46,6 @@ function Module() {
         setFavourites(newFavourites);
     }
 
-    function isFavouriteHandle(isFavourite) {
-        return !isFavourite;
-    }
-
     function deleteModule(moduleId) {
         const newModules = modules.filter((each) => each.moduleId !== moduleId)
         
