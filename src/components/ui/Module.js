@@ -11,20 +11,49 @@ function Module() {
     const [ modalIsOpen, setModalIsOpen ] = useState(false);
     const [ modules , setModules ] = useState(initialData);
     const [ selectedModuleId , selectModuleId ] = useState();
-    const [ favourites, setFavourites ] = useState();
+    const [ favourites, setFavourites ] = useState([]);
     
-    function setFavourite(module) {
-        const newFavourite = module;
-        this.setFavourites(favourites => ({
-            favourites: [...favourites, newFavourite] 
-        }))
+
+    const list = [];
+    function filterExample() {
+        const canDrink_2 = list.filter(age => age >= 21);
+    }
+
+    function mapExample() {
+        const ageMap = list
+            .map(age => Math.sqrt(age))
+            .map(age => age * 2);
+    }
+
+    function sortExample() {
+        const sortedCompanies = list.sort((a, b) => 
+            a.start > b.start ? 1 : -1
+        );
+    }
+
+    function reduceExample() {
+        const yearSum_ = list.reduce((total, c) => total + (c.end - c.start), 0);
+    }
+
+    function addFavourite(moduleId) {
+        const newFavourites = [...favourites, moduleId];
+        setFavourites(newFavourites); 
+    }
+
+    function removeFavourite(moduleId) {
+        const newFavourites = favourites.filter(each => each !== moduleId);
+
+        setFavourites(newFavourites);
+    }
+
+    function isFavouriteHandle(isFavourite) {
+        return !isFavourite;
     }
 
     function deleteModule(moduleId) {
         const newModules = modules.filter((each) => each.moduleId !== moduleId)
         
         setModules(newModules);
-        console.log(`${modules.length} module length`);
     }
 
 
@@ -51,18 +80,20 @@ function Module() {
             MODULES
             <br/>
             {modules.map((module) => (
-                <Card>
+                <Card key={module.moduleId}>
                     <img src={module.image} alt=''></img>
                     <p>{module.moduleName}</p>
                     <p className='moduleCode'>{module.moduleCode}</p>
                     <p className='moduleDetail'>{module.moduleDetail}</p>
                     <DeleteIcon 
-                        onClickIcon={deleteHandler} 
-                        moduleId={module.moduleId}
+                        onIconClick={deleteHandler} 
                         onClick={() => doSelectModule(module.moduleId)} 
                     />
                     <EditIcon/>
-                    <FavouriteIcon/>
+                    <FavouriteIcon 
+                        onUnfavourite={() => removeFavourite(module.moduleId)}
+                        onFavourite={() => addFavourite(module.moduleId)} 
+                    />
                 </Card>
             ))}
             {modalIsOpen && <Modal 
