@@ -38,7 +38,6 @@ function FavouriteIcon(props) {
 
     function isFavouriteHandle() {
         setIsFavourite(!isFavourite);
-        return isFavourite;
     }
 
     return (

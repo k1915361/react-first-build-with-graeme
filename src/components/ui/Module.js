@@ -1,44 +1,22 @@
 import './Module.css';
-import { DUMMY_DATA } from '../../data/data.js';
+import React, { useState  } from "react";
 import Card from './Card';
-import React, { useState, useEffect } from "react";
-import { EditIcon, DeleteIcon, FavouriteIcon } from './Icon';
-import Backdrop from './Backdrop';
-import Modal from './Modal';
+import { DUMMY_DATA } from '../../data/data';
 import Favourites from '../pages/Favourites';
+import Favourite from './Favourite';
+
 
 function Module() {
-    const initialData = DUMMY_DATA;
-    const [ modalIsOpen, setModalIsOpen ] = useState(false);
-    const [ modules , setModules ] = useState(initialData);
-    const [ selectedModuleId , selectModuleId ] = useState();
+    const [ modules, setModules ] = useState(DUMMY_DATA);
     const [ favourites, setFavourites ] = useState([]);
     
-
-    const list = [];
-    function filterExample() {
-        const canDrink_2 = list.filter(age => age >= 21);
-    }
-
-    function mapExample() {
-        const ageMap = list
-            .map(age => Math.sqrt(age))
-            .map(age => age * 2);
-    }
-
-    function sortExample() {
-        const sortedCompanies = list.sort((a, b) => 
-            a.start > b.start ? 1 : -1
-        );
-    }
-
-    function reduceExample() {
-        const yearSum_ = list.reduce((total, c) => total + (c.end - c.start), 0);
+    function deleteModule(moduleId) {
+        const newModules = modules.filter((each) => each.moduleId !== moduleId)
+        setModules(newModules);
     }
 
     function addFavourite(moduleId) {
-        const newFavourites = [...favourites, moduleId];
-        setFavourites(newFavourites); 
+        setFavourites([...favourites, moduleId]); 
     }
 
     function removeFavourite(moduleId) {
@@ -46,78 +24,33 @@ function Module() {
 
         setFavourites(newFavourites);
     }
-
-    function deleteModule(moduleId) {
-        const newModules = modules.filter((each) => each.moduleId !== moduleId)
-        
-        setModules(newModules);
+    
+    const childToParent = () => {
+        console.log('child to parent');
     }
-
-
-    function closeModalHandler() {
-        setModalIsOpen(false);
-    }
-
-    function deleteHandler() {
-        setModalIsOpen(true);
-    }
-
-    function doSelectModule(moduleId) {
-        selectModuleId(moduleId);
-    }
-
-    function setPreviousState(modules) {
-        const previousModulesState = modules;
-        return previousModulesState;
-    }
-
+    
     return (
         <div className='module'>
-            MODULES
+            MODULE
             <br/>
             {modules.map((module) => (
-                <Card key={module.moduleId}>
-                    <img src={module.image} alt=''></img>
-                    <p>{module.moduleName}</p>
-                    <p className='moduleCode'>{module.moduleCode}</p>
-                    <p className='moduleDetail'>{module.moduleDetail}</p>
-                    <DeleteIcon 
-                        onIconClick={deleteHandler} 
-                        onClick={() => doSelectModule(module.moduleId)} 
-                    />
-                    <EditIcon/>
-                    <FavouriteIcon 
-                        onUnfavourite={() => removeFavourite(module.moduleId)}
-                        onFavourite={() => addFavourite(module.moduleId)} 
-                    />
-                </Card>
+                <Card module={module} key={module.moduleId} 
+                    deleteModule={(moduleId) => deleteModule(moduleId)}
+                    onAddFavourite={(moduleId) => addFavourite(moduleId)}
+                    onRemoveFavourite={(moduleId) => removeFavourite(moduleId)}
+                />
             ))}
-            {modalIsOpen && <Modal 
-                onConfirm={() => deleteModule(selectedModuleId)} 
-                onClose={closeModalHandler} 
-            />}
-            {modalIsOpen && <Backdrop onClick={closeModalHandler}/>}
-            <Favourites favourites={favourites}>
+            <Favourites>
                 {favourites.map(favourite => (
-                    <Card key={modules[favourite-1].moduleId}>
-                       <img src={modules[favourite-1].image} alt=''></img>
-                       <p>{modules[favourite-1].moduleName}</p>
-                       <p className='moduleCode'>{modules[favourite-1].moduleCode}</p>
-                       <p className='moduleDetail'>{modules[favourite-1].moduleDetail}</p>
-                       <DeleteIcon 
-                           onIconClick={deleteHandler} 
-                           onClick={() => doSelectModule(modules[favourite-1].moduleId)} 
-                       />
-                       <EditIcon/>
-                       <FavouriteIcon 
-                           onUnfavourite={() => removeFavourite(modules[favourite-1].moduleId)}
-                           onFavourite={() => addFavourite(modules[favourite-1].moduleId)} 
-                       />
-                   </Card> 
+                    module=modules[favourite-1],
+                    <Favourite module={module} favourite={favourite} modules={modules} 
+                        
+                    />    
                 ))}
             </Favourites>
         </div>
     )
 }
+
 
 export default Module;
