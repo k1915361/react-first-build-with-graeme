@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { EditIcon, DeleteIcon, FavouriteIcon } from './Icon';
 import Backdrop from './Backdrop';
 import Modal from './Modal';
+import Favourites from '../pages/Favourites';
 
 function Module() {
     const initialData = DUMMY_DATA;
@@ -96,7 +97,25 @@ function Module() {
                 onClose={closeModalHandler} 
             />}
             {modalIsOpen && <Backdrop onClick={closeModalHandler}/>}
-            
+            <Favourites favourites={favourites}>
+                {favourites.map(favourite => (
+                    <Card key={modules[favourite-1].moduleId}>
+                       <img src={modules[favourite-1].image} alt=''></img>
+                       <p>{modules[favourite-1].moduleName}</p>
+                       <p className='moduleCode'>{modules[favourite-1].moduleCode}</p>
+                       <p className='moduleDetail'>{modules[favourite-1].moduleDetail}</p>
+                       <DeleteIcon 
+                           onIconClick={deleteHandler} 
+                           onClick={() => doSelectModule(modules[favourite-1].moduleId)} 
+                       />
+                       <EditIcon/>
+                       <FavouriteIcon 
+                           onUnfavourite={() => removeFavourite(modules[favourite-1].moduleId)}
+                           onFavourite={() => addFavourite(modules[favourite-1].moduleId)} 
+                       />
+                   </Card> 
+                ))}
+            </Favourites>
         </div>
     )
 }

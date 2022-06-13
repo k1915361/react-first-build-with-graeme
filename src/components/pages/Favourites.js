@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-function Favourites() {
-    
+function Favourites(props) {
+    const favourites = props.favourites;
 
     return (
         <div>
-            Favourites
+            FAVOURITES
+            <br/>
+            {props.children}
         </div>
     )
 }
