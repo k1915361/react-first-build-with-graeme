@@ -1,0 +1,6 @@
+npm install
+
+npm start
+
+dir *react-first-build-with-graeme*.* /s
+code .

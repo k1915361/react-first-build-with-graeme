@@ -21,4 +21,6 @@
   .btn:hover {
     background-color: #9c1458;
     border-color: #9c1458;
+
+    showTooltip: true;
   }

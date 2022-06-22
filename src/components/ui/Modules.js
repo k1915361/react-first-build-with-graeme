@@ -35,10 +35,6 @@ function Modules(props) {
         setFavourites(newFavourites);
     }
 
-    
-    
-    
-
     useEffect(() => { fetchModules() }, []);
 
     const fetchModules = async () => {
@@ -60,14 +56,6 @@ function Modules(props) {
     ModuleName: "Ethical Hacking"
     */
 
-    // return (
-    //     <div className='modules'>
-    //         MODULES
-    //         <br/>
-    //         {props.children}
-    //         {props.ListOfModules}
-    //     </div>
-    // )
     return (
         <div className='modules'>
             MODULES

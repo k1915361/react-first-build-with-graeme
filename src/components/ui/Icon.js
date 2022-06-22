@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Icon.css';
+import Tooltip from './Tooltip';
 
 function DeleteIcon(props) {
     function handle() {
@@ -9,6 +10,7 @@ function DeleteIcon(props) {
     return (
         <div className='icon' onClick={handle}>
             <img src="https://img.icons8.com/ios-glyphs/344/filled-trash.png" alt='delete icon'></img>
+            <Tooltip message='delete icon'/>
         </div>
     )
 }
@@ -17,6 +19,7 @@ function EditIcon() {
     return (
         <div className='icon'>
             <img src="https://img.icons8.com/material-sharp/344/edit--v1.png" alt='edit icon'></img>
+            <Tooltip message='edit icon'/>
         </div>
     )
 }
@@ -44,8 +47,9 @@ function FavouriteIcon(props) {
         <div className='icon' onClick={
             isFavourite ? UndoFavourite : doFavourite
             }>
+                
             { isFavourite ? favouriteIcon : unFavouriteIcon }
-             
+            <Tooltip message='favourite icon'/>
         </div>
     )
 }

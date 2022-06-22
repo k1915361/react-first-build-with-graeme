@@ -1,0 +1,19 @@
+.tooltip {
+    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    
+    /* z-index: 10; */
+    
+    /* visibility: hidden; */
+    /* display: none; */
+
+
+    /* background-color: white;
+    padding: 1rem;
+    text-align: center;
+    width: 30rem;
+    top: 20vh;
+    left: calc(50% - 15rem); */
+}
