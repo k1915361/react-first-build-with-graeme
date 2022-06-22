@@ -1,12 +1,13 @@
-import Module from '../ui/Module';
-import Favourites from '../pages/Favourites';
+import Modules from '../ui/Modules';
+import { MyModulesPage } from '../ui/FetchDBTest';
 
 function Home() {
     
     return (
         <div>
             <h1>Home</h1>
-            <Module />
+            <Modules />
+            <MyModulesPage />
         </div>
     )
 }

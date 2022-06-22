@@ -1,0 +1,21 @@
+.modules {
+    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.moduleDetail {
+    font-size: 2px;
+    color: rgb(189, 189, 189);
+}
+
+.moduleCode {
+    font-size: 2px;
+    color: rgb(189, 189, 189);
+}
+
+img {
+    width: 100%;
+    border-radius: 10px;
+}

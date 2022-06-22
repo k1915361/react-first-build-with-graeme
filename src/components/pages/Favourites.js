@@ -1,7 +1,9 @@
+import './Favourites.css'
+
 function Favourites(props) {
 
     return (
-        <div>
+        <div className='favourites'>
             FAVOURITES
             <br/>
             {props.children}

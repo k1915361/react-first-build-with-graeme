@@ -5,4 +5,10 @@
     height: auto;
     float: left;
     margin: 10px;
+    transition: width 0.3s;
+}
+
+.card:hover {
+    box-shadow: 1px 1px 30px 5px rgb(209, 209, 209);
+    width: 201px
 }
