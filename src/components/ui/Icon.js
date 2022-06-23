@@ -8,19 +8,21 @@ function DeleteIcon(props) {
         props.onClick();
     }
     return (
-        <div className='icon' onClick={handle}>
-            <img src="https://img.icons8.com/ios-glyphs/344/filled-trash.png" alt='delete icon'></img>
-            <Tooltip message='delete icon'/>
-        </div>
-    )
+        <Tooltip message='Delete'>
+            <div className='icon' onClick={handle}>
+                <img src="https://img.icons8.com/ios-glyphs/344/filled-trash.png" alt='delete icon'></img>
+            </div>
+        </Tooltip>
+    )   
 }
 
 function EditIcon() {
     return (
-        <div className='icon'>
-            <img src="https://img.icons8.com/material-sharp/344/edit--v1.png" alt='edit icon'></img>
-            <Tooltip message='edit icon'/>
-        </div>
+        <Tooltip message='Edit'>
+            <div className='icon'>
+                <img src="https://img.icons8.com/material-sharp/344/edit--v1.png" alt='edit icon'></img>
+            </div>
+        </Tooltip>
     )
 }
 
@@ -44,13 +46,14 @@ function FavouriteIcon(props) {
     }
 
     return (
-        <div className='icon' onClick={
-            isFavourite ? UndoFavourite : doFavourite
-            }>
-                
-            { isFavourite ? favouriteIcon : unFavouriteIcon }
-            <Tooltip message='favourite icon'/>
-        </div>
+        <Tooltip message='Un/Favourite'>
+            <div className='icon' onClick={
+                isFavourite ? UndoFavourite : doFavourite
+                }>
+                    
+                { isFavourite ? favouriteIcon : unFavouriteIcon }
+            </div>
+        </Tooltip >
     )
 }
 

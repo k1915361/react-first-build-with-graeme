@@ -6,7 +6,6 @@ function Tooltip(props) {
 
     const showTooltip = () => {
         setIsTooltipShown(true)
-        console.log('tooltip mouse over')
     }
     
     const hideTooltip = () => {
@@ -15,11 +14,11 @@ function Tooltip(props) {
 
     return(
         <div className='tooltip' onMouseOver={showTooltip} onMouseEnter={showTooltip} onMouseLeave={hideTooltip}>
+            {props.children}
             {isTooltipShown && 
-            <>
-                TOOLTIP 
+            <div className='message'> 
                 {props.message}
-            </>
+            </div>
             }
         </div>
     )

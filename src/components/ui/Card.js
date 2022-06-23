@@ -35,26 +35,25 @@ function Card(props) {
     }
 
     return (
-        <div className='card' key={module.id}>
-            <img src={module.image} alt=''></img>
-            <p>{module.moduleName}</p>
-            <p className='moduleCode'>{module.moduleCode}</p>
-            <p className='moduleDetail'>{module.moduleDetail}</p>
+        <div className='card' key={module.ModuleID}>
+            <img src={module.ModuleImage} alt=''></img>
+            <p>{module.ModuleName}</p>
+            <p>Level: {module.ModuleLevel}</p>
+            <p className='moduleCode'>{module.ModuleCode}</p>
             <DeleteIcon 
                 onIconClick={deleteHandler} 
-                onClick={() => doSelectModule(module.moduleId)} 
+                onClick={() => doSelectModule(module.ModuleID)} 
             />
             <EditIcon/>
             <FavouriteIcon 
-                onUnfavourite={() => removeFavourite(module.moduleId)}
-                onFavourite={() => addFavourite(module.moduleId)} 
+                onUnfavourite={() => removeFavourite(module.ModuleID)}
+                onFavourite={() => addFavourite(module.ModuleID)} 
                 />
-                
-            {modalIsOpen && 
-            <Modal onConfirm={deleteModule} onClose={closeModalHandler} />}
+            {modalIsOpen && <Modal onConfirm={deleteModule} onClose={closeModalHandler} />}
             {modalIsOpen && <Backdrop onClick={closeModalHandler}/>}
         </div>
     )
+
 }
 
 export default Card;

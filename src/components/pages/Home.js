@@ -1,5 +1,4 @@
 import Modules from '../ui/Modules';
-import { MyModulesPage } from '../ui/FetchDBTest';
 
 function Home() {
     
@@ -7,7 +6,6 @@ function Home() {
         <div>
             <h1>Home</h1>
             <Modules />
-            <MyModulesPage />
         </div>
     )
 }

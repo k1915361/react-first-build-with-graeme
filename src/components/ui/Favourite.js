@@ -8,7 +8,7 @@ function Favourite(props) {
 
     return (
         <div>
-            <Card module={module} key={module.id}/> 
+            <Card module={module} key={module.ModuleID}/> 
         </div>
     )
 }

@@ -1,19 +1,28 @@
 .tooltip {
     box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
     border-radius: 10px;
-    width: 100px;
-    height: 100px;
-    
-    /* z-index: 10; */
-    
-    /* visibility: hidden; */
-    /* display: none; */
+    width: auto;
+    height: auto;
 
+    
+}
 
-    /* background-color: white;
-    padding: 1rem;
+.message{
+    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+    border-radius: 10px;
+    width: auto;
+    height: auto;
     text-align: center;
-    width: 30rem;
-    top: 20vh;
-    left: calc(50% - 15rem); */
+    padding: 4px;
+    margin-top: 40px;
+    padding-inline: 20px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    opacity: 0.7;
+    position: absolute;     /* static   relative    fixed   absolute    sticky  */ 
+    
+    transition-delay: 1s;
+    transition: 1s;
+    transition-duration: 1s;
+    
 }

@@ -33,6 +33,15 @@ export const DUMMY_DATA = [
     },
 ]
 
+    // return (
+    //     <div className='card' key={module.id}>
+    //         <img src={module.image} alt=''></img>
+    //         <p>{module.moduleName}</p>
+    //         <p className='moduleCode'>{module.moduleCode}</p>
+    //         <p className='moduleDetail'>{module.moduleDetail}</p>
+    //     </div>
+    // )
+
 export let modules = [
     {
       ModuleID: 1,
@@ -117,3 +126,7 @@ export let modules = [
   ];
   
   export default modules;
+
+
+
+  
