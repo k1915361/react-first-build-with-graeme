@@ -1,0 +1,33 @@
+.form {
+    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+    border-radius: 10px;
+    width: 200px;
+    margin: 2px;
+}
+
+input {
+    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+    width: 97%;
+    margin-inline: 2%;
+}
+
+input:focus {
+    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+}
+
+button {
+    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+    /* margin-inline: 10px; */
+    padding-inline: 20px;
+    margin-block: 4%;
+
+    margin-left: auto;
+    margin-right: 1%;
+    float: right;
+    font-weight: 1000;
+}
+
+button:hover {
+    box-shadow: 1px 1px 30px 5px rgb(209, 209, 209);
+    transform:scale(1.001,1.001);
+}

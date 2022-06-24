@@ -1,4 +1,8 @@
 .favourites {
+    display: flex;
+    flex-wrap: wrap;
+    
     width: 100%;
-    display: inline-block;
+    /* display: inline-block; */
+
 }

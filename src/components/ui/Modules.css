@@ -5,6 +5,11 @@
     height: 100%;
 }
 
+div .cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .moduleDetail {
     font-size: 2px;
     color: rgb(189, 189, 189);

@@ -3,8 +3,8 @@
     border-radius: 10px;
     width: 200px;
     height: auto;
-    float: left;
-    margin: 10px;
+    /* float: left; */
+    margin: 2px;
     transition: width 0.3s;
 }
 
