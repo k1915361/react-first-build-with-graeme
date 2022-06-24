@@ -18,8 +18,6 @@ function Modules() {
 
     const [ favourites, setFavourites ] = useState([]);
     
-    loadingMessage.charAt(0);
-
     function deleteModule(moduleId) {
         const newModules = modules.filter((each) => each.ModuleID !== moduleId)
         setModules(newModules);
@@ -73,8 +71,6 @@ function Modules() {
                     <Favourite 
                         module={module=modules[favourite-1]} 
                         favourite={favourite} 
-                        modules={modules} 
-                        key={module.ModuleID}
                     />        
                 ))}
             </Favourites>

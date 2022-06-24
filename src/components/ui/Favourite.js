@@ -1,11 +1,14 @@
 import Card from './Card';
 
 function Favourite(props) {
-    const modules = props.modules;
-    const favourite = props.favourite-1;
+    // Properties ----------------------------------
+    const module = props.module;
 
-    const module = modules[favourite];
+    // Hooks ---------------------------------------
+    // Context -------------------------------------
+    // Methods -------------------------------------
 
+    // View ----------------------------------------
     return (
         <div>
             <Card module={module} key={module.ModuleID}/> 

@@ -5,11 +5,19 @@ import Backdrop from './Backdrop';
 import Modal from './Modal';
 
 function Card(props) {
+    // Properties ----------------------------------
     const module = props.module;
+    
+    // Hooks ---------------------------------------
     const [ selectedModuleId , selectModuleId ] = useState();
     
     const [ modalIsOpen, setModalIsOpen ] = useState(false);
-    
+
+
+    // Context -------------------------------------
+
+    // Methods -------------------------------------
+
     function closeModalHandler() {
         setModalIsOpen(false);
     }
@@ -17,23 +25,24 @@ function Card(props) {
     function deleteHandler() {
         setModalIsOpen(true);
     }
-
+    
     function doSelectModule(moduleId) {
         selectModuleId(moduleId);
     }
-
+    
     function deleteModule() {
         props.deleteModule(selectedModuleId);
     }
-
+    
     function addFavourite(moduleId) {
         props.onAddFavourite(moduleId);
     }
-
+    
     function removeFavourite(moduleId) {
         props.onRemoveFavourite(moduleId)
     }
-
+    
+    // View ----------------------------------------
     return (
         <div className='card' key={module.ModuleID}>
             <img src={module.ModuleImage} alt=''></img>
@@ -43,7 +52,7 @@ function Card(props) {
             <DeleteIcon 
                 onIconClick={deleteHandler} 
                 onClick={() => doSelectModule(module.ModuleID)} 
-            />
+                />
             <EditIcon/>
             <FavouriteIcon 
                 onUnfavourite={() => removeFavourite(module.ModuleID)}
