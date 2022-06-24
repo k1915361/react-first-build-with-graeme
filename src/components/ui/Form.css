@@ -3,12 +3,21 @@
     border-radius: 10px;
     width: 200px;
     margin: 2px;
+    margin-left: 10px;
+    text-align: center;
+
+}
+
+.title {
 }
 
 input {
     box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
     width: 97%;
-    margin-inline: 2%;
+
+    text-align: center;
+    
+    
 }
 
 input:focus {
@@ -17,7 +26,7 @@ input:focus {
 
 button {
     box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
-    /* margin-inline: 10px; */
+    margin-inline: 10px;
     padding-inline: 20px;
     margin-block: 4%;
 
@@ -25,6 +34,7 @@ button {
     margin-right: 1%;
     float: right;
     font-weight: 1000;
+
 }
 
 button:hover {
