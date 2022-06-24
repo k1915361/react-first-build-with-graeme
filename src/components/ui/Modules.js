@@ -10,31 +10,42 @@ import Favourite from './Favourite';
 import Form from './Form.js';
 
 function Modules() {
+    // Properties
     const API_URL = 'https://my.api.mockaroo.com/';
     const API_KEY = '?key=bb6adbc0';
 
+    // Hooks
     const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
     const [modules, setModules] = useState(null);
 
     const [ favourites, setFavourites ] = useState([]);
     
+    // Methods
     function deleteModule(moduleId) {
         const newModules = modules.filter((each) => each.ModuleID !== moduleId)
-        setModules(newModules);
-        
-        console.log(modules.length)
+        setModules(newModules); 
+    }
+    function addModule(module) {
+        setModules([...modules, module]); 
     }
 
     function addFavourite(moduleId) {
+        moduleId = getIndex(moduleId);
         setFavourites([...favourites, moduleId]); 
     }
 
     function removeFavourite(moduleId) {
+        moduleId = getIndex(moduleId);
         const newFavourites = favourites.filter(each => each !== moduleId);
 
         setFavourites(newFavourites);
     }
 
+    const getIndex = (id) => {
+        return modules.findIndex(module => module.ModuleID === id)+1;
+    }
+
+    // Context
     useEffect(() => { fetchModules() }, []);
 
     const fetchModules = async () => {
@@ -47,6 +58,7 @@ function Modules() {
 
     }
 
+    // View
     return (
         <div className='modules'>
             MODULES
@@ -65,11 +77,11 @@ function Modules() {
                 :
                 loadingMessage
             }
-            <Form/>
+            <Form onAddModule={(module) => addModule(module)}/>
             <Favourites>
                 {favourites.map((favourite) => (
                     <Favourite 
-                        module={module=modules[favourite-1]} 
+                        module={modules[favourite-1]} 
                         favourite={favourite} 
                     />        
                 ))}
