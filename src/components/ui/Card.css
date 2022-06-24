@@ -3,12 +3,10 @@
     border-radius: 10px;
     width: 200px;
     height: auto;
-    /* float: left; */
     margin: 2px;
     transition: width 0.3s;
 }
 
 .card:hover {
-    box-shadow: 1px 1px 30px 5px rgb(209, 209, 209);
-    width: 201px
+    box-shadow: 1px 1px 40px 10px rgb(209, 209, 209);
 }
