@@ -8,18 +8,23 @@ import { UsersPage, ListofUsers } from '../../data/moduleLeader';
 function Form(props) {
     // Props
     const module = props.module;
+    
+    const getModule = (e) => {
+        if(module)
+            return eval('module.Module'+String(e));
+    }
 
     // Hooks
-    const [ModuleImage, setModuleImageUrl] = useState('');
-    const [ModuleName, setModuleName] = useState('');
-    const [ModuleLevel, setModuleLevel] = useState('');
-    const [ModuleCode, setModuleCode] = useState('');
-    const [ModuleLeaderId, setModuleLeaderId] = useState('');
-    const [ModuleID, setModuleID] = useState('');
+    const [ModuleImage, setModuleImageUrl] = useState(getModule('Image'));
+    const [ModuleName, setModuleName] = useState(getModule('Name'));
+    const [ModuleLevel, setModuleLevel] = useState(getModule('Level'));
+    const [ModuleCode, setModuleCode] = useState(getModule('Code'));
+    const [ModuleLeaderId, setModuleLeaderId] = useState(getModule('LeaderID'));
+    const [ModuleID, setModuleID] = useState();
     
-    UsersPage()
-        
     // Methods
+    UsersPage()
+
     const handleModuleImageUrl = (e) => {
         setModuleImageUrl(e)
     }
@@ -69,12 +74,10 @@ function Form(props) {
     const getTitle = () => {
         return props.title ? props.title : 'Add';
     }
-    const getModuleImage = () => {
-        return module ? module.ModuleImage : null;
-    }
+
 
     
-
+    
     // View
     return(
         <div className='form'>
@@ -84,25 +87,25 @@ function Form(props) {
             <form onSubmit={handleSubmit}>
                 <input type="text" 
                     required 
-                    value={module && module.ModuleImage} 
+                    value={ModuleImage}
                     placeholder='Image URL' 
                     onChange={(e) => handleModuleImageUrl(e.target.value)}
                 ></input> 
                 <input type="text" 
                     required 
-                    value={module && module.ModuleName} 
+                    value={ModuleName}
                     placeholder='Name' 
                     onChange={(e) => handleModuleName(e.target.value)}
                 ></input> 
                 <input type="text" 
                     required 
-                    value={module && module.ModuleLevel} 
+                    value={ModuleLevel}
                     placeholder='Level' 
                     onChange={(e) => handleModuleLevel(e.target.value)}
                 ></input> 
                 <input type="text" 
                     required 
-                    value={module && module.ModuleCode} 
+                    value={ModuleCode}
                     placeholder='Code' 
                     onChange={(e) => handleModuleCode(e.target.value)}
                 ></input> 
