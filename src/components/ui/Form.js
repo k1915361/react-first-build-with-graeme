@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Form.css';
 import Tooltip from './Tooltip';
+import { UsersPage, ListofUsers } from '../../data/moduleLeader';
 
 function Form(props) {
     // Hooks
@@ -11,11 +12,18 @@ function Form(props) {
     const [ModuleLeaderId, setModuleLeaderId] = useState('');
     const [ModuleID, setModuleID] = useState('');
     
+    UsersPage()
     
+    // console.log(UsersPage===null);
+    // console.log(ListofUsers);
+    // console.log(ListofUsers[0].UserFirstname + ' U');
+    
+    
+    
+
     // Methods
     const handleModuleImageUrl = (e) => {
         setModuleImageUrl(e)
-        test(e)
     }
     const handleModuleName = (e) => {
         setModuleName(e)
@@ -47,9 +55,6 @@ function Form(props) {
     const handleAddModule = (module) => {
         props.onAddModule(module)
     }
-    const test = (e) => {
-        console.log(e)
-    }
 
     // View
     return(
@@ -79,15 +84,17 @@ function Form(props) {
                     placeholder='Code' 
                     onChange={(e) => handleModuleCode(e.target.value)}
                 ></input> 
-                <input type="text" 
-                    required value={ModuleLeaderId} 
-                    placeholder='Leader Name'
-                    onChange={(e) => handleModuleLeaderId(e.target.value)}
-                ></input> 
                 <select>
-                    <option value=''>name wan</option>
-                    <option value=''>name doo</option>
-                    <option value=''>name sree</option>
+                {ListofUsers &&
+                    ListofUsers.map((u) => (
+                        <option 
+                            user_id={u.UserID} 
+                            user_firstname={u.UserFirstname}
+                            user_lastname={u.UserLastname}
+                            key={u.UserID}
+                        >{u.UserFirstname} {u.UserLastname}</option>
+                    ))}
+                    
                 </select>
                 <br/>
                 <Tooltip message='Cancel'>
