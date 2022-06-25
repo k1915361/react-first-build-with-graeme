@@ -4,7 +4,7 @@ function Favourites(props) {
 
     return (
         <div className='favourites'>
-            FAVOURITES
+            <div className='title'>FAVOURITES</div>
             <br/>
             {props.children}
         </div>

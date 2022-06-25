@@ -6,6 +6,9 @@ import { UsersPage, ListofUsers } from '../../data/moduleLeader';
 
 
 function Form(props) {
+    // Props
+    const module = props.module;
+
     // Hooks
     const [ModuleImage, setModuleImageUrl] = useState('');
     const [ModuleName, setModuleName] = useState('');
@@ -66,6 +69,11 @@ function Form(props) {
     const getTitle = () => {
         return props.title ? props.title : 'Add';
     }
+    const getModuleImage = () => {
+        return module ? module.ModuleImage : null;
+    }
+
+    
 
     // View
     return(
@@ -76,25 +84,25 @@ function Form(props) {
             <form onSubmit={handleSubmit}>
                 <input type="text" 
                     required 
-                    value={ModuleImage} 
+                    value={module && module.ModuleImage} 
                     placeholder='Image URL' 
                     onChange={(e) => handleModuleImageUrl(e.target.value)}
                 ></input> 
                 <input type="text" 
                     required 
-                    value={ModuleName} 
+                    value={module && module.ModuleName} 
                     placeholder='Name' 
                     onChange={(e) => handleModuleName(e.target.value)}
                 ></input> 
                 <input type="text" 
                     required 
-                    value={ModuleLevel} 
+                    value={module && module.ModuleLevel} 
                     placeholder='Level' 
                     onChange={(e) => handleModuleLevel(e.target.value)}
                 ></input> 
                 <input type="text" 
                     required 
-                    value={ModuleCode} 
+                    value={module && module.ModuleCode} 
                     placeholder='Code' 
                     onChange={(e) => handleModuleCode(e.target.value)}
                 ></input> 

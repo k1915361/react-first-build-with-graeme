@@ -81,7 +81,10 @@ function Modules() {
             ? 
             modules.map((module) => (
                 isEditing(module.ModuleID) ? 
-                <Edit onCloseEditForm={() => closeEditForm()} key={null}/>
+                <Edit onCloseEditForm={() => closeEditForm()} 
+                    key={null}
+                    module={module}
+                />
                 :
                 <Card module={module} key={module.ModuleID} 
                     ModuleID = {module.ModuleID}

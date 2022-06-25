@@ -16,10 +16,7 @@ function UsersPage() {
 
     loadingMessage.at(0);
 
-    useEffect(() => { 
-        fetchUsers(); 
-        console.log('useEffect()')
-    }, []);
+    useEffect(() => { fetchUsers()}, []);
 
     // Context
     const fetchUsers = async () => {

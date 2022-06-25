@@ -1,8 +1,14 @@
 .favourites {
+    box-shadow: -1px -1px 3px 0px rgb(255, 255, 255), 
+        0px 0px 10px 1px rgb(206, 206, 206),
+        2px 2px 4px 0px rgb(187, 187, 187)
+        ;
+    margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
-    
     width: 100%;
-    /* display: inline-block; */
+}
 
+.title {
+    width: 100%;
 }

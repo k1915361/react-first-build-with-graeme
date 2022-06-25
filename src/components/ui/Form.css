@@ -35,3 +35,7 @@ button:hover {
     box-shadow: 1px 1px 30px 5px rgb(209, 209, 209);
     transform:scale(1.001,1.001);
 }
+
+select {
+    width: 97%;
+}
