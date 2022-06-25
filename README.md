@@ -9,4 +9,6 @@ App with interactive university module cards.
 
 Now working on:
 - Edit details of each module
-- Prevent repeated Calling of the class UsersPage from moduleLeader.js
+- Try to seperate database access and component files
+- Prevent repeated Calling of the class UsersPage from moduleLeader.js 
+- Find useEffect alternative for this.
