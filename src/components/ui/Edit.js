@@ -10,6 +10,10 @@ export default function Edit(props) {
             <Form 
                 module={props.module}
                 onCloseEditForm={onCloseEditForm}
+                onEdit={(module) => {
+                    props.onEdit(module); 
+                    console.log(module)}
+                }   
                 tooltipTitle='Edit Module Form'
                 tooltipEdit='Edit Module'
                 title='Edit'

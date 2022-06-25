@@ -9,19 +9,20 @@ function Form(props) {
     // Props
     const module = props.module;
     
-    const getModule = (e) => {
+    const Module = (e) => {
         if(module)
-            return eval('module.Module'+String(e));
+            return eval('module.Module'+e);
+        return null;
     }
 
     // Hooks
-    const [ModuleImage, setModuleImageUrl] = useState(getModule('Image'));
-    const [ModuleName, setModuleName] = useState(getModule('Name'));
-    const [ModuleLevel, setModuleLevel] = useState(getModule('Level'));
-    const [ModuleCode, setModuleCode] = useState(getModule('Code'));
-    const [ModuleLeaderId, setModuleLeaderId] = useState(getModule('LeaderID'));
-    const [ModuleID, setModuleID] = useState();
-    
+    const [ModuleImage, setModuleImageUrl] = useState(Module('Image'));
+    const [ModuleName, setModuleName] = useState(Module('Name'));
+    const [ModuleLevel, setModuleLevel] = useState(Module('Level'));
+    const [ModuleCode, setModuleCode] = useState(Module('Code'));
+    const [ModuleLeaderId, setModuleLeaderId] = useState(Module('LeaderID'));
+    const [ModuleID, setModuleID] = useState(Module('ID'));
+
     // Methods
     UsersPage()
 
@@ -41,28 +42,37 @@ function Form(props) {
         setModuleLeaderId(e)
     }
     const handleModuleID = () => {
-        let e = props.getNewModuleID;
-        setModuleID(e);
+        setModuleID( props.getNewModuleID );
     }
-    const handleSubmit = (e) => {
-        e.preventDefault();   
-        
-        handleModuleID()
-        const module = { 
+    const getNewModule = () => {
+        const new_module = { 
             ModuleID: ModuleID,
             ModuleImage: ModuleImage,
             ModuleName: ModuleName, 
             ModuleLevel: ModuleLevel,
             ModuleCode: ModuleCode,
             ModuleLeaderID: ModuleLeaderId
-        }
-        handleAddModule(module)
+        };
+        return new_module;
     }
-    const handleAddModule = (module) => {
-        props.onAddModule(module)
+    const handleAdd = (e) => {
+        e.preventDefault();           
+        handleModuleID();
+        handleAddModule(getNewModule())
+    }
+    const handleWhichSubmit = (e) => {
+        e.preventDefault();
+        module ? handleEdit(getNewModule()) : handleAdd(e);
+    }
+    const handleEdit = (module) => {
+        props.onEdit(module)
+        closeEditForm();
     }
     const closeEditForm = () => {
         props.onCloseEditForm();
+    }
+    const handleAddModule = (module) => {
+        props.onAddModule(module)
     }
 
     const getTitleTooltipMessage = () => {
@@ -84,7 +94,7 @@ function Form(props) {
             <Tooltip message={getTitleTooltipMessage()}>
             <div className='title'>{getTitle()}</div>
             </Tooltip>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleWhichSubmit}>
                 <input type="text" 
                     required 
                     value={ModuleImage}

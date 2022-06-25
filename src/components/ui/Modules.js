@@ -59,6 +59,20 @@ function Modules() {
         return modules.at(-1).ModuleID+1;
     }
 
+    const editModule = (module) => {
+        console.log(module.ModuleID)
+
+        const id = module.ModuleID
+        const newModules = modules.map(m => {
+            if(m.ModuleID === id) {
+                return module
+            }
+            return m;
+        });
+
+        setModules(newModules);
+    }
+
     // Context
     useEffect(() => { fetchModules() }, []);
 
@@ -84,6 +98,7 @@ function Modules() {
                 <Edit onCloseEditForm={() => closeEditForm()} 
                     key={null}
                     module={module}
+                    onEdit={(module) => editModule(module)}
                 />
                 :
                 <Card module={module} key={module.ModuleID} 
