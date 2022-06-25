@@ -8,6 +8,6 @@ App with interactive university module cards.
 
 
 Now working on:
-- submiting, adding module via form
-- fetching module leader names from database
-- options of module leader names in the form
+- Fetching module leader names from database
+- Then into options in the form
+- Edit details of each module
