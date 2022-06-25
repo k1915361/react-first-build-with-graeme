@@ -7,7 +7,8 @@ import './Modules.css'
 import Card from './Card';
 import Favourites from '../pages/Favourites';
 import Favourite from './Favourite';
-import Form from './Form.js';
+import Form from './Form';
+import Edit from './Edit';
 
 function Modules() {
     // Properties
@@ -19,7 +20,9 @@ function Modules() {
     const [modules, setModules] = useState(null);
 
     const [ favourites, setFavourites ] = useState([]);
-    
+
+    const [ editingModule, setEditingModule ] = useState(null);
+
     // Methods
     function deleteModule(moduleId) {
         const newModules = modules.filter((each) => each.ModuleID !== moduleId)
@@ -27,6 +30,16 @@ function Modules() {
     }
     function addModule(module) {
         setModules([...modules, module]); 
+    }
+
+    function closeEditForm() {
+        setEditingModule(null);
+    }
+    function isEditing(moduleId) {
+        return moduleId === editingModule;
+    }
+    function selectEditModule(moduleId) {
+        setEditingModule(moduleId); 
     }
 
     function addFavourite(moduleId) {
@@ -43,6 +56,10 @@ function Modules() {
 
     const getIndex = (id) => {
         return modules.findIndex(module => module.ModuleID === id)+1;
+    }
+
+    const getNewModuleID = () => {
+        return modules.at(-1).ModuleID+1;
     }
 
     // Context
@@ -63,21 +80,23 @@ function Modules() {
         <div className='modules'>
             MODULES
             <div className='cardContainer'>
-            {
-                modules 
-                ? 
-                modules.map((module) => (
-                    <Card module={module} key={module.ModuleID} 
-                        ModuleID = {module.ModuleID}
-                        deleteModule={(ModuleID) => deleteModule(ModuleID)}
-                        onAddFavourite={(ModuleID) => addFavourite(ModuleID)}
-                        onRemoveFavourite={(ModuleID) => removeFavourite(ModuleID)}
-                    />
-                ))
+            {modules 
+            ? 
+            modules.map((module) => (
+                isEditing(module.ModuleID) ? 
+                <Edit onCloseEditForm={() => closeEditForm()} key={null}/>
                 :
-                loadingMessage
+                <Card module={module} key={module.ModuleID} 
+                    ModuleID = {module.ModuleID}
+                    onDeleteModule={(ModuleID) => deleteModule(ModuleID)}
+                    onSelectEditModule={(ModuleID) => selectEditModule(ModuleID)}
+                    onAddFavourite={(ModuleID) => addFavourite(ModuleID)}
+                    onRemoveFavourite={(ModuleID) => removeFavourite(ModuleID)}
+                />
+            ))
+            : loadingMessage
             }
-            <Form onAddModule={(module) => addModule(module)}/>
+            <Form onAddModule={(module) => addModule(module)} newModuleID={getNewModuleID}/>
             <Favourites>
                 {favourites.map((favourite) => (
                     <Favourite 

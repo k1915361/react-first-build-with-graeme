@@ -16,10 +16,13 @@ function DeleteIcon(props) {
     )   
 }
 
-function EditIcon() {
+function EditIcon(props) {
+    function editHandle(){
+        props.onSelectModule();
+    }
     return (
         <Tooltip message='Edit'>
-            <div className='icon'>
+            <div className='icon' onClick={editHandle}>
                 <img src="https://img.icons8.com/material-sharp/344/edit--v1.png" alt='edit icon'></img>
             </div>
         </Tooltip>

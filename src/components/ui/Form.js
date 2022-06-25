@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './Form.css';
 import Tooltip from './Tooltip';
 import { UsersPage, ListofUsers } from '../../data/moduleLeader';
+
+
 
 function Form(props) {
     // Hooks
@@ -13,14 +15,7 @@ function Form(props) {
     const [ModuleID, setModuleID] = useState('');
     
     UsersPage()
-    
-    // console.log(UsersPage===null);
-    // console.log(ListofUsers);
-    // console.log(ListofUsers[0].UserFirstname + ' U');
-    
-    
-    
-
+        
     // Methods
     const handleModuleImageUrl = (e) => {
         setModuleImageUrl(e)
@@ -37,23 +32,29 @@ function Form(props) {
     const handleModuleLeaderId = (e) => {
         setModuleLeaderId(e)
     }
-    const handleModuleID = (e) => {
-        setModuleID(e)
+    const handleModuleID = () => {
+        let e = props.getNewModuleID;
+        setModuleID(e);
     }
     const handleSubmit = (e) => {
         e.preventDefault();   
+        
+        handleModuleID()
         const module = { 
-            ModuleID: null,
+            ModuleID: ModuleID,
             ModuleImage: ModuleImage,
             ModuleName: ModuleName, 
             ModuleLevel: ModuleLevel,
             ModuleCode: ModuleCode,
-            ModuleLeaderId: ModuleLeaderId
+            ModuleLeaderID: ModuleLeaderId
         }
         handleAddModule(module)
     }
     const handleAddModule = (module) => {
         props.onAddModule(module)
+    }
+    const closeEditForm = () => {
+        props.onCloseEditForm();
     }
 
     // View
@@ -70,17 +71,20 @@ function Form(props) {
                     onChange={(e) => handleModuleImageUrl(e.target.value)}
                 ></input> 
                 <input type="text" 
-                    required value={ModuleName} 
+                    required 
+                    value={ModuleName} 
                     placeholder='Name' 
                     onChange={(e) => handleModuleName(e.target.value)}
                 ></input> 
                 <input type="text" 
-                    required value={ModuleLevel} 
+                    required 
+                    value={ModuleLevel} 
                     placeholder='Level' 
                     onChange={(e) => handleModuleLevel(e.target.value)}
                 ></input> 
                 <input type="text" 
-                    required value={ModuleCode} 
+                    required 
+                    value={ModuleCode} 
                     placeholder='Code' 
                     onChange={(e) => handleModuleCode(e.target.value)}
                 ></input> 
@@ -88,17 +92,20 @@ function Form(props) {
                 {ListofUsers &&
                     ListofUsers.map((u) => (
                         <option 
-                            user_id={u.UserID} 
+                            moduleleaderid={u.UserID} 
                             user_firstname={u.UserFirstname}
                             user_lastname={u.UserLastname}
                             key={u.UserID}
+                            onChange={(e) => handleModuleLeaderId(e.target.moduleleaderid)}
                         >{u.UserFirstname} {u.UserLastname}</option>
                     ))}
                     
                 </select>
                 <br/>
                 <Tooltip message='Cancel'>
-                <button className='button'>X</button>
+                <button className='button' 
+                    onClick={closeEditForm}
+                >X</button>
                 </Tooltip>
                 <Tooltip message='Add Module'>
                 <button className='button'>+</button>

@@ -17,11 +17,9 @@ function Card(props) {
     // Context -------------------------------------
 
     // Methods -------------------------------------
-
     function closeModalHandler() {
         setModalIsOpen(false);
     }
-
     function deleteHandler() {
         setModalIsOpen(true);
     }
@@ -30,10 +28,18 @@ function Card(props) {
         selectModuleId(moduleId);
     }
     
-    function deleteModule() {
-        props.deleteModule(selectedModuleId);
+    function selectModule(moduleId) {
+        props.onSelectEditModule(moduleId)
     }
-    
+
+    function deleteModule() {
+        props.onDeleteModule(selectedModuleId);
+    }
+
+    function editHandler() {
+        props.onEditModule();
+    }
+
     function addFavourite(moduleId) {
         props.onAddFavourite(moduleId);
     }
@@ -52,12 +58,15 @@ function Card(props) {
             <DeleteIcon 
                 onIconClick={deleteHandler} 
                 onClick={() => doSelectModule(module.ModuleID)} 
-                />
-            <EditIcon/>
+            />
+            <EditIcon
+                onIconClick={editHandler}
+                onSelectModule={() => selectModule(module.ModuleID)}
+            />
             <FavouriteIcon 
                 onUnfavourite={() => removeFavourite(module.ModuleID)}
                 onFavourite={() => addFavourite(module.ModuleID)} 
-                />
+            />
             {modalIsOpen && <Modal onConfirm={deleteModule} onClose={closeModalHandler} />}
             {modalIsOpen && <Backdrop onClick={closeModalHandler}/>}
         </div>

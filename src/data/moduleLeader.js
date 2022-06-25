@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 
 import { apiRequest } from '../components/api/apiRequest.js';
 
-var ListofUsers;
+let ListofUsers;
+
 
 function UsersPage() {
     // Properties
@@ -13,10 +14,12 @@ function UsersPage() {
     const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
     const [ListOfUsers, setListOfUsers] = useState(null);
 
-    const pleaseStopThrowingErrors = 0;
-    loadingMessage.at(pleaseStopThrowingErrors);
+    loadingMessage.at(0);
 
-    useEffect(() => { fetchUsers() }, []);
+    useEffect(() => { 
+        fetchUsers(); 
+        console.log('useEffect()')
+    }, []);
 
     // Context
     const fetchUsers = async () => {
@@ -30,12 +33,11 @@ function UsersPage() {
     }
 
     ListofUsers = ListOfUsers;
+}
 
-    console.log('UsersPage()')
-
-    // View
-    return ( null
-    )
+export function Listof_Users() {
+    if(ListofUsers) 
+        return ListofUsers
 }
 
 export { UsersPage, ListofUsers };
