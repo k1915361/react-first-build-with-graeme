@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react';
-
-import { apiRequest } from '../api/apiRequest.js';
-
 import './Modules.css'
-
+import { useState, useEffect } from 'react';
+import { apiRequest } from '../api/apiRequest.js';
 import Card from './Card';
 import Favourites from '../pages/Favourites';
 import Favourite from './Favourite';

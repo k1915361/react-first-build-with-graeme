@@ -1,10 +1,16 @@
 .icon {
-    box-shadow: 0px 0px 4px 0px rgb(209, 209, 209);
+    box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
+        0px 0px 1px 1px rgb(209, 209, 209);
     border-radius: 10px;
     width: 35px;
     height: 35px;
     float: right;
     margin: 2px;
+}
+
+.icon:hover {
+  box-shadow: -1px -1px 1px 0px rgb(209, 209, 209), 
+        0px 0px 1px 1px rgb(255, 255, 255);
 }
 
 .btn {
@@ -21,6 +27,5 @@
   .btn:hover {
     background-color: #9c1458;
     border-color: #9c1458;
-
     showTooltip: true;
   }

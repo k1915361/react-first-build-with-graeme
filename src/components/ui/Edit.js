@@ -6,8 +6,13 @@ export default function Edit(props) {
         props.onCloseEditForm();
     }   
     return (
-        <div>
-            <Form onCloseEditForm={onCloseEditForm}/>
+        <div className='edit' >
+            <Form 
+                onCloseEditForm={onCloseEditForm}
+                tooltipTitle='Edit Module Form'
+                tooltipEdit='Edit Module'
+                title='Edit'
+            />
         </div>
     )
 }

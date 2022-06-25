@@ -57,11 +57,21 @@ function Form(props) {
         props.onCloseEditForm();
     }
 
+    const getTitleTooltipMessage = () => {
+        return props.tooltipTitle ? props.tooltipTitle : 'Add Module Form'; 
+    }
+    const getAddEditTooltipMessage = () => {
+        return props.tooltipEdit ? props.tooltipEdit : 'Add Module'; 
+    }
+    const getTitle = () => {
+        return props.title ? props.title : 'Add';
+    }
+
     // View
     return(
         <div className='form'>
-            <Tooltip message='Add Module Form'>
-            <div className='title'>FORM</div>
+            <Tooltip message={getTitleTooltipMessage()}>
+            <div className='title'>{getTitle()}</div>
             </Tooltip>
             <form onSubmit={handleSubmit}>
                 <input type="text" 
@@ -107,7 +117,7 @@ function Form(props) {
                     onClick={closeEditForm}
                 >X</button>
                 </Tooltip>
-                <Tooltip message='Add Module'>
+                <Tooltip message={getAddEditTooltipMessage()}>
                 <button className='button'>+</button>
                 </Tooltip>
             </form>

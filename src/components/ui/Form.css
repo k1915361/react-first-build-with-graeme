@@ -4,7 +4,6 @@
     width: 200px;
     margin: 2px;
     text-align: center;
-
 }
 
 .title {
@@ -13,10 +12,7 @@
 input {
     box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
     width: 97%;
-
-    text-align: center;
-    
-    
+    text-align: center;    
 }
 
 input:focus {
@@ -33,7 +29,6 @@ button {
     margin-right: 1%;
     float: right;
     font-weight: 1000;
-
 }
 
 button:hover {
