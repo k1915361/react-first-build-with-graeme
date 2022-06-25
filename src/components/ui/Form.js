@@ -35,11 +35,12 @@ function Form(props) {
     const handleSubmit = (e) => {
         e.preventDefault();   
         const module = { 
-            moduleImageUrl: ModuleImage,
-            moduleName: ModuleName, 
-            moduleLevel: ModuleLevel,
-            moduleCode: ModuleCode,
-            moduleLeaderId: ModuleLeaderId
+            ModuleID: null,
+            ModuleImage: ModuleImage,
+            ModuleName: ModuleName, 
+            ModuleLevel: ModuleLevel,
+            ModuleCode: ModuleCode,
+            ModuleLeaderId: ModuleLeaderId
         }
         handleAddModule(module)
     }

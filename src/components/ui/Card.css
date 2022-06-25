@@ -1,5 +1,6 @@
 .card {
-    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+    box-shadow: -1px -1px 3px 0px rgb(255, 255, 255), 
+        10px 10px 10px 1px rgb(209, 209, 209);
     border-radius: 10px;
     width: 200px;
     height: auto;
@@ -8,5 +9,6 @@
 }
 
 .card:hover {
-    box-shadow: 1px 1px 40px 10px rgb(209, 209, 209);
+    box-shadow: -1px -1px 3px 0px rgb(102, 102, 102),
+        10px 10px 10px 10px rgb(255, 255, 255);
 }

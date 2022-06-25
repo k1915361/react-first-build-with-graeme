@@ -27,6 +27,7 @@ function Modules() {
     }
     function addModule(module) {
         setModules([...modules, module]); 
+        console.log(module);
     }
 
     function addFavourite(moduleId) {
