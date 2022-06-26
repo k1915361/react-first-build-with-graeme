@@ -6,22 +6,28 @@ import { UsersPage, ListofUsers } from '../../data/moduleLeader';
 
 
 function Form(props) {
-    // Props
-    const module = props.module;
-    
-    const Module = (e) => {
-        if(module)
-            return eval('module.Module'+e);
-        return null;
+    let image, name, level, code, lId, id;
+   
+    if(props.module){
+        let m = props.module
+        image = m.ModuleImage
+        name = m.ModuleName
+        level = m.ModuleLevel
+        code = m.ModuleCode
+        lId = m.moduleleaderID
+        id = m.ModuleID
     }
-
+    
     // Hooks
-    const [ModuleImage, setModuleImageUrl] = useState(Module('Image'));
-    const [ModuleName, setModuleName] = useState(Module('Name'));
-    const [ModuleLevel, setModuleLevel] = useState(Module('Level'));
-    const [ModuleCode, setModuleCode] = useState(Module('Code'));
-    const [ModuleLeaderId, setModuleLeaderId] = useState(Module('LeaderID'));
-    const [ModuleID, setModuleID] = useState(Module('ID'));
+    const [ModuleImage, setModuleImageUrl] = useState(image);
+    const [ModuleName, setModuleName] = useState(name);
+    const [ModuleLevel, setModuleLevel] = useState(level);
+    const [ModuleCode, setModuleCode] = useState(code);
+    const [ModuleLeaderId, setModuleLeaderId] = useState(lId);
+    const [ModuleID, setModuleID] = useState(id);
+
+    
+    
 
     // Methods
     UsersPage()
@@ -36,6 +42,7 @@ function Form(props) {
         setModuleLevel(e)
     }
     const handleModuleCode = (e) => {
+        console.log(e)
         setModuleCode(e)
     }
     const handleModuleLeaderId = (e) => {
@@ -62,7 +69,7 @@ function Form(props) {
     }
     const handleWhichSubmit = (e) => {
         e.preventDefault();
-        module ? handleEdit(getNewModule()) : handleAdd(e);
+        props.module ? handleEdit(getNewModule()) : handleAdd(e);
     }
     const handleEdit = (module) => {
         props.onEdit(module)
@@ -85,9 +92,6 @@ function Form(props) {
         return props.title ? props.title : 'Add';
     }
 
-
-    
-    
     // View
     return(
         <div className='form'>
@@ -98,28 +102,29 @@ function Form(props) {
                 <input type="text" 
                     required 
                     value={ModuleImage}
-                    placeholder='Image URL' 
+                    placeholder= 'Image URL'
                     onChange={(e) => handleModuleImageUrl(e.target.value)}
-                ></input> 
+                />
                 <input type="text" 
                     required 
                     value={ModuleName}
-                    placeholder='Name' 
+                    placeholder= 'Name'
                     onChange={(e) => handleModuleName(e.target.value)}
-                ></input> 
+                />
                 <input type="text" 
                     required 
                     value={ModuleLevel}
-                    placeholder='Level' 
+                    placeholder= 'Level'
                     onChange={(e) => handleModuleLevel(e.target.value)}
-                ></input> 
+                />
                 <input type="text" 
                     required 
                     value={ModuleCode}
-                    placeholder='Code' 
+                    placeholder='Code'
                     onChange={(e) => handleModuleCode(e.target.value)}
-                ></input> 
+                />
                 <select>
+                <option>Module Leader:</option>
                 {ListofUsers &&
                     ListofUsers.map((u) => (
                         <option 
@@ -128,7 +133,7 @@ function Form(props) {
                             user_lastname={u.UserLastname}
                             key={u.UserID}
                             onChange={(e) => handleModuleLeaderId(e.target.moduleleaderid)}
-                        >{u.UserFirstname} {u.UserLastname}</option>
+                            >{u.UserFirstname} {u.UserLastname}</option>
                     ))}
                     
                 </select>

@@ -60,8 +60,6 @@ function Modules() {
     }
 
     const editModule = (module) => {
-        console.log(module.ModuleID)
-
         const id = module.ModuleID
         const newModules = modules.map(m => {
             if(m.ModuleID === id) {
@@ -77,13 +75,12 @@ function Modules() {
     useEffect(() => { fetchModules() }, []);
 
     const fetchModules = async () => {
-
         const outcome = await apiRequest(API_URL, 'Modules', API_KEY);
 
-        if (outcome.success) setModules (outcome.response);
-
-        else setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
-
+        if (outcome.success) 
+            setModules (outcome.response);
+        else 
+            setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
     }
 
     // View
@@ -95,16 +92,20 @@ function Modules() {
             ? 
             modules.map((module) => (
                 isEditing(module.ModuleID) ? 
-                <Edit onCloseEditForm={() => closeEditForm()} 
+                <Edit 
                     key={null}
+                    onCloseEditForm={() => closeEditForm()} 
                     module={module}
                     onEdit={(module) => editModule(module)}
+                    
                 />
                 :
-                <Card module={module} key={module.ModuleID} 
+                <Card 
+                    key={module.ModuleID} 
+                    module={module} 
                     ModuleID = {module.ModuleID}
                     onDeleteModule={(ModuleID) => deleteModule(ModuleID)}
-                    onSelectEditModule={(ModuleID) => selectEditModule(ModuleID)}
+                    onSelectEditModule={() => selectEditModule(module.ModuleID)}
                     onAddFavourite={(ModuleID) => addFavourite(ModuleID)}
                     onRemoveFavourite={(ModuleID) => removeFavourite(ModuleID)}
                 />

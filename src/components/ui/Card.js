@@ -36,9 +36,7 @@ function Card(props) {
         props.onDeleteModule(selectedModuleId);
     }
 
-    function editHandler() {
-        props.onEditModule();
-    }
+
 
     function addFavourite(moduleId) {
         props.onAddFavourite(moduleId);
@@ -60,7 +58,6 @@ function Card(props) {
                 onClick={() => doSelectModule(module.ModuleID)} 
             />
             <EditIcon
-                onIconClick={editHandler}
                 onSelectModule={() => selectModule(module.ModuleID)}
             />
             <FavouriteIcon 
