@@ -97,7 +97,7 @@ function Modules() {
                     onCloseEditForm={() => closeEditForm()} 
                     module={module}
                     onEdit={(module) => editModule(module)}
-                    
+                    // onModuleSelect={(id) => selectEditModule(id)}
                 />
                 :
                 <Card 

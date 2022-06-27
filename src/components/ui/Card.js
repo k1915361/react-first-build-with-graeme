@@ -3,6 +3,7 @@ import { EditIcon, DeleteIcon, FavouriteIcon } from './Icon';
 import React, { useState } from "react";
 import Backdrop from './Backdrop';
 import Modal from './Modal';
+import Tooltip from './Tooltip';
 
 function Card(props) {
     // Properties ----------------------------------
@@ -51,8 +52,12 @@ function Card(props) {
         <div className='card' key={module.ModuleID}>
             <img src={module.ModuleImage} alt=''></img>
             <p>{module.ModuleName}</p>
-            <p>Level: {module.ModuleLevel}</p>
+            <Tooltip message='Level'>
+                <p>{module.ModuleLevel}</p>
+            </Tooltip>
+            <Tooltip message='Code'>
             <p className='moduleCode'>{module.ModuleCode}</p>
+            </Tooltip>
             <DeleteIcon 
                 onIconClick={deleteHandler} 
                 onClick={() => doSelectModule(module.ModuleID)} 

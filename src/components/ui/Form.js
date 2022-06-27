@@ -2,10 +2,11 @@ import { useState } from 'react';
 import './Form.css';
 import Tooltip from './Tooltip';
 import { UsersPage, ListofUsers } from '../../data/moduleLeader';
-
+import Input from './Input';
 
 
 function Form(props) {
+    // Properties
     let image, name, level, code, lId, id;
    
     if(props.module){
@@ -19,11 +20,11 @@ function Form(props) {
     }
     
     // Hooks
-    const [ModuleImage, setModuleImageUrl] = useState(image);
-    const [ModuleName, setModuleName] = useState(name);
-    const [ModuleLevel, setModuleLevel] = useState(level);
-    const [ModuleCode, setModuleCode] = useState(code);
-    const [ModuleLeaderId, setModuleLeaderId] = useState(lId);
+    const [ModuleImage, setModuleImageUrl] = useState(null);
+    const [ModuleName, setModuleName] = useState(null);
+    const [ModuleLevel, setModuleLevel] = useState(null);
+    const [ModuleCode, setModuleCode] = useState(null);
+    const [ModuleLeaderId, setModuleLeaderId] = useState(null);
     const [ModuleID, setModuleID] = useState(id);
 
     
@@ -42,7 +43,6 @@ function Form(props) {
         setModuleLevel(e)
     }
     const handleModuleCode = (e) => {
-        console.log(e)
         setModuleCode(e)
     }
     const handleModuleLeaderId = (e) => {
@@ -56,7 +56,7 @@ function Form(props) {
             ModuleID: ModuleID,
             ModuleImage: ModuleImage,
             ModuleName: ModuleName, 
-            ModuleLevel: ModuleLevel,
+            ModuleLevel:  ModuleLevel,
             ModuleCode: ModuleCode,
             ModuleLeaderID: ModuleLeaderId
         };
@@ -78,6 +78,9 @@ function Form(props) {
     const closeEditForm = () => {
         props.onCloseEditForm();
     }
+    // const openEditForm = () => {
+    //     props.onModuleSelect(id);
+    // }
     const handleAddModule = (module) => {
         props.onAddModule(module)
     }
@@ -92,6 +95,17 @@ function Form(props) {
         return props.title ? props.title : 'Add';
     }
 
+    console.log(code, ModuleCode)
+    
+    if( code && code !== ModuleCode && name !== ModuleName && level !== ModuleLevel &&
+        image !== ModuleImage && id !== ModuleID){
+        setModuleCode(code)
+        setModuleName(name)
+        setModuleLevel(level)
+        setModuleImageUrl(image)
+        setModuleID(id)
+    }
+
     // View
     return(
         <div className='form'>
@@ -99,44 +113,42 @@ function Form(props) {
             <div className='title'>{getTitle()}</div>
             </Tooltip>
             <form onSubmit={handleWhichSubmit}>
-                <input type="text" 
-                    required 
+                <Input 
+                    defaultValue={null}
                     value={ModuleImage}
-                    placeholder= 'Image URL'
+                    placeholder={image ? image : 'Image'}
                     onChange={(e) => handleModuleImageUrl(e.target.value)}
                 />
-                <input type="text" 
-                    required 
+                <Input 
                     value={ModuleName}
-                    placeholder= 'Name'
+                    placeholder={name ? name : 'Name'}
                     onChange={(e) => handleModuleName(e.target.value)}
                 />
-                <input type="text" 
-                    required 
+                <Input 
                     value={ModuleLevel}
-                    placeholder= 'Level'
+                    placeholder={level ? level : 'Level'}
                     onChange={(e) => handleModuleLevel(e.target.value)}
                 />
-                <input type="text" 
-                    required 
+                <Input 
                     value={ModuleCode}
-                    placeholder='Code'
-                    onChange={(e) => handleModuleCode(e.target.value)}
+                    placeholder={code ? code : 'Code'}
+                    onChange={(e) => {handleModuleCode(e.target.value)}}
                 />
+                <Tooltip message='Select Module Leader'>
                 <select>
-                <option>Module Leader:</option>
                 {ListofUsers &&
                     ListofUsers.map((u) => (
                         <option 
-                            moduleleaderid={u.UserID} 
-                            user_firstname={u.UserFirstname}
-                            user_lastname={u.UserLastname}
-                            key={u.UserID}
-                            onChange={(e) => handleModuleLeaderId(e.target.moduleleaderid)}
-                            >{u.UserFirstname} {u.UserLastname}</option>
-                    ))}
+                        moduleleaderid={u.UserID}
+                        key={u.UserID}
+                        onChange={(e) => 
+                            handleModuleLeaderId(e.target.moduleleaderid)
+                        }
+                        >{u.UserFirstname} {u.UserLastname}</option>
+                        ))}
                     
                 </select>
+                </Tooltip>
                 <br/>
                 <Tooltip message='Cancel'>
                 <button className='button' 

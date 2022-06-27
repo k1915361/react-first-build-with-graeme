@@ -6,6 +6,7 @@
     height: auto;
     margin: 2px;
     transition: width 0.3s;
+    font-weight:bolder;
 }
 
 .card:hover {
