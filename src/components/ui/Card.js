@@ -13,6 +13,7 @@ function Card(props) {
     const [ selectedModuleId , selectModuleId ] = useState();
     
     const [ modalIsOpen, setModalIsOpen ] = useState(false);
+    const [ classNames, setClassNames ] = useState(false);
 
 
     // Context -------------------------------------
@@ -47,9 +48,16 @@ function Card(props) {
         props.onRemoveFavourite(moduleId)
     }
     
+    const isCardHover = () => {
+        setClassNames(true)
+    }
+    const cardUnHover = () => {
+        setClassNames(false)
+    }
+
     // View ----------------------------------------
     return (
-        <div className='card' key={module.ModuleID}>
+        <div className={'card'} key={module.ModuleID} onMouseOver={() => isCardHover()} onMouseLeave={() => cardUnHover()}>
             <img src={module.ModuleImage} alt=''></img>
             <p>{module.ModuleName}</p>
             <Tooltip message='Level'>
@@ -58,17 +66,22 @@ function Card(props) {
             <Tooltip message='Code'>
             <p className='moduleCode'>{module.ModuleCode}</p>
             </Tooltip>
+            
             <DeleteIcon 
                 onIconClick={deleteHandler} 
                 onClick={() => doSelectModule(module.ModuleID)} 
+                classNames={classNames}
             />
             <EditIcon
                 onSelectModule={() => selectModule(module.ModuleID)}
+                classNames={classNames}
             />
             <FavouriteIcon 
                 onUnfavourite={() => removeFavourite(module.ModuleID)}
                 onFavourite={() => addFavourite(module.ModuleID)} 
+                classNames={classNames}
             />
+            
             {modalIsOpen && <Modal onConfirm={deleteModule} onClose={closeModalHandler} />}
             {modalIsOpen && <Backdrop onClick={closeModalHandler}/>}
         </div>

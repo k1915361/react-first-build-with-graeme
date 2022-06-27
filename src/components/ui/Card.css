@@ -7,9 +7,19 @@
     margin: 2px;
     transition: width 0.3s;
     font-weight:bolder;
+    
 }
 
 .card:hover {
     box-shadow: -1px -1px 3px 0px rgb(161, 161, 161),
         10px 10px 10px 1px rgb(248, 248, 248);
+    
 }
+
+
+
+/* .icon img{
+    filter: opacity(0%);
+} */
+
+

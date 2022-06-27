@@ -1,16 +1,17 @@
 .icon {
-    box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
-        0px 0px 1px 1px rgb(209, 209, 209);
+    box-shadow: -1px -1px 1px 0px rgb(255, 255, 255), 
+        0px 0px 1px 0px rgb(209, 209, 209);
     border-radius: 10px;
     width: 35px;
     height: 35px;
     float: right;
     margin: 2px;
+    filter: opacity(0%);
 }
 
 .icon:hover {
-  box-shadow: -1px -1px 1px 0px rgb(209, 209, 209), 
-        0px 0px 1px 1px rgb(255, 255, 255);
+  box-shadow: -1px -1px 1px 0px rgb(231, 231, 231), 
+        0px 0px 1px 0px rgb(245, 245, 245);
 }
 
 .btn {
@@ -27,4 +28,46 @@
 .btn:hover {
   background-color: #9c1458;
   border-color: #9c1458;
+}
+
+/* .cardHoverIcon {
+  box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
+        0px 0px 1px 1px rgb(206, 206, 206);
+  filter: opacity(100%);
+}
+.cardUnhoverIcon {
+  filter: opacity(0%);
+}
+.cardHoverImg {
+  filter: opacity(0%);
+}
+.cardUnhoverImg {
+  filter: opacity(0%);
+} */
+
+
+
+.card:hover /*?*/ .icon img{
+  filter: opacity(0%);
+}
+.card:hover /*?*/ .icon{
+  box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
+        0px 0px 1px 1px rgb(206, 206, 206);
+  filter: opacity(100%);
+}
+.card:hover .icon img:hover{
+  filter: opacity(50%);  
+}
+
+
+imageCSSExamples {
+  filter: saturate(1);
+  filter: grayscale(100%);
+  filter: contrast(1%);
+  filter: brightness(0.25);
+  filter: blur(3px);
+  filter: invert(60%);
+  filter: sepia(200%);
+  filter: hue-rotate(180deg);
+  filter: opacity(50%);
 }
