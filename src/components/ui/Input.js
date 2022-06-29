@@ -1,6 +1,8 @@
+import './Input.css'
+
 export default function input(props) {
     return(
-        <div>
+        <div className='input'>
             <input
                 type="text"
                 defaultValue={props.defaultValue}

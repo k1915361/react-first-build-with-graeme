@@ -30,10 +30,10 @@
   border-color: #9c1458;
 }
 
-.card:hover /*?*/ .icon img{
+.card:hover .icon img{
   filter: opacity(0%);
 }
-.card:hover /*?*/ .icon{
+.card:hover .icon{
   box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
         0px 0px 1px 1px rgb(206, 206, 206);
   filter: opacity(100%);

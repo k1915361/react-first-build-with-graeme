@@ -1,11 +1,15 @@
 nav {
-    box-shadow: 0px 10px 11px 1px rgb(209, 209, 209);
+    box-shadow: 0px 1px 1px 0px rgb(228, 228, 228);
     display: flex;
     overflow: hidden;
-    background-color: #edafb8;
+    /* background-color: #edafb8; */
+    background-color: #f7ebed;
 }
 
 nav div.navItem { padding: 10px;}
-nav div.navItem:hover { background-color: #f4cdd3;}
+nav div.navItem:hover { 
+    box-shadow: 0px 0px 21px 0px #f4cdd3;
+    /* background-color: #f4cdd3; */
+}
 nav div.navItem a { color: white; text-decoration: none;}
 nav div.navItem a.navSelected { color: black;}

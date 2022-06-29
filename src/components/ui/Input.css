@@ -1,0 +1,11 @@
+.input{
+    opacity: 100%;
+}
+
+Form .tooltip{
+    opacity: 20%;
+}
+
+Form:hover .tooltip{
+    opacity: 100%;
+}
