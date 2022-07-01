@@ -19,7 +19,7 @@ function Form(props) {
         id = m.ModuleID
     }
     
-    // Hooks
+    // States
     const [ModuleImage, setModuleImageUrl] = useState(null);
     const [ModuleName, setModuleName] = useState(null);
     const [ModuleLevel, setModuleLevel] = useState(null);
@@ -78,9 +78,7 @@ function Form(props) {
     const closeEditForm = () => {
         props.onCloseEditForm();
     }
-    // const openEditForm = () => {
-    //     props.onModuleSelect(id);
-    // }
+    
     const handleAddModule = (module) => {
         props.onAddModule(module)
     }
@@ -94,8 +92,6 @@ function Form(props) {
     const getTitle = () => {
         return props.title ? props.title : 'Add';
     }
-
-    console.log(code, ModuleCode)
     
     if( code && code !== ModuleCode && name !== ModuleName && level !== ModuleLevel &&
         image !== ModuleImage && id !== ModuleID){

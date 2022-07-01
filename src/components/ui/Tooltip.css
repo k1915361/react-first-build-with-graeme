@@ -35,7 +35,7 @@
 
 .tooltip {
     opacity: 0%;  
-    transition: 1s opacity;
+    transition: 0.5s opacity;
     transition-delay: 0s;
 }
 

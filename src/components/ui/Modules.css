@@ -28,3 +28,10 @@ img {
     width: 100%;
     border-radius: 10px;
 }
+
+.exampleCard  {
+    box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
+          0px 0px 1px 10px rgb(0, 0, 0);
+    opacity: 100%;
+}
+  
