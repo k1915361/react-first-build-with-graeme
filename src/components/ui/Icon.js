@@ -52,7 +52,8 @@ function FavouriteIcon(props) {
     }
 
     return (
-        <Tooltip message='Un/Favourite'>
+        <Tooltip 
+            message={isFavourite ? 'Unfavourite' : 'Favourite'}>
             <div className={'icon'} onClick={
                 isFavourite ? UndoFavourite : doFavourite
                 }>

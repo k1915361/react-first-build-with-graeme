@@ -7,7 +7,7 @@ export default function input(props) {
                 type="text"
                 defaultValue={props.defaultValue}
                 required
-                value={props.value}
+                value={props.value ? props.value : ''}
                 placeholder={props.placeholder}
                 onChange={props.onChange}
             />

@@ -20,11 +20,11 @@ function Form(props) {
     }
     
     // States
-    const [ModuleImage, setModuleImageUrl] = useState(null);
-    const [ModuleName, setModuleName] = useState(null);
-    const [ModuleLevel, setModuleLevel] = useState(null);
-    const [ModuleCode, setModuleCode] = useState(null);
-    const [ModuleLeaderId, setModuleLeaderId] = useState(null);
+    const [ModuleImage, setModuleImageUrl] = useState('');
+    const [ModuleName, setModuleName] = useState('');
+    const [ModuleLevel, setModuleLevel] = useState('');
+    const [ModuleCode, setModuleCode] = useState('');
+    const [ModuleLeaderId, setModuleLeaderId] = useState('');
     const [ModuleID, setModuleID] = useState(id);
 
     
@@ -93,13 +93,33 @@ function Form(props) {
         return props.title ? props.title : 'Add';
     }
     
-    if( code && code !== ModuleCode && name !== ModuleName && level !== ModuleLevel &&
-        image !== ModuleImage && id !== ModuleID){
-        setModuleCode(code)
-        setModuleName(name)
-        setModuleLevel(level)
-        setModuleImageUrl(image)
-        setModuleID(id)
+    const autoFillEditForm = () => {
+        if( code && code !== ModuleCode && name !== ModuleName && level !== ModuleLevel &&
+            image !== ModuleImage && id !== ModuleID){
+            setModuleCode(code)
+            setModuleName(name)
+            setModuleLevel(level)
+            setModuleImageUrl(image)
+            setModuleID(id)
+        }
+    }
+    autoFillEditForm();
+            
+    const handleModuleCodeTest = (code) => {
+        if ((code.trim()).match(/^[A-z]{2}[0-9]{4}$/g)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    const handleModuleNameTest = (name) => {
+        if(name.match(/^[A-Z]{2,}/)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // View
@@ -109,39 +129,63 @@ function Form(props) {
             <div className='title'>{getTitle()}</div>
             </Tooltip>
             <form onSubmit={handleWhichSubmit}>
-                <Input 
-                    defaultValue={null}
-                    value={ModuleImage}
-                    placeholder={image ? image : 'Image'}
-                    onChange={(e) => handleModuleImageUrl(e.target.value)}
-                />
-                <Input 
-                    value={ModuleName}
-                    placeholder={name ? name : 'Name'}
-                    onChange={(e) => handleModuleName(e.target.value)}
-                />
-                <Input 
-                    value={ModuleLevel}
-                    placeholder={level ? level : 'Level'}
+                <Tooltip message='Module Image URL'>
+                    <Input 
+                        value={ModuleImage}
+                        placeholder={image ? image : 'Image'}
+                        onChange={(e) => handleModuleImageUrl(e.target.value)}
+                    />
+                </Tooltip>
+                <Tooltip message={handleModuleNameTest(ModuleName) ? 'Module Name' : 'Module Name e.g. Database'}>
+                    <Input 
+                        value={ModuleName}
+                        placeholder={name ? name : 'Name'}
+                        onChange={(e) => handleModuleName(e.target.value)}
+                    />
+                </Tooltip>
+                <Tooltip message='Select Module Level'>
+                <select
+                    value={ModuleLevel ? ModuleLevel : ''}
                     onChange={(e) => handleModuleLevel(e.target.value)}
-                />
+                >
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                </select>
+                </Tooltip>
+                <Tooltip message={handleModuleCodeTest(ModuleCode) ? 'Module Code' : 'Module Code e.g. CI0123'}>
                 <Input 
                     value={ModuleCode}
                     placeholder={code ? code : 'Code'}
                     onChange={(e) => {handleModuleCode(e.target.value)}}
                 />
+                </Tooltip>
                 <Tooltip message='Select Module Leader'>
-                <select>
-                {ListofUsers &&
+                <select
+                    value={ModuleLeaderId}
+                    onChange={(e) => 
+                        handleModuleLeaderId(e.target.moduleleaderid)
+                    }
+                >
+                {
+                ListofUsers ?
                     ListofUsers.map((u) => (
                         <option 
-                        moduleleaderid={u.UserID}
-                        key={u.UserID}
-                        onChange={(e) => 
-                            handleModuleLeaderId(e.target.moduleleaderid)
-                        }
-                        >{u.UserFirstname} {u.UserLastname}</option>
-                        ))}
+                            moduleleaderid={u.UserID}
+                            key={u.UserID}
+                            onChange={(e) => 
+                                handleModuleLeaderId(e.target.moduleleaderid)
+                            }
+                        >
+                            {u.UserFirstname} {u.UserLastname}
+                        </option>
+                        )
+                    )
+                :
+                <option>Loading Module Leaders</option>
+                }
                     
                 </select>
                 </Tooltip>
