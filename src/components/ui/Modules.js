@@ -86,6 +86,14 @@ function Modules() {
     // View
     return (
         <div className='modules'>
+            <Favourites>
+                {favourites.map((favourite) => (
+                    <Favourite 
+                        module={modules[favourite-1]} 
+                        favourite={favourite} 
+                    />        
+                ))}
+            </Favourites>
             MODULES
             <div className='cardContainer'>
             {modules 
@@ -113,14 +121,7 @@ function Modules() {
             : loadingMessage
             }
             <Form onAddModule={(module) => addModule(module)} newModuleID={getNewModuleID}/>
-            <Favourites>
-                {favourites.map((favourite) => (
-                    <Favourite 
-                        module={modules[favourite-1]} 
-                        favourite={favourite} 
-                    />        
-                ))}
-            </Favourites>
+            
             </div>
         </div>
     )
