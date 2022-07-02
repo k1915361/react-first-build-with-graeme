@@ -29,37 +29,35 @@ function User() {
     // States
     const [user, setUser] = useState([]);
 
-    // Context
-    
-
     // Methods
-    
 
+    const User = ListOfUsers[0];
+    
     // View
     return (
         <div className='user'>
-            User
+            Me
             <Card>
                 <Tooltip message=''>
-                    <img src={ListOfUsers[0].UserImageURL}/>
+                    <img src={User.UserImageURL}/>
                 </Tooltip>
                 <Tooltip message='Name'>
-                    <p>{ListOfUsers[0].UserFirstname} {ListOfUsers[0].UserLastname}</p>
+                    <p>{User.UserFirstname} {User.UserLastname}</p>
                 </Tooltip>
                 <Tooltip message='Email'>
-                    <p>{ListOfUsers[0].UserEmail}</p>
+                    <p>{User.UserEmail}</p>
                 </Tooltip>
                 <Tooltip message='Password'>
-                    <p>{ListOfUsers[0].UserPassword}</p>
+                    <p>{User.UserPassword}</p>
                 </Tooltip>
                 <Tooltip message='Is Registered'>
-                    <p>{ListOfUsers[0].UserRegistered ? 'Registered': 'Not Registered'}</p>
+                    <p>{User.UserRegistered ? 'Registered': 'Not Registered'}</p>
                 </Tooltip>
                 <Tooltip message='Type ID'>
-                    <p>{ListOfUsers[0].UserUsertypeID}</p>
+                    <p>{User.UserUsertypeID}</p>
                 </Tooltip>
                 <Tooltip message='Cohort ID'>
-                    <p>{ListOfUsers[0].UserCohortID}</p>
+                    <p>{User.UserCohortID}</p>
                 </Tooltip>
             </Card>    
         </div>
