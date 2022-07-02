@@ -1,12 +1,11 @@
 import './Users.sass';
-import './Card';
+import Card from './Card';
 import { useState } from 'react';
 
 function Users() {
     // Properties
     
     // States
-    const [user, setUser] = useState(null);
     const [users, setUsers] = useState(null);
 
     // Context

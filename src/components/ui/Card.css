@@ -22,7 +22,18 @@
     
 }
 
+.moduleLevel {
+    color: rgb(189, 189, 189);
+}
 
+.moduleDetail {
+    font-size: 2px;
+    color: rgb(189, 189, 189);
+}
+
+.moduleCode {
+    color: rgb(189, 189, 189);
+}
 
 /* .icon img{
     filter: opacity(0%);

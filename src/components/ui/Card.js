@@ -52,11 +52,13 @@ function Card(props) {
         <div className={'card'} key={module.ModuleID} >
             <img src={module.ModuleImage} alt=''></img>
             <p>{module.ModuleName}</p>
+            
             <Tooltip message='Level'>
-                <p>{module.ModuleLevel}</p>
+                <p className='moduleLevel'>{module.ModuleLevel}</p>
             </Tooltip>
+            
             <Tooltip message='Code'>
-            <p className='moduleCode'>{module.ModuleCode}</p>
+                <p className='moduleCode'>{module.ModuleCode}</p>
             </Tooltip>
             
             <DeleteIcon 

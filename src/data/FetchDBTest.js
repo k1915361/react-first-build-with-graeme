@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import { useState, useEffect } from 'react';
 
-import { apiRequest } from '../api/apiRequest.js';
+import { apiRequest } from '../components/api/apiRequest.js';
 
-import Modules from './Modules.js';
+import Modules from '../components/ui/Modules.js';
 
 
 export default function MyModulesPage() {

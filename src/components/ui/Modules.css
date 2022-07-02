@@ -14,15 +14,7 @@ div .cardContainer {
     flex-wrap: wrap;
 }
 
-.moduleDetail {
-    font-size: 2px;
-    color: rgb(189, 189, 189);
-}
 
-.moduleCode {
-    font-size: 16px;
-    color: rgb(189, 189, 189);
-}
 
 img {
     width: 100%;

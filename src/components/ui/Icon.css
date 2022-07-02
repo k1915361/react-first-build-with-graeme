@@ -1,17 +1,20 @@
 .icon {
-    box-shadow: -1px -1px 1px 0px rgb(255, 255, 255), 
-        0px 0px 1px 0px rgb(209, 209, 209);
     border-radius: 10px;
     width: 35px;
     height: 35px;
     float: right;
     margin: 2px;
-    filter: opacity(0%);
+    filter: opacity(100%);
+}
+
+.icon img {
+  box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
+        0px 0px 1px 1px rgb(209, 209, 209);
+  filter: opacity(3%);
 }
 
 .icon:hover {
-  box-shadow: -1px -1px 1px 0px rgb(231, 231, 231), 
-        0px 0px 1px 0px rgb(245, 245, 245);
+  
 }
 
 .btn {
@@ -31,7 +34,7 @@
 }
 
 .card:hover .icon img{
-  filter: opacity(0%);
+  filter: opacity(30%);
 }
 .card:hover .icon{
   box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
@@ -39,7 +42,9 @@
   filter: opacity(100%);
 }
 .card:hover .icon img:hover{
-  filter: opacity(50%);  
+  box-shadow: -1px -1px 1px 0px rgb(212, 212, 212), 
+        1px 1px 1px 1px rgb(255, 255, 255);
+  filter: opacity(100%);  
 }
 
 

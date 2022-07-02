@@ -89,6 +89,7 @@ function Modules() {
             <Favourites>
                 {favourites.map((favourite) => (
                     <Favourite 
+                        key={favourite}
                         module={modules[favourite-1]} 
                         favourite={favourite} 
                     />        
@@ -101,11 +102,10 @@ function Modules() {
             modules.map((module) => (
                 isEditing(module.ModuleID) ? 
                 <Edit 
-                    key={null}
+                    key={module.ModuleID}
                     onCloseEditForm={() => closeEditForm()} 
                     module={module}
                     onEdit={(module) => editModule(module)}
-                    // onModuleSelect={(id) => selectEditModule(id)}
                 />
                 :
                 <Card 

@@ -80,7 +80,10 @@ function Form(props) {
     }
     
     const handleAddModule = (module) => {
-        props.onAddModule(module)
+        if(handleModuleCodeValidation(module.ModuleCode) && 
+        handleModuleNameValidation(module.ModuleName)){
+            props.onAddModule(module)
+        }
     }
 
     const getTitleTooltipMessage = () => {
@@ -105,7 +108,7 @@ function Form(props) {
     }
     autoFillEditForm();
             
-    const handleModuleCodeTest = (code) => {
+    const handleModuleCodeValidation = (code) => {
         if ((code.trim()).match(/^[A-z]{2}[0-9]{4}$/g)){
             return true;
         }
@@ -114,7 +117,7 @@ function Form(props) {
         }
     }
 
-    const handleModuleNameTest = (name) => {
+    const handleModuleNameValidation = (name) => {
         if(name.match(/^[A-Z]{2,}/)){
             return true;
         } else {
@@ -122,12 +125,15 @@ function Form(props) {
         }
     }
 
+    var moduleLevels = [3,4,5,6,7];
+
     // View
     return(
         <div className='form'>
             <Tooltip message={getTitleTooltipMessage()}>
-            <div className='title'>{getTitle()}</div>
+                <div className='title'>{getTitle()}</div>
             </Tooltip>
+            
             <form onSubmit={handleWhichSubmit}>
                 <Tooltip message='Module Image URL'>
                     <Input 
@@ -136,67 +142,71 @@ function Form(props) {
                         onChange={(e) => handleModuleImageUrl(e.target.value)}
                     />
                 </Tooltip>
-                <Tooltip message={handleModuleNameTest(ModuleName) ? 'Module Name' : 'Module Name e.g. Database'}>
+                
+                <Tooltip 
+                    message={handleModuleNameValidation(ModuleName) 
+                    ? 'Module Name' : 'Module Name e.g. Database'}
+                >
                     <Input 
                         value={ModuleName}
                         placeholder={name ? name : 'Name'}
                         onChange={(e) => handleModuleName(e.target.value)}
                     />
                 </Tooltip>
+                
                 <Tooltip message='Select Module Level'>
-                <select
-                    value={ModuleLevel ? ModuleLevel : ''}
-                    onChange={(e) => handleModuleLevel(e.target.value)}
+                    <select
+                        value={ModuleLevel ? ModuleLevel : ''}
+                        onChange={(e) => handleModuleLevel(e.target.value)}
+                    >
+                        {(moduleLevels.map((l) => 
+                                <option key={l}>{l}</option>
+                            )
+                        )}
+                    </select>
+                </Tooltip>
+                
+                <Tooltip 
+                    message={handleModuleCodeValidation(ModuleCode) ? 'Module Code' : 'Module Code e.g. CI0123'}
                 >
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                </select>
+                    <Input 
+                        value={ModuleCode}
+                        placeholder={code ? code : 'Code'}
+                        onChange={(e) => {handleModuleCode(e.target.value)}}
+                    />
                 </Tooltip>
-                <Tooltip message={handleModuleCodeTest(ModuleCode) ? 'Module Code' : 'Module Code e.g. CI0123'}>
-                <Input 
-                    value={ModuleCode}
-                    placeholder={code ? code : 'Code'}
-                    onChange={(e) => {handleModuleCode(e.target.value)}}
-                />
-                </Tooltip>
+                
                 <Tooltip message='Select Module Leader'>
-                <select
-                    value={ModuleLeaderId}
-                    onChange={(e) => 
-                        handleModuleLeaderId(e.target.moduleleaderid)
-                    }
-                >
-                {
-                ListofUsers ?
-                    ListofUsers.map((u) => (
-                        <option 
-                            moduleleaderid={u.UserID}
-                            key={u.UserID}
-                            onChange={(e) => 
-                                handleModuleLeaderId(e.target.moduleleaderid)
-                            }
-                        >
-                            {u.UserFirstname} {u.UserLastname}
-                        </option>
-                        )
-                    )
-                :
-                <option>Loading Module Leaders</option>
-                }
-                    
-                </select>
+                    <select
+                        value={ModuleLeaderId}
+                        onChange={(e) => 
+                            handleModuleLeaderId(e.target.moduleleaderid)
+                        }
+                    >
+                        {
+                        ListofUsers 
+                        ?
+                            ListofUsers.map((u) => (
+                                <option key={u.UserID}>
+                                    {u.UserFirstname} {u.UserLastname}
+                                </option>
+                                )
+                            )
+                        :
+                            <option>Loading Module Leaders</option>
+                        }
+                    </select>
                 </Tooltip>
-                <br/>
+                
                 <Tooltip message='Cancel'>
-                <button className='button' 
-                    onClick={closeEditForm}
-                >X</button>
+                    <button className='button' 
+                        onClick={closeEditForm}
+                    >X
+                    </button>
                 </Tooltip>
+
                 <Tooltip message={getAddEditTooltipMessage()}>
-                <button className='button'>+</button>
+                    <button className='button'>+</button>
                 </Tooltip>
             </form>
         </div>
