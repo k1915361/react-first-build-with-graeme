@@ -1,15 +1,15 @@
 import './Modal.css';
 
 function Modal(props) {
-    function confirmHandler() {
+    const confirmHandler = () => {
         props.onConfirm();
     }
 
-    function closeHandler() {
+    const closeHandler = () => {
         props.onClose();
     }
 
-    function deleteHandler() {
+    const deleteHandler = () => {
         closeHandler();
         confirmHandler();
     }

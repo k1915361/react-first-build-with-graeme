@@ -27,39 +27,43 @@ function User() {
     }
 
     // States
-    const [user, setUser] = useState([]);
+    // const [user, setUser] = useState([]);
 
     // Methods
 
     const User = ListOfUsers[0];
-    
+
     // View
     return (
         <div className='user'>
-            Me
-            <Card>
-                <Tooltip message=''>
-                    <img src={User.UserImageURL}/>
-                </Tooltip>
-                <Tooltip message='Name'>
-                    <p>{User.UserFirstname} {User.UserLastname}</p>
-                </Tooltip>
-                <Tooltip message='Email'>
-                    <p>{User.UserEmail}</p>
-                </Tooltip>
-                <Tooltip message='Password'>
-                    <p>{User.UserPassword}</p>
-                </Tooltip>
-                <Tooltip message='Is Registered'>
-                    <p>{User.UserRegistered ? 'Registered': 'Not Registered'}</p>
-                </Tooltip>
-                <Tooltip message='Type ID'>
-                    <p>{User.UserUsertypeID}</p>
-                </Tooltip>
-                <Tooltip message='Cohort ID'>
-                    <p>{User.UserCohortID}</p>
-                </Tooltip>
-            </Card>    
+            User
+            {User ? 
+                <Card>
+                    <Tooltip message=''>
+                        <img src={User.UserImageURL} alt=''/>
+                    </Tooltip>
+                    <Tooltip message='Name'>
+                        <p>{User.UserFirstname} {User.UserLastname}</p>
+                    </Tooltip>
+                    <Tooltip message='Email'>
+                        <p>{User.UserEmail}</p>
+                    </Tooltip>
+                    <Tooltip message='Password'>
+                        <p>{User.UserPassword}</p>
+                    </Tooltip>
+                    <Tooltip message='Is Registered'>
+                        <p>{User.UserRegistered ? 'Registered': 'Not Registered'}</p>
+                    </Tooltip>
+                    <Tooltip message='Type ID'>
+                        <p>{User.UserUsertypeID}</p>
+                    </Tooltip>
+                    <Tooltip message='Cohort ID'>
+                        <p>{User.UserCohortID}</p>
+                    </Tooltip>
+                </Card>    
+            : 
+                loadingMessage
+            }
         </div>
     )
 }

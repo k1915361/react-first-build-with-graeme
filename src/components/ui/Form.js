@@ -49,7 +49,7 @@ function Form(props) {
         setModuleLeaderId(e)
     }
     const handleModuleID = () => {
-        setModuleID( props.getNewModuleID );
+        setModuleID( props.onGetNewModuleID() );
     }
     const getNewModule = () => {
         const new_module = { 
@@ -82,7 +82,7 @@ function Form(props) {
     const handleAddModule = (module) => {
         if(handleModuleCodeValidation(module.ModuleCode) && 
         handleModuleNameValidation(module.ModuleName)){
-            props.onAddModule(module)
+            props.onAddModule(module);
         }
     }
 
@@ -96,6 +96,19 @@ function Form(props) {
         return props.title ? props.title : 'Add';
     }
     
+    if (code && '' === ModuleCode){
+        setModuleCode(code);    
+        setModuleName(name);    
+        setModuleImageUrl(image);
+        setModuleLevel(level);
+        setModuleID(id);
+    }
+
+    
+    
+
+    console.log(code +' '+ ('' === ModuleCode))
+
     const autoFillEditForm = () => {
         if( code && code !== ModuleCode && name !== ModuleName && level !== ModuleLevel &&
             image !== ModuleImage && id !== ModuleID){
@@ -109,7 +122,7 @@ function Form(props) {
     autoFillEditForm();
             
     const handleModuleCodeValidation = (code) => {
-        if ((code.trim()).match(/^[A-z]{2}[0-9]{4}$/g)){
+        if ((code.trim()).match(/^[A-Z]{2}[0-9]{4}$/g)){
             return true;
         }
         else{
@@ -118,7 +131,7 @@ function Form(props) {
     }
 
     const handleModuleNameValidation = (name) => {
-        if(name.match(/^[A-Z]{2,}/)){
+        if(name.match(/^[A-z]{2,}/)){
             return true;
         } else {
             return false;
@@ -135,6 +148,7 @@ function Form(props) {
             </Tooltip>
             
             <form onSubmit={handleWhichSubmit}>
+                
                 <Tooltip message='Module Image URL'>
                     <Input 
                         value={ModuleImage}
@@ -167,7 +181,10 @@ function Form(props) {
                 </Tooltip>
                 
                 <Tooltip 
-                    message={handleModuleCodeValidation(ModuleCode) ? 'Module Code' : 'Module Code e.g. CI0123'}
+                    message={handleModuleCodeValidation(ModuleCode) 
+                    ? 'Module Code' : 
+                      'Module Code e.g. CI0123'
+                    }
                 >
                     <Input 
                         value={ModuleCode}
@@ -199,15 +216,16 @@ function Form(props) {
                 </Tooltip>
                 
                 <Tooltip message='Cancel'>
-                    <button className='button' 
+                    <button 
+                        className='button' 
                         onClick={closeEditForm}
-                    >X
-                    </button>
+                    >X</button>
                 </Tooltip>
 
                 <Tooltip message={getAddEditTooltipMessage()}>
                     <button className='button'>+</button>
                 </Tooltip>
+
             </form>
         </div>
     )
