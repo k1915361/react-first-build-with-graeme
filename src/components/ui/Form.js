@@ -104,11 +104,6 @@ function Form(props) {
         setModuleID(id);
     }
 
-    
-    
-
-    console.log(code +' '+ ('' === ModuleCode))
-
     const autoFillEditForm = () => {
         if( code && code !== ModuleCode && name !== ModuleName && level !== ModuleLevel &&
             image !== ModuleImage && id !== ModuleID){

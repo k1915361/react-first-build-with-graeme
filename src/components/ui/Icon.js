@@ -5,7 +5,7 @@ import Tooltip from './Tooltip';
 function DeleteIcon(props) {
     function handle() {
         props.onIconClick();
-        props.onClick();
+        props.onSelectModule();
     }
     
     return (

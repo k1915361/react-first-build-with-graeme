@@ -1,14 +1,12 @@
 import './Modules.css'
 import { useState, useEffect } from 'react';
 import { apiRequest } from '../api/apiRequest.js';
-import Card from './Card';
 import Favourites from '../pages/Favourites';
 import Form from './Form';
 import Edit from './Edit';
-import Tooltip from './Tooltip';
-import { DeleteIcon, EditIcon, FavouriteIcon } from './Icon';
 import Backdrop from './Backdrop';
 import Modal from './Modal';
+import Module from './Module';
 
 
 function Modules() {
@@ -114,30 +112,19 @@ function Modules() {
         <div className='modules'>
             <Favourites>
                 {favourites.map((favourite) => (
-                    <Card key={favourite}>
-                        <img src={favourite.ModuleImage} alt=''></img>
-                        <p>{favourite.ModuleName}</p>
-                        
-                        <Tooltip message='Level'>
-                            <p className='moduleLevel'>{favourite.ModuleLevel}</p>
-                        </Tooltip>
-                        
-                        <Tooltip message='Code'>
-                            <p className='moduleCode'>{favourite.ModuleCode}</p>
-                        </Tooltip>
-                        
-                        <DeleteIcon 
-                            onIconClick={deleteHandler} 
-                            onClick={() => doSelectModule(favourite.ModuleID)} 
-                        />
-                        <EditIcon
-                            onSelectModule={() => selectEditModule(favourite.ModuleID)}
-                        />
-                        <FavouriteIcon 
-                            onUnfavourite={() => removeFavourite(favourite.ModuleID)}
-                            onFavourite={() => addFavourite(favourite.ModuleID)} 
-                        />    
-                    </Card>        
+                    <Module 
+                        module={favourite}
+
+                        onIconClick={deleteHandler} 
+                        onSelectDeleteModule={() => doSelectModule(favourite.ModuleID)} 
+
+                        onSelectEditModule={() => selectEditModule(favourite.ModuleID)}
+
+                        onUnfavourite={() => removeFavourite(favourite.ModuleID)}
+                        onFavourite={() => addFavourite(favourite.ModuleID)}     
+                    >
+                    </Module>
+                          
                 ))}
             </Favourites>
             
@@ -154,32 +141,18 @@ function Modules() {
                         onEdit={(module) => editModule(module)}
                     />
                     :
-                    <Card
-                        key={module.ModuleID} 
-                    > 
-                        <img src={module.ModuleImage} alt=''></img>
-                        <p>{module.ModuleName}</p>
-                        
-                        <Tooltip message='Level'>
-                            <p className='moduleLevel'>{module.ModuleLevel}</p>
-                        </Tooltip>
-                        
-                        <Tooltip message='Code'>
-                            <p className='moduleCode'>{module.ModuleCode}</p>
-                        </Tooltip>
-                        
-                        <DeleteIcon 
-                            onIconClick={deleteHandler} 
-                            onClick={() => doSelectModule(module.ModuleID)} 
-                        />
-                        <EditIcon
-                            onSelectModule={() => selectEditModule(module.ModuleID)}
-                        />
-                        <FavouriteIcon 
-                            onUnfavourite={() => removeFavourite(module.ModuleID)}
-                            onFavourite={() => addFavourite(module.ModuleID)} 
-                        />
-                    </Card>
+                    <Module 
+                        key={module.ModuleID}
+                        module={module}
+
+                        onIconClick={deleteHandler} 
+                        onSelectDeleteModule={() => doSelectModule(module.ModuleID)} 
+
+                        onSelectEditModule={() => selectEditModule(module.ModuleID)}
+
+                        onUnfavourite={() => removeFavourite(module.ModuleID)}
+                        onFavourite={() => addFavourite(module.ModuleID)}     
+                    ></Module>
                 ))
             : 
                 loadingMessage
