@@ -1,6 +1,6 @@
-import './Card.css';
+import './Form.css';
 
-export default function Card(props) {
+export default function Form(props) {
     // Properties ----------------------------------
     // Hooks ---------------------------------------
     // Context -------------------------------------
@@ -8,7 +8,7 @@ export default function Card(props) {
 
     // View ----------------------------------------
     return(
-        <div className='card'>
+        <div className='form'>
             {props.children}
         </div>
     )

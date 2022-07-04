@@ -1,8 +1,9 @@
-// import './User.sass';
+import './User.scss';
 import { useEffect, useState } from 'react';
 import { apiRequest } from '../api/apiRequest';
-import Card from './CardReusable';
+import Card from './Card';
 import Tooltip from './Tooltip';
+import Form from './FormReuse';
 
 function User() {
     // Properties
@@ -27,18 +28,18 @@ function User() {
     }
 
     // States
-    // const [user, setUser] = useState([]);
-
     // Methods
 
-    const User = ListOfUsers[0];
-
+    
     // View
+    const User = ListOfUsers[0];
+    
     return (
         <div className='user'>
             User
             {User ? 
                 <Card>
+                    <Form>
                     <Tooltip message=''>
                         <img src={User.UserImageURL} alt=''/>
                     </Tooltip>
@@ -60,6 +61,7 @@ function User() {
                     <Tooltip message='Cohort ID'>
                         <p>{User.UserCohortID}</p>
                     </Tooltip>
+                    </Form>
                 </Card>    
             : 
                 loadingMessage

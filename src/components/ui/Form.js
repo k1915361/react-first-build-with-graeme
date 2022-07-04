@@ -80,8 +80,7 @@ function Form(props) {
     }
     
     const handleAddModule = (module) => {
-        if(handleModuleCodeValidation(module.ModuleCode) && 
-        handleModuleNameValidation(module.ModuleName)){
+        if(handleModuleValidations(module)){
             props.onAddModule(module);
         }
     }
@@ -133,9 +132,29 @@ function Form(props) {
         }
     }
 
-    var moduleLevels = [3,4,5,6,7];
+    const handleModuleLevelValidation = (level) => {
+        if(level !== ''){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    const handleModuleValidations = (module) => {
+        if(handleModuleCodeValidation(module.ModuleCode) && 
+            handleModuleNameValidation(module.ModuleName) &&
+            handleModuleLevelValidation)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    
     // View
+    var moduleLevels = [3,4,5,6,7];
+    
     return(
         <div className='form'>
             <Tooltip message={getTitleTooltipMessage()}>
@@ -165,7 +184,8 @@ function Form(props) {
                 
                 <Tooltip message='Select Module Level'>
                     <select
-                        value={ModuleLevel ? ModuleLevel : ''}
+                        value={ModuleLevel}
+                        placeholder={ModuleLevel ? ModuleLevel : 'Level'}
                         onChange={(e) => handleModuleLevel(e.target.value)}
                     >
                         {(moduleLevels.map((l) => 

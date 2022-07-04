@@ -105,14 +105,14 @@ function Modules() {
             setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
     }
 
-    let module;
-
+    
     // View
     return (
         <div className='modules'>
             <Favourites>
                 {favourites.map((favourite) => (
                     <Module 
+                        key={favourite.ModuleID}
                         module={favourite}
 
                         onIconClick={deleteHandler} 
@@ -120,8 +120,8 @@ function Modules() {
 
                         onSelectEditModule={() => selectEditModule(favourite.ModuleID)}
 
-                        onUnfavourite={() => removeFavourite(favourite.ModuleID)}
-                        onFavourite={() => addFavourite(favourite.ModuleID)}     
+                        onUnfavourite={() => addFavourite(favourite.ModuleID)}
+                        onFavourite={() => removeFavourite(favourite.ModuleID)}     
                     >
                     </Module>
                           
