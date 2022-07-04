@@ -28,9 +28,60 @@ function User() {
     }
 
     // States
-    // Methods
-
+    const [isEditing, setIsEditing] = useState(false);
     
+    // Methods
+    const wrapWithIsEditing = (value) => {
+        return (
+            <div onClick={() => setIsEditing(!isEditing)}>
+                {isEditing ? 
+                <input type='text' placeholder={value} />
+                :
+                <p>{value}</p>}
+            </div>
+        )
+    }
+    
+    const wrapWithIsEditingDiv = (children) => {
+        return (
+            <div onClick={() => setIsEditing(!isEditing)}>
+                {children}
+            </div>
+        )
+    }
+
+    const isEditingInput = (value) => {
+        return (
+            isEditing ? 
+            <input type='text' placeholder={value} />
+            :
+            null
+        )
+    }
+
+    const handleIsEditingImage = (value) => {
+        return (
+            <div onClick={() => setIsEditing(!isEditing)}>
+            {
+                isEditing ? 
+                <input type='text' placeholder={value} />
+                :
+                <img src={value} />
+            }
+            </div>
+        )
+    }
+
+    const wrapWithTooltip = (message, children) => {
+        return <Tooltip message={message}>
+            {children}
+        </Tooltip>
+    }
+
+    const isRegistered = (registered) => {
+        return registered ? 'Registered' : 'Not Registered'
+    }
+
     // View
     const User = ListOfUsers[0];
     
@@ -40,27 +91,40 @@ function User() {
             {User ? 
                 <Card>
                     <Form>
-                    <Tooltip message=''>
-                        <img src={User.UserImageURL} alt=''/>
-                    </Tooltip>
-                    <Tooltip message='Name'>
-                        <p>{User.UserFirstname} {User.UserLastname}</p>
-                    </Tooltip>
-                    <Tooltip message='Email'>
-                        <p>{User.UserEmail}</p>
-                    </Tooltip>
-                    <Tooltip message='Password'>
-                        <p>{User.UserPassword}</p>
-                    </Tooltip>
-                    <Tooltip message='Is Registered'>
-                        <p>{User.UserRegistered ? 'Registered': 'Not Registered'}</p>
-                    </Tooltip>
-                    <Tooltip message='Type ID'>
-                        <p>{User.UserUsertypeID}</p>
-                    </Tooltip>
-                    <Tooltip message='Cohort ID'>
-                        <p>{User.UserCohortID}</p>
-                    </Tooltip>
+                    {wrapWithTooltip(
+                        'Image',
+                        wrapWithIsEditingDiv(
+                            isEditingInput(User.UserImageURL) 
+                            ?
+                            isEditingInput(User.UserImageURL) 
+                            :
+                            <img src={User.UserImageURL}/>
+                        )    
+                    )}
+                    {wrapWithTooltip(
+                        'Name',
+                        wrapWithIsEditing(User.UserFirstname + ' ' +User.UserLastname)
+                    )}
+                    {wrapWithTooltip(
+                        'Email',
+                        wrapWithIsEditing(User.UserEmail)
+                    )}
+                    {wrapWithTooltip(
+                        'Password',
+                        wrapWithIsEditing(User.UserPassword)
+                    )}
+                    {wrapWithTooltip(
+                        isRegistered(User.UserRegistered),
+                        wrapWithIsEditing(isRegistered(User.UserRegistered))
+                    )}
+                    {wrapWithTooltip(
+                        'Type ID',
+                        wrapWithIsEditing(User.UserUsertypeID)
+                    )}
+                    {wrapWithTooltip(
+                        'Cohort ID',
+                        wrapWithIsEditing(User.UserCohortID)
+                    )}
                     </Form>
                 </Card>    
             : 

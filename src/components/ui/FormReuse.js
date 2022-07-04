@@ -9,7 +9,7 @@ export default function Form(props) {
     // View ----------------------------------------
     return(
         <div className='form'>
-            {props.children}
+                {props.children}
         </div>
     )
 }
