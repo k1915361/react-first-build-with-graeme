@@ -50,12 +50,9 @@ function User() {
         )
     }
 
-    const isEditingInput = (value) => {
+    const getTextInput = (value) => {
         return (
-            isEditing ? 
             <input type='text' placeholder={value} />
-            :
-            null
         )
     }
 
@@ -94,9 +91,9 @@ function User() {
                     {wrapWithTooltip(
                         'Image',
                         wrapWithIsEditingDiv(
-                            isEditingInput(User.UserImageURL) 
+                            isEditing 
                             ?
-                            isEditingInput(User.UserImageURL) 
+                            getTextInput(User.UserImageURL) 
                             :
                             <img src={User.UserImageURL}/>
                         )    
