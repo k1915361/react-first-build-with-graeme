@@ -29,12 +29,34 @@ function User() {
 
     // States
     const [isEditing, setIsEditing] = useState(false);
-    
+    const [user, setUser ] = useState('');
+
     // Methods
+    const handleTextChange = (message, e) => {
+        console.log(message +' _ '+ e)
+        if (message === 'Image') setUser({...user, UserImageURL: e});
+        if (message === 'First Name') setUser({...user, UserFirstname: e});
+        if (message === 'Last Name')  setUser({...user, UserLastname: e});
+        if (message === 'Email') setUser({...user, UserEmail: e});
+        if (message === 'Password') setUser({...user, UserPassword: e});
+        if (message === 'Registered' || 
+            message === 'Not Registered') setUser({...user, UserRegistered: e});
+        if (message === 'Type ID') setUser({...user, UserUsertypeID: e});
+        if (message === 'Cohort ID') setUser({...user, UserCohortID: e});
+    }
+
     const getTextInput = (value) => {
         return (
             <input type='text' placeholder={value} defaultValue={value}/>
         )
+    }
+
+    const TooltipDiv = (message, children) => {
+        return <Tooltip message={message}>
+            <div onClick={() => setIsEditing(true)}>
+                {children}
+            </div>
+        </Tooltip>
     }
 
     const TooltipInput = (message, value) => {
@@ -42,7 +64,7 @@ function User() {
             <div onClick={() => setIsEditing(true)}>
             {isEditing 
             ? 
-                <input type='text' placeholder={value} defaultValue={value}/>
+                <input type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChange(message, e.target.value)}/>
             :
                 <p>{value}</p>
             }
@@ -57,33 +79,44 @@ function User() {
             ?
                 getTextInput(value) 
             :
-                <img src={value} alt=''/>
+                <img className='userThumbnail' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMmjihQ8c7k8vIBh4QZGWhaCZY_GaaBN9y1A&usqp=CAU' alt=''/>
+                // <img src={value} alt=''/>
             }
             </div>
         </Tooltip>
     }
 
-    const isRegistered = (registered) => {
+    const isRegisteredMessage = (registered) => {
         return registered ? 'Registered' : 'Not Registered'
+    }
+
+    const handleSubmit = (e) => {
+        console.log(e.target.value)
+        e.preventDefault();
+        setUser(...user, e);
     }
 
     // View
     const User = ListOfUsers[0];
     
-    const [user, setUser] = useState('');
-    
-
-    console.log(User.UserFirstname +' '+user.UserFirstname)
-    // console.log(user === undefined)
-    // console.log(ListOfUsers.length === 0 ? 'X' : 'O')
-    // console.log(ListOfUsers[0] ? 'O' : 'X')
-    
-    if (ListOfUsers[0] && user === '') {
-        setUser(User);
+    if (User) {
+        if (user === ''){
+            setUser(User);
+        }
+        if (
+            User.UserImageURL !== user.UserImageURL && 
+            User.UserFirstname !== user.UserFirstname && 
+            User.UserLastname !== user.UserLastname && 
+            User.UserEmail !== user.UserEmail && 
+            User.UserPassword !== user.UserPassword && 
+            User.UserRegistered !== user.UserRegistered && 
+            User.UserUsertypeID !== user.UserUsertypeID && 
+            User.UserCohortID !== user.UserCohortID 
+            ) {
+            setUser(User);
+        }
     }
-    if (User.UserFirstname !== user.UserFirstname) {
-        setUser(User);
-    }
+    
  
     return (
         <Tooltip message='To Edit, Click on Card'>
@@ -91,42 +124,47 @@ function User() {
             User
             {User ? 
                 <Card>
-                    <Form>
+                    <form onSubmit={(e) => handleSubmit(e)}>
                         {TooltipImageInput(
                             'Image',
-                            User.UserImageURL
+                            user.UserImageURL
                         )}
                         {TooltipInput(
-                            'Name',
-                            User.UserFirstname + ' ' +User.UserLastname
+                            'First Name',
+                            user.UserFirstname
+                        )}
+                        {TooltipInput(
+                            'Last Name',
+                            user.UserLastname
                         )}
                         {TooltipInput(
                             'Email',
-                            User.UserEmail
+                            user.UserEmail
                         )}
                         {TooltipInput(
                             'Password',
-                            User.UserPassword
+                            user.UserPassword
                         )}
                         {TooltipInput(
-                            isRegistered(User.UserRegistered),
-                            isRegistered(User.UserRegistered)
+                            isRegisteredMessage(user.UserRegistered),
+                            isRegisteredMessage(user.UserRegistered)
                         )}
                         {TooltipInput(
                             'Type ID',
-                            User.UserUsertypeID
+                            user.UserUsertypeID
                         )}
                         {TooltipInput(
                             'Cohort ID',
-                            User.UserCohortID
+                            user.UserCohortID
                         )}
                         {isEditing && 
                             <>
                             <button onClick={() => setIsEditing(!isEditing)}>X</button>
-                            <button onClick={() => setIsEditing(!isEditing)}>O</button>
+                            <button type="submit" onClick={() => {setIsEditing(!isEditing)}}>
+                            O</button>
                             </>
                         }
-                    </Form>
+                    </form>
                 </Card>    
             : 
                 loadingMessage
