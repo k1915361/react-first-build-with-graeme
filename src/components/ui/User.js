@@ -31,7 +31,7 @@ function User() {
     const [isEditing, setIsEditing] = useState(false);
     
     // Methods
-    const wrapWithIsEditing = (value) => {
+    const DivInputIsEditing = (value) => {
         return (
             <div onClick={() => setIsEditing(!isEditing)}>
                 {isEditing ? 
@@ -42,7 +42,7 @@ function User() {
         )
     }
     
-    const wrapWithIsEditingDiv = (children) => {
+    const DivSetIsEditing = (children) => {
         return (
             <div onClick={() => setIsEditing(!isEditing)}>
                 {children}
@@ -56,22 +56,29 @@ function User() {
         )
     }
 
-    const handleIsEditingImage = (value) => {
-        return (
-            <div onClick={() => setIsEditing(!isEditing)}>
-            {
-                isEditing ? 
-                <input type='text' placeholder={value} />
-                :
-                <img src={value} />
-            }
-            </div>
-        )
-    }
-
-    const wrapWithTooltip = (message, children) => {
+    const Tooltip_ = (message, children) => {
         return <Tooltip message={message}>
             {children}
+        </Tooltip>
+    }
+
+    const TooltipInput = (message, value) => {
+        return <Tooltip message={message}>
+            <div onClick={() => setIsEditing(!isEditing)}>
+            {isEditing ? 
+                <input type='text' placeholder={value} />
+                :
+                <p>{value}</p>
+            }
+            </div>
+        </Tooltip>
+    }
+
+    const TooltipDiv = (message, children) => {
+        return <Tooltip message={message}>
+            <div onClick={() => setIsEditing(!isEditing)}>
+                {children}
+            </div>
         </Tooltip>
     }
 
@@ -88,39 +95,37 @@ function User() {
             {User ? 
                 <Card>
                     <Form>
-                    {wrapWithTooltip(
+                    {TooltipDiv(
                         'Image',
-                        wrapWithIsEditingDiv(
-                            isEditing 
-                            ?
+                        isEditing 
+                        ?
                             getTextInput(User.UserImageURL) 
-                            :
+                        :
                             <img src={User.UserImageURL}/>
-                        )    
                     )}
-                    {wrapWithTooltip(
+                    {TooltipInput(
                         'Name',
-                        wrapWithIsEditing(User.UserFirstname + ' ' +User.UserLastname)
+                        User.UserFirstname + ' ' +User.UserLastname
                     )}
-                    {wrapWithTooltip(
+                    {TooltipInput(
                         'Email',
-                        wrapWithIsEditing(User.UserEmail)
+                        User.UserEmail
                     )}
-                    {wrapWithTooltip(
+                    {TooltipInput(
                         'Password',
-                        wrapWithIsEditing(User.UserPassword)
+                        User.UserPassword
                     )}
-                    {wrapWithTooltip(
+                    {TooltipInput(
                         isRegistered(User.UserRegistered),
-                        wrapWithIsEditing(isRegistered(User.UserRegistered))
+                        isRegistered(User.UserRegistered)
                     )}
-                    {wrapWithTooltip(
+                    {TooltipInput(
                         'Type ID',
-                        wrapWithIsEditing(User.UserUsertypeID)
+                        User.UserUsertypeID
                     )}
-                    {wrapWithTooltip(
+                    {TooltipInput(
                         'Cohort ID',
-                        wrapWithIsEditing(User.UserCohortID)
+                        User.UserCohortID
                     )}
                     </Form>
                 </Card>    
