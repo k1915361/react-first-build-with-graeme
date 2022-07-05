@@ -31,53 +31,34 @@ function User() {
     const [isEditing, setIsEditing] = useState(false);
     
     // Methods
-    const DivInputIsEditing = (value) => {
-        return (
-            <div onClick={() => setIsEditing(!isEditing)}>
-                {isEditing ? 
-                <input type='text' placeholder={value} />
-                :
-                <p>{value}</p>}
-            </div>
-        )
-    }
-    
-    const DivSetIsEditing = (children) => {
-        return (
-            <div onClick={() => setIsEditing(!isEditing)}>
-                {children}
-            </div>
-        )
-    }
-
     const getTextInput = (value) => {
         return (
             <input type='text' placeholder={value} />
         )
     }
 
-    const Tooltip_ = (message, children) => {
-        return <Tooltip message={message}>
-            {children}
-        </Tooltip>
-    }
-
     const TooltipInput = (message, value) => {
         return <Tooltip message={message}>
-            <div onClick={() => setIsEditing(!isEditing)}>
-            {isEditing ? 
+            <div onClick={() => setIsEditing(true)}>
+            {isEditing 
+            ? 
                 <input type='text' placeholder={value} />
-                :
+            :
                 <p>{value}</p>
             }
             </div>
         </Tooltip>
     }
 
-    const TooltipDiv = (message, children) => {
+    const TooltipImageInput = (message, value) => {
         return <Tooltip message={message}>
             <div onClick={() => setIsEditing(!isEditing)}>
-                {children}
+            {isEditing 
+            ?
+                getTextInput(value) 
+            :
+                <img src={value} alt=''/>
+            }
             </div>
         </Tooltip>
     }
@@ -89,50 +70,61 @@ function User() {
     // View
     const User = ListOfUsers[0];
     
+    const [user, setUser] = useState('');
+    if (ListOfUsers && user === '') 
+        // setUser(User)
+        ;
+    console.log(User && User.UserFirstname +' '+ user.UserFirstname)
+    // 
+
     return (
+        <Tooltip message='To Edit, Click on Card'>
         <div className='user'>
             User
             {User ? 
                 <Card>
                     <Form>
-                    {TooltipDiv(
-                        'Image',
-                        isEditing 
-                        ?
-                            getTextInput(User.UserImageURL) 
-                        :
-                            <img src={User.UserImageURL}/>
-                    )}
-                    {TooltipInput(
-                        'Name',
-                        User.UserFirstname + ' ' +User.UserLastname
-                    )}
-                    {TooltipInput(
-                        'Email',
-                        User.UserEmail
-                    )}
-                    {TooltipInput(
-                        'Password',
-                        User.UserPassword
-                    )}
-                    {TooltipInput(
-                        isRegistered(User.UserRegistered),
-                        isRegistered(User.UserRegistered)
-                    )}
-                    {TooltipInput(
-                        'Type ID',
-                        User.UserUsertypeID
-                    )}
-                    {TooltipInput(
-                        'Cohort ID',
-                        User.UserCohortID
-                    )}
+                        {TooltipImageInput(
+                            'Image',
+                            User.UserImageURL
+                        )}
+                        {TooltipInput(
+                            'Name',
+                            User.UserFirstname + ' ' +User.UserLastname
+                        )}
+                        {TooltipInput(
+                            'Email',
+                            User.UserEmail
+                        )}
+                        {TooltipInput(
+                            'Password',
+                            User.UserPassword
+                        )}
+                        {TooltipInput(
+                            isRegistered(User.UserRegistered),
+                            isRegistered(User.UserRegistered)
+                        )}
+                        {TooltipInput(
+                            'Type ID',
+                            User.UserUsertypeID
+                        )}
+                        {TooltipInput(
+                            'Cohort ID',
+                            User.UserCohortID
+                        )}
+                        {isEditing && 
+                            <>
+                            <button onClick={() => setIsEditing(!isEditing)}>X</button>
+                            <button onClick={() => setIsEditing(!isEditing)}>O</button>
+                            </>
+                        }
                     </Form>
                 </Card>    
             : 
                 loadingMessage
             }
         </div>
+        </Tooltip>
     )
 }
 
