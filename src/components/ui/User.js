@@ -33,7 +33,7 @@ function User() {
     // Methods
     const getTextInput = (value) => {
         return (
-            <input type='text' placeholder={value} />
+            <input type='text' placeholder={value} defaultValue={value}/>
         )
     }
 
@@ -42,7 +42,7 @@ function User() {
             <div onClick={() => setIsEditing(true)}>
             {isEditing 
             ? 
-                <input type='text' placeholder={value} />
+                <input type='text' placeholder={value} defaultValue={value}/>
             :
                 <p>{value}</p>
             }
@@ -52,7 +52,7 @@ function User() {
 
     const TooltipImageInput = (message, value) => {
         return <Tooltip message={message}>
-            <div onClick={() => setIsEditing(!isEditing)}>
+            <div onClick={() => setIsEditing(true)}>
             {isEditing 
             ?
                 getTextInput(value) 
@@ -71,12 +71,20 @@ function User() {
     const User = ListOfUsers[0];
     
     const [user, setUser] = useState('');
-    if (ListOfUsers && user === '') 
-        // setUser(User)
-        ;
-    console.log(User && User.UserFirstname +' '+ user.UserFirstname)
-    // 
+    
 
+    console.log(User.UserFirstname +' '+user.UserFirstname)
+    // console.log(user === undefined)
+    // console.log(ListOfUsers.length === 0 ? 'X' : 'O')
+    // console.log(ListOfUsers[0] ? 'O' : 'X')
+    
+    if (ListOfUsers[0] && user === '') {
+        setUser(User);
+    }
+    if (User.UserFirstname !== user.UserFirstname) {
+        setUser(User);
+    }
+ 
     return (
         <Tooltip message='To Edit, Click on Card'>
         <div className='user'>
