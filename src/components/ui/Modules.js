@@ -7,6 +7,7 @@ import Edit from './Edit';
 import Backdrop from './Backdrop';
 import Modal from './Modal';
 import Module from './Module';
+import { apiRequestPost } from '../api/apiRequestPost';
 
 
 function Modules() {
@@ -94,6 +95,46 @@ function Modules() {
     const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
 
     // Context
+    const postModule = async (module) => {
+        const outcome = await apiRequestPost(API_URL, 'Modules', API_KEY, module);
+
+        if (outcome.success) 
+            setModules (outcome.response);
+        else 
+            setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
+    }
+    // (postModule(
+    //     JSON.stringify({
+    //         "ModuleID":11,
+    //         "ModuleName":"Games Programming",
+    //         "ModuleCode":"CI6655",
+    //         "ModuleLevel":4,
+    //         "ModuleLeaderID":77,
+    //         "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
+    //     })
+
+    // ))
+    // console.log(loadingMessage +' loadng mssg')
+
+    function componentDidMount() {
+       
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                "ModuleID":11,
+                "ModuleName":"Games Programming",
+                "ModuleCode":"CI7901",
+                "ModuleLevel":4,
+                "ModuleLeaderID":90,
+                "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg" })
+        };
+        fetch('https://my.api.mockaroo.com/Modules?key=bb6adbc0', requestOptions)
+            .then(response => response.json())
+            // .then(data => this.setState({ postId: data.id }));
+    }
+    componentDidMount();
+
     useEffect(() => { fetchModules() }, []);
 
     const fetchModules = async () => {
@@ -105,6 +146,20 @@ function Modules() {
             setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
     }
 
+    
+
+    
+
+    const postModule2 = () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ title: 'React POST Request Example' })
+        };
+        fetch(`${API_URL}Modules${API_KEY}`, requestOptions)
+        .then(response => response.json())
+        .then(data => this.setState({ postId: data.id }));
+    }
     
     // View
     return (
