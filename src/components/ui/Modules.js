@@ -103,10 +103,18 @@ function Modules() {
         "ModuleLeaderID":77,
         "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
     })
+    const testModule2 = {
+        "ModuleID":11,
+        "ModuleName":"Games Programming",
+        "ModuleCode":"CI6655",
+        "ModuleLevel":4,
+        "ModuleLeaderID":77,
+        "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
+    }
 
     // Context
-    const postModule = async () => {
-        const outcome = await apiRequestPost(API_URL, 'Modules', API_KEY, testModule);
+    const postTest = async () => {
+        const outcome = await apiRequestPost(API_URL, 'Modules', API_KEY, testModule, "POST");
 
         if (outcome.success) 
             setModules (outcome.response);
@@ -114,48 +122,47 @@ function Modules() {
             setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
         console.log(loadingMessage +' loadng mssg')
     }
-    // postModule()
+    postTest()
     
-    function postTest() {
-       
+    const postURLtest = 'https://api.mockaroo.com/bb6adbc0/datasets/Modules'
+    function postTest2() {
         const requestOptions = {
-            method: 'POST',
-            headers: { 'content-Type': 'application/json' },
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: testModule
         };
-        fetch('https://my.api.mockaroo.com/Modules?key=bb6adbc0', requestOptions)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            // .then(data => this.setState({ postId: data.id }));
-    }
-    postTest()
-
-    function postTest2() {
-        const fetch = require('node-fetch')
-        
-        function upload(apiKey, name) {
-          fetch(`https://api.mockaroo.com/api/datasets/${encodeURIComponent(name)}?key=${encodeURIComponent(apiKey)}`, {
-            method: 'POST',
-            body: testModule, 
-            headers: {
-              "content-type": "application/json"
-            }
-          })
-          .then(result => result.json())
-          .then(result => console.log(result))
-        }
-        const dataset = { "ModuleID":11 }
-        upload('bb6adbc0', dataset)
+        fetch('https://my.api.mockaroo.com/Modules?key=bb6adbc0', 
+            requestOptions
+        )
+        .then(response => console.log(response.json()))
     }
     function postTest3() {
+        // const fetch = require('node-fetch')
+        
+        function upload(apiKey, name) {
+          fetch(`https://my.api.mockaroo.com/api/datasets/${encodeURIComponent(name)}?key=${encodeURIComponent(apiKey)}`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            }, 
+            body: JSON.stringify(testModule2)
+          })
+          .then(result => console.log(result.json()))
+        //   .then(response => console.log(response.json()))
+        //   .then(request => console.log(request.json()))
+        }
+        
+        upload('bb6adbc0', 'Modules')
+    }
+    function postTest4() {
         const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: "POST",
+            headers: { "content-type": "application/json" },
             body: testModule
         };
         fetch('https://api.mockaroo.com/Modules.json?key=bb6adbc0&_method=POST', requestOptions)
-            .then(response => response.json())
-            .then(response => console.log(response))
+            .then(response => console.log(response.json()))
+
     }
     // postTest2();
 
