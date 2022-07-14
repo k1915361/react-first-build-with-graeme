@@ -94,46 +94,70 @@ function Modules() {
     // Hooks
     const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
 
+    // Props
+    const testModule = JSON.stringify({
+        "ModuleID":11,
+        "ModuleName":"Games Programming",
+        "ModuleCode":"CI6655",
+        "ModuleLevel":4,
+        "ModuleLeaderID":77,
+        "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
+    })
+
     // Context
-    const postModule = async (module) => {
-        const outcome = await apiRequestPost(API_URL, 'Modules', API_KEY, module);
+    const postModule = async () => {
+        const outcome = await apiRequestPost(API_URL, 'Modules', API_KEY, testModule);
 
         if (outcome.success) 
             setModules (outcome.response);
         else 
             setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
+        console.log(loadingMessage +' loadng mssg')
     }
-    // (postModule(
-    //     JSON.stringify({
-    //         "ModuleID":11,
-    //         "ModuleName":"Games Programming",
-    //         "ModuleCode":"CI6655",
-    //         "ModuleLevel":4,
-    //         "ModuleLeaderID":77,
-    //         "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
-    //     })
-
-    // ))
-    // console.log(loadingMessage +' loadng mssg')
-
-    function componentDidMount() {
+    // postModule()
+    
+    function postTest() {
        
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                "ModuleID":11,
-                "ModuleName":"Games Programming",
-                "ModuleCode":"CI7901",
-                "ModuleLevel":4,
-                "ModuleLeaderID":90,
-                "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg" })
+            headers: { 'content-Type': 'application/json' },
+            body: testModule
         };
         fetch('https://my.api.mockaroo.com/Modules?key=bb6adbc0', requestOptions)
             .then(response => response.json())
+            .then(response => console.log(response))
             // .then(data => this.setState({ postId: data.id }));
     }
-    componentDidMount();
+    postTest()
+
+    function postTest2() {
+        const fetch = require('node-fetch')
+        
+        function upload(apiKey, name) {
+          fetch(`https://api.mockaroo.com/api/datasets/${encodeURIComponent(name)}?key=${encodeURIComponent(apiKey)}`, {
+            method: 'POST',
+            body: testModule, 
+            headers: {
+              "content-type": "application/json"
+            }
+          })
+          .then(result => result.json())
+          .then(result => console.log(result))
+        }
+        const dataset = { "ModuleID":11 }
+        upload('bb6adbc0', dataset)
+    }
+    function postTest3() {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: testModule
+        };
+        fetch('https://api.mockaroo.com/Modules.json?key=bb6adbc0&_method=POST', requestOptions)
+            .then(response => response.json())
+            .then(response => console.log(response))
+    }
+    // postTest2();
 
     useEffect(() => { fetchModules() }, []);
 
