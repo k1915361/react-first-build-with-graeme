@@ -11,7 +11,7 @@ function Form(props) {
    
     if(props.module){
         let m = props.module
-        image = m.ModuleImage
+        image = m.ModuleImageURL
         name = m.ModuleName
         level = m.ModuleLevel
         code = m.ModuleCode
@@ -20,7 +20,7 @@ function Form(props) {
     }
     
     // States
-    const [ModuleImage, setModuleImageUrl] = useState('');
+    const [ModuleImageURL, setModuleImageUrl] = useState('');
     const [ModuleName, setModuleName] = useState('');
     const [ModuleLevel, setModuleLevel] = useState('');
     const [ModuleCode, setModuleCode] = useState('');
@@ -54,7 +54,7 @@ function Form(props) {
     const getNewModule = () => {
         const new_module = { 
             ModuleID: ModuleID,
-            ModuleImage: ModuleImage,
+            ModuleImageURL: ModuleImageURL,
             ModuleName: ModuleName, 
             ModuleLevel:  ModuleLevel,
             ModuleCode: ModuleCode,
@@ -105,7 +105,7 @@ function Form(props) {
 
     const autoFillEditForm = () => {
         if( code && code !== ModuleCode && name !== ModuleName && level !== ModuleLevel &&
-            image !== ModuleImage && id !== ModuleID){
+            image !== ModuleImageURL && id !== ModuleID){
             setModuleCode(code)
             setModuleName(name)
             setModuleLevel(level)
@@ -165,7 +165,7 @@ function Form(props) {
                 
                 <Tooltip message='Module Image URL'>
                     <Input 
-                        value={ModuleImage}
+                        value={ModuleImageURL}
                         placeholder={image ? image : 'Image'}
                         onChange={(e) => handleModuleImageUrl(e.target.value)}
                     />

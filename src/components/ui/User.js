@@ -42,7 +42,7 @@ function User() {
         if (message === 'Registered' || 
             message === 'Not Registered') setUser({...user, UserRegistered: e});
         if (message === 'Type ID') setUser({...user, UserUsertypeID: e});
-        if (message === 'Cohort ID') setUser({...user, UserCohortID: e});
+        if (message === 'Cohort ID') setUser({...user, UserLevel: e});
     }
 
     const getTextInput = (value) => {
@@ -111,7 +111,7 @@ function User() {
             User.UserPassword !== user.UserPassword && 
             User.UserRegistered !== user.UserRegistered && 
             User.UserUsertypeID !== user.UserUsertypeID && 
-            User.UserCohortID !== user.UserCohortID 
+            User.UserLevel !== user.UserLevel 
             ) {
             setUser(User);
         }
@@ -155,7 +155,7 @@ function User() {
                         )}
                         {TooltipInput(
                             'Cohort ID',
-                            user.UserCohortID
+                            user.UserLevel
                         )}
                         {isEditing && 
                             <>

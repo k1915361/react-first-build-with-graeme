@@ -9,7 +9,7 @@ function Module(props) {
     return (
         <div className='module'>
             <Card key={module.ModuleID}>
-                <img src={module.ModuleImage} alt=''></img>
+                <img src={module.ModuleImageURL} alt=''></img>
                 <p>{module.ModuleName}</p>
                 
                 <Tooltip message='Level'>
