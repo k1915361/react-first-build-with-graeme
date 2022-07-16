@@ -32,22 +32,15 @@ function User() {
     const [user, setUser ] = useState('');
 
     // Methods
-    const handleTextChange = (message, e) => {
-        console.log(message +' _ '+ e)
-        if (message === 'Image') setUser({...user, UserImageURL: e});
-        if (message === 'First Name') setUser({...user, UserFirstname: e});
-        if (message === 'Last Name')  setUser({...user, UserLastname: e});
-        if (message === 'Email') setUser({...user, UserEmail: e});
-        if (message === 'Password') setUser({...user, UserPassword: e});
-        if (message === 'Registered' || 
-            message === 'Not Registered') setUser({...user, UserRegistered: e});
-        if (message === 'Type ID') setUser({...user, UserUsertypeID: e});
-        if (message === 'Cohort ID') setUser({...user, UserLevel: e});
+    const handleTextChangeTEST = (target) => {
+        setUser({...user, [target.id]: target.value})
     }
 
-    const getTextInput = (value) => {
+
+
+    const getTextInput = (id, value) => {
         return (
-            <input type='text' placeholder={value} defaultValue={value}/>
+            <input id={id} type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChangeTEST(e.target)}/>
         )
     }
 
@@ -59,12 +52,12 @@ function User() {
         </Tooltip>
     }
 
-    const TooltipInput = (message, value) => {
+    const TooltipInputTEST = (id, message, value) => {
         return <Tooltip message={message}>
             <div onClick={() => setIsEditing(true)}>
             {isEditing 
             ? 
-                <input type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChange(message, e.target.value)}/>
+                <input id={id} type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChangeTEST(e.target)}/>
             :
                 <p>{value}</p>
             }
@@ -72,12 +65,12 @@ function User() {
         </Tooltip>
     }
 
-    const TooltipImageInput = (message, value) => {
+    const TooltipImageInput = (id, message, value) => {
         return <Tooltip message={message}>
             <div onClick={() => setIsEditing(true)}>
             {isEditing 
             ?
-                getTextInput(value) 
+                getTextInput(id, value) 
             :
                 <img className='userThumbnail' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMmjihQ8c7k8vIBh4QZGWhaCZY_GaaBN9y1A&usqp=CAU' alt=''/>
                 // <img src={value} alt=''/>
@@ -126,35 +119,43 @@ function User() {
                 <Card>
                     <form onSubmit={(e) => handleSubmit(e)}>
                         {TooltipImageInput(
+                            'UserImageURL',
                             'Image',
                             user.UserImageURL
                         )}
-                        {TooltipInput(
+                        {TooltipInputTEST(
+                            'UserFirstname',
                             'First Name',
                             user.UserFirstname
                         )}
-                        {TooltipInput(
+                        {TooltipInputTEST(
+                            'UserLastname',
                             'Last Name',
                             user.UserLastname
                         )}
-                        {TooltipInput(
+                        {TooltipInputTEST(
+                            'UserEmail',
                             'Email',
                             user.UserEmail
                         )}
-                        {TooltipInput(
+                        {TooltipInputTEST(
+                            'UserPassword',
                             'Password',
                             user.UserPassword
                         )}
-                        {TooltipInput(
+                        {TooltipInputTEST(
+                            `${user.UserRegistered}`,
                             isRegisteredMessage(user.UserRegistered),
                             isRegisteredMessage(user.UserRegistered)
                         )}
-                        {TooltipInput(
+                        {TooltipInputTEST(
+                            'UserUsertypeID',
                             'Type ID',
                             user.UserUsertypeID
                         )}
-                        {TooltipInput(
-                            'Cohort ID',
+                        {TooltipInputTEST(
+                            'UserLevel',
+                            'Level 3 - 7',
                             user.UserLevel
                         )}
                         {isEditing && 
