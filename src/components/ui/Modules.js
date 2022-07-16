@@ -15,12 +15,9 @@ function Modules() {
     const [ modalIsOpen, setModalIsOpen ] = useState(false);
     const [ selectedModuleId , selectModuleId ] = useState();
     
-
     // Hooks
     const [modules, setModules] = useState(null);
-
     const [ favourites, setFavourites ] = useState([]);
-
     const [ editingModule, setEditingModule ] = useState(null);
 
     // Methods

@@ -11,6 +11,9 @@ function User() {
     const API_KEY = '?key=bb6adbc0';
     
     // States
+    const [isEditing, setIsEditing] = useState(false);
+    const [user, setUser ] = useState('');
+
     const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
     const [ListOfUsers, setListOfUsers] = useState([]);
 
@@ -26,17 +29,12 @@ function User() {
         else setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
         
     }
-
-    // States
-    const [isEditing, setIsEditing] = useState(false);
-    const [user, setUser ] = useState('');
+   
 
     // Methods
     const handleTextChangeTEST = (target) => {
         setUser({...user, [target.id]: target.value})
     }
-
-
 
     const getTextInput = (id, value) => {
         return (
@@ -110,7 +108,6 @@ function User() {
         }
     }
     
- 
     return (
         <Tooltip message='To Edit, Click on Card'>
         <div className='user'>
