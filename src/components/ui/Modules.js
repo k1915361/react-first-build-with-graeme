@@ -178,7 +178,9 @@ function Modules() {
     }
 
     
-
+    const editModuleAnotherWay = (property, value) => {
+        editModule({...module, property : value})
+    }
     
 
     const postModule2 = () => {

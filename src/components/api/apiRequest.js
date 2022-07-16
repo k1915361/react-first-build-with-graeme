@@ -6,6 +6,13 @@
 // body: defaults to null if not specified. (Use this later when you want to update records.)
 // -----------------------------------------------------------------------
 
+apiRequest.get = apiRequest(apiURL, endpoint, key, body, method = "GET")
+apiRequest.post = apiRequest(apiURL, endpoint, key, body, method = "POST")
+apiRequest.put = apiRequest(apiURL, endpoint, key, body, method = "PUT")
+apiRequest.delete = apiRequest(apiURL, endpoint, key, body, method = "DELETE")
+apiRequest.patch = apiRequest(apiURL, endpoint, key, body, method = "PATCH")
+
+
 export async function apiRequest(apiURL, endpoint, key, method = "GET", body = null) {
 
   // Build fetch parameters
