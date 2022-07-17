@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./Form.css";
 import Tooltip from "./Tooltip";
 import { UsersPage, ListofUsers } from "../../data/moduleLeader";
-import Input from "./Input";
 
 function Form(props) {
   // Properties
