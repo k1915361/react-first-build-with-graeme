@@ -1,254 +1,251 @@
-import { useState } from 'react';
-import './Form.css';
-import Tooltip from './Tooltip';
-import { UsersPage, ListofUsers } from '../../data/moduleLeader';
-import Input from './Input';
-
+import { useState } from "react";
+import "./Form.css";
+import Tooltip from "./Tooltip";
+import { UsersPage, ListofUsers } from "../../data/moduleLeader";
+import Input from "./Input";
 
 function Form(props) {
-    // Properties
-    let image, name, level, code, lId, id;
-   
-    if(props.module){
-        let m = props.module
-        image = m.ModuleImageURL
-        name = m.ModuleName
-        level = m.ModuleLevel
-        code = m.ModuleCode
-        lId = m.moduleleaderID
-        id = m.ModuleID
-    }
-    
-    // States
-    const [ModuleImageURL, setModuleImageUrl] = useState('');
-    const [ModuleName, setModuleName] = useState('');
-    const [ModuleLevel, setModuleLevel] = useState('');
-    const [ModuleCode, setModuleCode] = useState('');
-    const [ModuleLeaderId, setModuleLeaderId] = useState('');
-    const [ModuleID, setModuleID] = useState(id);
+  // Properties
+  let image, name, level, code, lId, id;
 
-    
-    
+  if (props.module) {
+    let m = props.module;
+    image = m.ModuleImageURL;
+    name = m.ModuleName;
+    level = m.ModuleLevel;
+    code = m.ModuleCode;
+    lId = m.moduleleaderID;
+    id = m.ModuleID;
+  }
 
-    // Methods
-    UsersPage()
+  // States
+  const [module, setModule] = useState('');
 
-    const handleModuleImageUrl = (e) => {
-        setModuleImageUrl(e)
-    }
-    const handleModuleName = (e) => {
-        setModuleName(e)
-    }
-    const handleModuleLevel = (e) => {
-        setModuleLevel(e)
-    }
-    const handleModuleCode = (e) => {
-        setModuleCode(e)
-    }
-    const handleModuleLeaderId = (e) => {
-        setModuleLeaderId(e)
-    }
-    const handleModuleID = () => {
-        setModuleID( props.onGetNewModuleID() );
-    }
-    const getNewModule = () => {
-        const new_module = { 
-            ModuleID: ModuleID,
-            ModuleImageURL: ModuleImageURL,
-            ModuleName: ModuleName, 
-            ModuleLevel:  ModuleLevel,
-            ModuleCode: ModuleCode,
-            ModuleLeaderID: ModuleLeaderId
-        };
-        return new_module;
-    }
-    const handleAdd = (e) => {
-        e.preventDefault();           
-        handleModuleID();
-        handleAddModule(getNewModule())
-    }
-    const handleWhichSubmit = (e) => {
-        e.preventDefault();
-        props.module ? handleEdit(getNewModule()) : handleAdd(e);
-    }
-    const handleEdit = (module) => {
-        props.onEdit(module)
-        closeEditForm();
-    }
-    const closeEditForm = () => {
-        props.onCloseEditForm();
-    }
-    
-    const handleAddModule = (module) => {
-        if(handleModuleValidations(module)){
-            props.onAddModule(module);
-        }
-    }
+  // Methods
+  UsersPage();
 
-    const getTitleTooltipMessage = () => {
-        return props.tooltipTitle ? props.tooltipTitle : 'Add Module Form'; 
-    }
-    const getAddEditTooltipMessage = () => {
-        return props.tooltipEdit ? props.tooltipEdit : 'Add Module'; 
-    }
-    const getTitle = () => {
-        return props.title ? props.title : 'Add';
-    }
-    
-    if (code && '' === ModuleCode){
-        setModuleCode(code);    
-        setModuleName(name);    
-        setModuleImageUrl(image);
-        setModuleLevel(level);
-        setModuleID(id);
-    }
+  const handleAdd = (e) => {
+    setModule({...module, ['ModuleID']: props.onGetNewModuleID()})
+    handleAddModule(module);
+  };
 
-    const autoFillEditForm = () => {
-        if( code && 
-            code !== ModuleCode && 
-            name !== ModuleName && 
-            level !== ModuleLevel &&
-            image !== ModuleImageURL && 
-            id !== ModuleID
-        ){
-            setModuleCode(code)
-            setModuleName(name)
-            setModuleLevel(level)
-            setModuleImageUrl(image)
-            setModuleID(id)
-        }
+  const handleWhichSubmit = (e) => {
+    // console.log(module)
+    e.preventDefault();
+    props.module ? handleEdit(module) : handleAdd(e);
+  };
+
+  const handleEdit = (module) => {
+    props.onEdit(module);
+    closeEditForm();
+  };
+
+  const closeEditForm = () => {
+    props.onCloseEditForm();
+  };
+
+  const handleAddModule = (module) => {
+    if (handleModuleValidations(module)) {
+      props.onAddModule(module);
     }
-    autoFillEditForm();
-            
-    const handleModuleCodeValidation = (code) => {
-        if ((code.trim()).match(/^[A-Z]{2}[0-9]{4}$/g)){
-            return true;
-        }
-        else{
-            return false;
-        }
+  };
+
+  const getTitleTooltipMessage = () => {
+    return props.tooltipTitle ? props.tooltipTitle : "Add Module Form";
+  };
+  const getAddEditTooltipMessage = () => {
+    return props.tooltipEdit ? props.tooltipEdit : "Add Module";
+  };
+  const getTitle = () => {
+    return props.title ? props.title : "Add";
+  };
+
+  // if (code && "" === ModuleCode) {
+    // setModule({...module, 
+    //   ['ModuleCode']:code,
+    //   ['ModuleName']:name,
+    //   ['ModuleLevel']:level,
+    //   ['ModuleImageURL']:image,
+    //   ['ModuleID']:id,
+  // }
+
+
+  const autoFillEditForm_ = () => {
+    if (
+      code &&
+      code !== module.ModuleCode &&
+      name !== module.ModuleName &&
+      level !== module.ModuleLevel &&
+      image !== module.ModuleImageURL &&
+      id !== module.ModuleID
+    ) {
+      setModule({...module, 
+        ['ModuleCode']:code,
+        ['ModuleName']:name,
+        ['ModuleLevel']:level,
+        ['ModuleImageURL']:image,
+        ['ModuleID']:id,    
+    })
     }
+  };
+  autoFillEditForm_();
 
-    const handleModuleNameValidation = (name) => {
-        if(name.match(/^[A-z]{2,}/)){
-            return true;
-        } else {
-            return false;
-        }
+  const handleModuleCodeValidation = (code) => {
+    if (code && code.trim().match(/^[A-Z]{2}[0-9]{4}$/g)) {
+      return true;
+    } else {
+      return false;
     }
+  };
 
-    const handleModuleLevelValidation = (level) => {
-        if(level !== ''){
-            return true;
-        } else {
-            return false;
-        }
+  const handleModuleNameValidation = (name) => {
+    if (name && name.match(/^[A-z]{2,}/)) {
+      return true;
+    } else {
+      return false;
     }
+  };
 
-    const handleModuleValidations = (module) => {
-        if(handleModuleCodeValidation(module.ModuleCode) && 
-            handleModuleNameValidation(module.ModuleName) &&
-            handleModuleLevelValidation)
-        {
-            return true;
-        } else {
-            return false;
-        }
+  const handleModuleLevelValidation = (level) => {
+    console.log(level ? level : `''`)
+    if (level) {
+      return true;
+    } else {
+      return false;
     }
+  };
 
-    
-    // View
-    var moduleLevels = [3,4,5,6,7];
-    
-    return(
-        <div className='form'>
-            <Tooltip message={getTitleTooltipMessage()}>
-                <div className='title'>{getTitle()}</div>
-            </Tooltip>
-            
-            <form onSubmit={handleWhichSubmit}>
-                
-                <Tooltip message='Module Image URL'>
-                    <Input 
-                        value={ModuleImageURL}
-                        placeholder={image ? image : 'Image'}
-                        onChange={(e) => handleModuleImageUrl(e.target.value)}
-                    />
-                </Tooltip>
-                
-                <Tooltip 
-                    message={handleModuleNameValidation(ModuleName) 
-                    ? 'Module Name' : 'Module Name e.g. Database'}
-                >
-                    <Input 
-                        value={ModuleName}
-                        placeholder={name ? name : 'Name'}
-                        onChange={(e) => handleModuleName(e.target.value)}
-                    />
-                </Tooltip>
-                
-                <Tooltip message='Select Module Level'>
-                    <select
-                        value={ModuleLevel}
-                        placeholder={ModuleLevel ? ModuleLevel : 'Level'}
-                        onChange={(e) => handleModuleLevel(e.target.value)}
-                    >
-                        {(moduleLevels.map((l) => 
-                                <option key={l}>{l}</option>
-                            )
-                        )}
-                    </select>
-                </Tooltip>
-                
-                <Tooltip 
-                    message={handleModuleCodeValidation(ModuleCode) 
-                    ? 'Module Code' : 
-                      'Module Code e.g. CI0123'
-                    }
-                >
-                    <Input 
-                        value={ModuleCode}
-                        placeholder={code ? code : 'Code'}
-                        onChange={(e) => {handleModuleCode(e.target.value)}}
-                    />
-                </Tooltip>
-                
-                <Tooltip message='Select Module Leader'>
-                    <select
-                        value={ModuleLeaderId}
-                        onChange={(e) => 
-                            handleModuleLeaderId(e.target.moduleleaderid)
-                        }
-                    >
-                        {
-                        ListofUsers 
-                        ?
-                            ListofUsers.map((u) => (
-                                <option key={u.UserID}>
-                                    {u.UserFirstname} {u.UserLastname}
-                                </option>
-                                )
-                            )
-                        :
-                            <option>Loading Module Leaders</option>
-                        }
-                    </select>
-                </Tooltip>
-                
-                <Tooltip message='Cancel'>
-                    <button 
-                        className='button' 
-                        onClick={closeEditForm}
-                    >X</button>
-                </Tooltip>
+  const handleModuleValidations = (module) => {
+    let message = '';
+    if (!handleModuleNameValidation(module.ModuleName)) {
+      message += 'Name is Invalid, e.g. Computing'
+    }
+    else if (!handleModuleLevelValidation(module.ModuleLevel)) {
+      message += 'Level is Not Selected'      
+    } 
+    else if (!handleModuleCodeValidation(module.ModuleCode)){
+      message += 'Code is Invalid, e.g. CI0123';
+    }
+    if(message){
+      // console.alert(message)
+      window.alert(message)
+      // console.log(message + ` message='' `)
+      return false;
+    }
+    else {
+      return true;
+    }
+  };
 
-                <Tooltip message={getAddEditTooltipMessage()}>
-                    <button className='button'>+</button>
-                </Tooltip>
+  const handleValueChange = (target) => {
+    setModule({ ...module, [target.id]: target.value });
+  };
 
-            </form>
-        </div>
+  const TooltipInput = (id, message, value, placeholder) => {
+    return (
+      <Tooltip message={message}>
+        <input
+          id={id}
+          type="text"
+          placeholder={placeholder}
+          defaultValue={value}
+          onChange={(e) => handleValueChange(e.target)}
+        />
+      </Tooltip>
+    );
+  };
+
+  const tooltip = (message, children) => {
+    return (
+      <Tooltip message={message}>
+        {children}
+      </Tooltip>
     )
+  }
+
+  // VIEW
+  var moduleLevels = [3, 4, 5, 6, 7];
+
+  return (
+    <div className="form">
+      {tooltip(
+        getTitleTooltipMessage(),
+        <div className="title">{getTitle()}</div>
+      )}
+
+      <form onSubmit={handleWhichSubmit}>
+        
+        {TooltipInput(
+          'ModuleImageURL',
+          "Module Image URL",
+          module.ModuleImageURL,
+          "Image"
+        )}
+
+        {TooltipInput(
+          'ModuleName',
+          handleModuleNameValidation(module.ModuleName) 
+          ? "Module Name" : "Module Name e.g. Database",
+          module.ModuleName, 
+          'Name'
+        )}
+
+        {tooltip(
+          'Select Module Level',
+          <select
+            id={'ModuleLevel'}
+            value={module.ModuleLevel}
+            defaultValue={module.ModuleLevel ? module.ModuleLevel : 3}
+            // defaultValue is not working on options js - search google
+            placeholder={module.ModuleLevel ? module.ModuleLevel : "Level"}
+            onChange={(e) => handleValueChange(e.target)}
+          >
+            {moduleLevels.map((l) => (
+              <option key={l}>{l}</option>
+            ))}
+          </select>          
+        )}
+        
+        {TooltipInput(
+          'ModuleCode',
+          handleModuleCodeValidation(module.ModuleCode) ? "Module Code" : "Module Code e.g. CI0123",
+          module.ModuleCode,
+          "Code",
+        )}
+
+        {tooltip(
+          "Select Module Leader",
+          <select
+            id='ModuleLeaderId'
+            value={module.ModuleLeaderId}
+            onChange={(e) => handleValueChange(e.target)}
+          >
+            {ListofUsers ? (
+              ListofUsers.map((u) => (
+                <option key={u.UserID}>
+                  {u.UserFirstname} {u.UserLastname}
+                </option>
+              ))
+            ) : (
+              <option>Loading Module Leaders</option>
+            )}
+          </select>
+        )}
+
+        {tooltip(
+          "Cancel",
+          <button className="button" onClick={closeEditForm}>
+            X
+          </button>
+        )}
+
+        {tooltip(
+          getAddEditTooltipMessage(),
+          <button className="button">+</button>
+        )}
+      </form>
+    </div>
+  );
 }
 
 export default Form;
