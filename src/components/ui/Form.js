@@ -29,7 +29,6 @@ function Form(props) {
   };
 
   const handleWhichSubmit = (e) => {
-    // console.log(module)
     e.preventDefault();
     props.module ? handleEdit(module) : handleAdd(e);
   };
@@ -126,9 +125,7 @@ function Form(props) {
       message += 'Code is Invalid, e.g. CI0123';
     }
     if(message){
-      // console.alert(message)
       window.alert(message)
-      // console.log(message + ` message='' `)
       return false;
     }
     else {
@@ -195,7 +192,7 @@ function Form(props) {
             id={'ModuleLevel'}
             value={module.ModuleLevel}
             defaultValue={module.ModuleLevel ? module.ModuleLevel : 3}
-            // defaultValue is not working on options js - search google
+            selected={module.ModuleLevel ? module.ModuleLevel : 3}
             placeholder={module.ModuleLevel ? module.ModuleLevel : "Level"}
             onChange={(e) => handleValueChange(e.target)}
           >

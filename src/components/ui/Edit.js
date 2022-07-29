@@ -14,7 +14,6 @@ export default function Edit(props) {
                 tooltipTitle='Edit Module Form'
                 tooltipEdit='Edit Module'
                 title='Edit'
-                // onModuleSelect={(id) => props.onModuleSelect(id)}
             />
         </div>
     )
