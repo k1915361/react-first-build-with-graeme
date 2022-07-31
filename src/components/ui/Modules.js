@@ -16,7 +16,7 @@ function Modules() {
   const [ selectedModuleId , selectModuleId ] = useState();
   
   // Hooks
-  const [modules, setModules] = useState(null);
+  const [ modules, setModules ] = useState(null);
   const [ favourites, setFavourites ] = useState([]);
   const [ editingModule, setEditingModule ] = useState(null);
 

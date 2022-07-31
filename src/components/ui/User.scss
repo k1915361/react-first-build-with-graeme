@@ -26,3 +26,23 @@ div .cardContainer {
   display: inline-block;
   height: auto;
 }
+
+.user input {
+  width: 97%;
+  text-align: center;
+  height: 99%;
+  height:17px;    
+}
+
+.user button {
+  box-shadow: 1px 1px 1px 0px rgb(209, 209, 209);
+  height: 19px;
+  margin-inline: 10px;
+  padding-inline: 30px;
+  margin-block: 4%;
+
+  margin-left: auto;
+  margin-right: 1%;
+  float: right;
+  font-weight: 1000;
+}

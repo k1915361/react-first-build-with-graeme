@@ -7,3 +7,4 @@ code .
 
 Ctrl + P            (search)
 Ctrl + Shft + f     (indent)
+Ctrl + K Ctrl + D   (find)

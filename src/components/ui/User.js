@@ -50,25 +50,30 @@ function User(props) {
     </Tooltip>
   }
 
-  const TooltipImageInput = (id, message, value) => {
-    return <Tooltip message={message}>
-        <div onClick={() => setIsEditing(true)}>
-        {isEditing 
-        ?
-            getTextInput(id, value) 
-        :
-            // <img className='userThumbnail' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMmjihQ8c7k8vIBh4QZGWhaCZY_GaaBN9y1A&usqp=CAU' alt=''/>
-            <img className='userThumbnail' src={value} alt=''/>
-        }
-        </div>
-    </Tooltip>
-  }
-
   const tooltip = (message, children) => {
     return <Tooltip message={message}>
       {children}
     </Tooltip>
   }
+
+  const onClickSetIsEditing = (children) => {
+    return <div onClick={() => setIsEditing(true)}>
+      {children}
+    </div>
+  }
+
+  const TooltipImageInput = (id, message, value) => {
+    return( tooltip(message, 
+      onClickSetIsEditing(
+        isEditing ?
+          getTextInput(id, value) 
+        :
+          <img className='userThumbnail' src={value} alt=''/>
+        )
+      )
+    )
+  }
+
 
   const isRegisteredMessage = (registered) => {
     return registered ? 'Registered' : 'Not Registered'

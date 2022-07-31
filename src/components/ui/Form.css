@@ -1,7 +1,7 @@
 .form {
     box-shadow: 0px 0px 1px 1px rgb(226, 226, 226);
     border-radius: 10px;
-    width: 200px;
+    width: 150px;
     margin: 2px;
     text-align: center;
     
@@ -13,9 +13,10 @@
 }
 
 input {
-    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+    box-shadow: 0px 0px 1px 0px rgb(209, 209, 209);
     width: 97%;
-    text-align: center;    
+    text-align: center;
+    height:fit-content;    
 }
 
 input:focus {
@@ -23,7 +24,7 @@ input:focus {
 }
 
 button {
-    box-shadow: 1px 1px 10px 1px rgb(209, 209, 209);
+    box-shadow: 1px 1px 1px 0px rgb(209, 209, 209);
     margin-inline: 10px;
     padding-inline: 20px;
     margin-block: 4%;
