@@ -1,27 +1,29 @@
 import './Users.sass';
-import Card from './Card';
-import { useState } from 'react';
+import tableOfUsers from '../../data/tableOfUsers'
+import User from './User';
 
 function Users() {
-    // Properties
-    
-    // States
-    const [users, setUsers] = useState(null);
+  // Properties
+  const records = tableOfUsers
 
-    // Context
+  // States
 
+  // Context
 
-    // Methods
-    
+  // Methods
+ 
+  // View
+  return (
+    <div className='cardContainer'>
+      <div>Users</div>
 
-    // View
-    return (
-        <div>
-        <Card>
-
-        </Card>    
-        </div>
-    )
+      {records.map((record) => (
+        <User record={record}>
+            
+        </User>    
+      ))}
+    </div>
+  )
 }
 
 export default Users;

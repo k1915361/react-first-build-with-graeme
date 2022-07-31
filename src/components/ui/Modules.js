@@ -41,7 +41,7 @@ function Modules() {
 
   const addFavourite = (moduleId) => {
     moduleId = getIndex(moduleId);
-    module = modules.at(moduleId-1);
+    const module = modules.at(moduleId-1);
     setFavourites([...favourites, module]); 
   }
 

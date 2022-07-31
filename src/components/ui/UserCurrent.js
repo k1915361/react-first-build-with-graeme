@@ -5,7 +5,7 @@ import Card from './Card';
 import Tooltip from './Tooltip';
 // import Form from './FormReuse';
 
-function User(props) {
+function User() {
   // Properties
   const API_URL = 'https://my.api.mockaroo.com/';
   const API_KEY = '?key=bb6adbc0';
@@ -38,42 +38,42 @@ function User(props) {
 
   const getTextInput = (id, value) => {
     return (
-        <input id={id} type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChangeTEST(e.target)}/>
+      <input id={id} type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChangeTEST(e.target)}/>
     )
   }
 
   const TooltipDiv = (message, children) => {
     return <Tooltip message={message}>
-        <div onClick={() => setIsEditing(true)}>
-            {children}
-        </div>
+      <div onClick={() => setIsEditing(true)}>
+        {children}
+      </div>
     </Tooltip>
   }
 
   const TooltipInput = (id, message, value) => {
     return <Tooltip message={message}>
-        <div onClick={() => setIsEditing(true)}>
-        {isEditing 
-        ? 
-            <input id={id} type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChangeTEST(e.target)}/>
-        :
-            <p>{value}</p>
-        }
-        </div>
+      <div onClick={() => setIsEditing(true)}>
+      {isEditing 
+      ? 
+        <input id={id} type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChangeTEST(e.target)}/>
+      :
+        <p>{value}</p>
+      }
+      </div>
     </Tooltip>
   }
 
   const TooltipImageInput = (id, message, value) => {
     return <Tooltip message={message}>
-        <div onClick={() => setIsEditing(true)}>
-        {isEditing 
-        ?
-            getTextInput(id, value) 
-        :
-            // <img className='userThumbnail' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMmjihQ8c7k8vIBh4QZGWhaCZY_GaaBN9y1A&usqp=CAU' alt=''/>
-            <img className='userThumbnail' src={value} alt=''/>
-        }
-        </div>
+      <div onClick={() => setIsEditing(true)}>
+      {isEditing 
+      ?
+        getTextInput(id, value) 
+      :
+        <img className='userThumbnail' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMmjihQ8c7k8vIBh4QZGWhaCZY_GaaBN9y1A&usqp=CAU' alt=''/>
+        // <img src={value} alt=''/>
+      }
+      </div>
     </Tooltip>
   }
 
@@ -88,33 +88,30 @@ function User(props) {
   }
 
   // View
-  const User = props.record;
-  
-  console.log(User)
-  console.log('test')
-
+  const User = ListOfUsers[0];
+    
   if (User) {
     if (user === ''){
-        setUser(User);
+      setUser(User);
     }
     if (
-        User.UserImageURL !== user.UserImageURL && 
-        User.UserFirstname !== user.UserFirstname && 
-        User.UserLastname !== user.UserLastname && 
-        User.UserEmail !== user.UserEmail && 
-        User.UserPassword !== user.UserPassword && 
-        User.UserRegistered !== user.UserRegistered && 
-        User.UserUsertypeID !== user.UserUsertypeID && 
-        User.UserLevel !== user.UserLevel 
-        ) {
-        setUser(User);
+      User.UserImageURL !== user.UserImageURL && 
+      User.UserFirstname !== user.UserFirstname && 
+      User.UserLastname !== user.UserLastname && 
+      User.UserEmail !== user.UserEmail && 
+      User.UserPassword !== user.UserPassword && 
+      User.UserRegistered !== user.UserRegistered && 
+      User.UserUsertypeID !== user.UserUsertypeID && 
+      User.UserLevel !== user.UserLevel 
+      ) {
+      setUser(User);
     }
   }
     
   return (
     <Tooltip message='To Edit, Click on Card'>
     <div className='user'>
-      
+      User
       {User ? 
         <Card>
           <form onSubmit={(e) => handleSubmit(e)}>

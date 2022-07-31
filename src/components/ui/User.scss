@@ -1,10 +1,21 @@
+.users {
+}
+
 .user {
-    
-    inline-size: 100px;
-    
+  inline-size: 300;
+  height: 220px;
 }
 
 .userThumbnail {
-    width: 100px;
+    width: 40px;
     border-radius: 100px;
+}
+
+div .cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  height: 220px;
 }
