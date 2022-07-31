@@ -1,6 +1,7 @@
 import './Users.sass';
 import tableOfUsers from '../../data/tableOfUsers'
 import User from './User';
+import { ListofUsers as users } from '../../data/users'
 
 function Users() {
   // Properties
@@ -15,11 +16,11 @@ function Users() {
   // View
   return (
     <div className='cardContainer'>
-      <div>Users</div>
+      <div className='title'>Users</div>
 
       {records.map((record) => (
-        <User record={record}>
-            
+        <User record={record} key={record.UserID}>
+          
         </User>    
       ))}
     </div>

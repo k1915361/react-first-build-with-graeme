@@ -3,12 +3,13 @@
 
 .user {
   inline-size: 300;
-  height: 220px;
+  // height: 220px;
 }
 
 .userThumbnail {
     width: 40px;
     border-radius: 100px;
+    float: right;
 }
 
 div .cardContainer {
@@ -16,6 +17,12 @@ div .cardContainer {
   flex-wrap: wrap;
 }
 
-.card {
-  height: 220px;
+.user .card {
+  // height: 220px;
+  color:#6f6f6f;
+  font-size:10px;
+  // width:100%;
+  position: relative;
+  display: inline-block;
+  height: auto;
 }

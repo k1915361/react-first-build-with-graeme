@@ -70,8 +70,8 @@ function User() {
       ?
         getTextInput(id, value) 
       :
-        <img className='userThumbnail' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMmjihQ8c7k8vIBh4QZGWhaCZY_GaaBN9y1A&usqp=CAU' alt=''/>
-        // <img src={value} alt=''/>
+      <img className='userThumbnail' src={value} alt=''/>
+      //                             src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMmjihQ8c7k8vIBh4QZGWhaCZY_GaaBN9y1A&usqp=CAU'
       }
       </div>
     </Tooltip>
@@ -82,7 +82,6 @@ function User() {
   }
 
   const handleSubmit = (e) => {
-    console.log(e.target.value)
     e.preventDefault();
     setUser(...user, e);
   }
@@ -111,7 +110,7 @@ function User() {
   return (
     <Tooltip message='To Edit, Click on Card'>
     <div className='user'>
-      User
+      <div className='title'>User</div>
       {User ? 
         <Card>
           <form onSubmit={(e) => handleSubmit(e)}>

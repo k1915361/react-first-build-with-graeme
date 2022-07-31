@@ -16,7 +16,17 @@
 }
 
 img {
-    width: 100%;
-    border-radius: 10px;
+  
 }
 
+.module .icon img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.module img {
+  /* width: 100px; */
+  /* width: auto; */
+  width: 100%;
+  border-radius: 10px;
+}

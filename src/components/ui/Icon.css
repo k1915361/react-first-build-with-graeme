@@ -1,15 +1,14 @@
 .icon {
     border-radius: 10px;
-    width: 35px;
-    height: 35px;
-    float: right;
+    width: 25px;
+    height: 25px;
     margin: 2px;
     filter: opacity(100%);
 }
 
 .icon img {
-  box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
-        0px 0px 1px 1px rgb(209, 209, 209);
+  box-shadow: -1px -1px 0px 0px rgb(255, 255, 255), 
+        0px 0px 0px 0px rgb(209, 209, 209);
   filter: opacity(3%);
 }
 
@@ -37,13 +36,14 @@
   filter: opacity(30%);
 }
 .card:hover .icon{
-  box-shadow: -1px -1px 1px 1px rgb(255, 255, 255), 
-        0px 0px 1px 1px rgb(206, 206, 206);
+  box-shadow: 
+  /* -1px -1px 0px 0px rgb(209, 209, 209),  */
+        0px 0px 0px 0px rgb(206, 206, 206);
   filter: opacity(100%);
 }
 .card:hover .icon img:hover{
-  box-shadow: -1px -1px 1px 0px rgb(212, 212, 212), 
-        1px 1px 1px 1px rgb(255, 255, 255);
+  box-shadow: -1px -1px 0px 0px rgb(212, 212, 212), 
+        1px 1px 0px 0px rgb(255, 255, 255);
   filter: opacity(100%);  
 }
 

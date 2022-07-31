@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Form.css";
 import Tooltip from "./Tooltip";
-import { UsersPage, ListofUsers } from "../../data/moduleLeader";
+import { UsersPage, ListofUsers } from "../../data/users";
 
 function Form(props) {
   // Properties
@@ -21,7 +21,8 @@ function Form(props) {
   const [module, setModule] = useState('');
 
   // Methods
-  UsersPage();
+  // UsersPage();
+  
 
   const handleAdd = (e) => {
     setModule({...module, ['ModuleID']: props.onGetNewModuleID()})

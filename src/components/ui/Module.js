@@ -5,31 +5,49 @@ import Tooltip from './Tooltip';
 
 function Module(props) {
  const module = props.module;
+ 
+  const tooltip = (message, children) => {
+    return (
+      <Tooltip message={message}>
+        {children}
+      </Tooltip>
+    )
+  }
+  const paragraph = (className, children) => {
+    return (
+      <p className={className}>
+        {children}
+      </p>
+    )
+  }
+
  return (
  <div className='module'>
   <Card key={module.ModuleID}>
    <img src={module.ModuleImageURL} alt=''></img>
    <p>{module.ModuleName}</p>
-   
-   <Tooltip message='Level'>
-    <p className='moduleLevel'>{module.ModuleLevel}</p>
-   </Tooltip>
-   
-   <Tooltip message='Code'>
-    <p className='moduleCode'>{module.ModuleCode}</p>
-   </Tooltip>
-   
-   <DeleteIcon 
-    onIconClick={props.onIconClick} 
-    onSelectModule={() => props.onSelectDeleteModule()} 
-   />
-   <EditIcon
-    onSelectModule={() => props.onSelectEditModule()}
-   />
-   <FavouriteIcon 
-    onUnfavourite={() => props.onUnfavourite()}
-    onFavourite={() => props.onFavourite()} 
-   />    
+   {tooltip('Level',
+      paragraph('moduleLevel',module.ModuleLevel)
+    )
+   }
+   {tooltip('Code',
+      paragraph('moduleCode',module.ModuleCode)
+    )
+   }
+   <div className='icons'>
+    <DeleteIcon 
+      onIconClick={props.onIconClick} 
+      onSelectModule={() => props.onSelectDeleteModule()} 
+    />
+    <EditIcon
+      onSelectModule={() => props.onSelectEditModule()}
+    />
+    <FavouriteIcon 
+      onUnfavourite={() => props.onUnfavourite()}
+      onFavourite={() => props.onFavourite()} 
+    />    
+   </div>
+
   </Card>    
  </div>
  )
