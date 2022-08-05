@@ -18,8 +18,8 @@ class Validator {
   // Mehthods
 
   validateID = (id) => this.validate(this.idSchema, id)
-  validateCreate = (id) => this.validate(this.createScema, obj)
-  validateUpdate = (id) => this.validate(this.updateSchema, obj)
+  validateCreate = (obj) => this.validate(this.createScema, obj)
+  validateUpdate = (obj) => this.validate(this.updateSchema, obj)
 
 }
 

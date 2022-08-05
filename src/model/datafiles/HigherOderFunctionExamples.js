@@ -18,3 +18,25 @@ function sortExample() {
 function reduceExample() {
     const yearSum_ = list.reduce((total, c) => total + (c.end - c.start), 0);
 }
+
+// https://flaviocopes.com/how-to-iterate-object-properties-javascript/
+// Iterate object properties 
+Object.entries(items).map(item => {
+  console.log(item)
+})
+
+Object.entries(items).forEach(item => {
+  console.log(item)
+})
+
+for (const item of Object.entries(items)) {
+  console.log(item)
+}
+
+/*
+
+package.json
+"startNodeMon": "nodemon react-scripts start",
+"startAppTestNodeMon": "nodemon appTest.js",
+
+*/ 

@@ -15,7 +15,7 @@ class Accessor {
   }
 
   read = (id) => {
-    const record = this.records.find((record) => record[this.idKey] === parseInt(req.params.id));
+    const record = this.records.find((record) => record[this.idKey] === parseInt(id));
     return record
     ? { isSuccess: true, result: this.records, message: "Records successfully recovered" }
     : { isSuccess: false, result: null, message: "Record ${id} not found" };
@@ -23,14 +23,14 @@ class Accessor {
 
   update = (id, obj) => {
     const record = this.records.find((record) => record[this.idKey] === parseInt(id)) ;
-    if(!record) return { isSuccess: false, result: null, message: `Record ${req.params.id} not found` }
+    if(!record) return { isSuccess: false, result: null, message: `Record ${id} not found` }
     this.mutableKeys.map((key) => record[key] = obj[key] || record[key] );
     return { isSuccess: true, result: record, message: "Record successfully updated" }
   }
 
   delete = (id) => {
     const index = this.records.findIndex((record) => record[this.idKey] === parseInt(id));
-    if (index < 0) return { isSuccess: false, result: null, message: `Record ${req.params.id} not found`};
+    if (index < 0) return { isSuccess: false, result: null, message: `Record ${id} not found`};
     this.records.splice(index, 1);
     return { isSuccess: true, result: null, message: "Record successfully deleted" }
   }
