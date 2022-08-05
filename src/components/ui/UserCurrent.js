@@ -88,7 +88,8 @@ function User() {
   }
 
   // View
-  const User = !ListOfUsers[0] && tableOfUsers[0]
+  // const User = !ListOfUsers[0] && tableOfUsers[0]
+  const User = tableOfUsers[0]
   // User = !User && setListOfUsers(tableOfUsers)
   // const User = ListOfUsers[0];
 

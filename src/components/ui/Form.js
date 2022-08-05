@@ -66,15 +66,18 @@ function Form(props) {
     return props.title ? props.title : "Add";
   };
 
-  // if (code && "" === ModuleCode) {
-    // setModule({...record, 
-    //   ['ModuleCode']:code,
-    //   ['ModuleName']:name,
-    //   ['ModuleLevel']:level,
-    //   ['ModuleImageURL']:image,
-    //   ['ModuleID']:id,
-  // }
-
+  const autoFillEditForm_anotherVersion = () => {
+    if (code && "" === record[recordType+'Code']) {
+      setRecord({...record, 
+        [recordType+'Code']:code,
+        [recordType+'Name']:name,
+        [recordType+'Level']:level,
+        [recordType+'ImageURL']:image,
+        [recordType+'ID']:id,
+        }
+      )
+    }
+  }
 
   const autoFillEditForm_ = () => {
     if (
@@ -170,8 +173,6 @@ function Form(props) {
   // VIEW
   var moduleLevels = [3, 4, 5, 6, 7];
 
-  console.log(record)
-
   return (
     <div className="form">
       {tooltip(
@@ -213,7 +214,7 @@ function Form(props) {
         )}
         
         {TooltipInput(
-          'ModuleCode',
+          recordType+'Code',
           handleModuleCodeValidation(record[recordType+'Code']) ? recordType+" Code" : recordType+" Code e.g. CI0123",
           record[recordType+'Code'],
           "Code",
