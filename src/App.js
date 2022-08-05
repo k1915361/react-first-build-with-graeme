@@ -7,8 +7,6 @@ import ContactUs from './components/pages/ContactUs';
 import PageNotFound from './components/pages/404';
 import './App.css';
 
-// 1:20:56
-
 function App() {
   return (
     <BrowserRouter>
