@@ -13,7 +13,8 @@ function Users() {
   const [ selectedId , selectId ] = useState();
   const [ editing, setEditing ] = useState(null);
   const [ records, setRecords ] = useState(tableOfUsers)
-  
+  const recordType = 'user'
+
   // Context
 
   // Methods
@@ -36,6 +37,18 @@ function Users() {
   const closeEditForm = () => {
     setEditing(null);
   }
+  
+  const openEditForm = (record) => {
+    return (
+    <Edit 
+      key={record[recordType+'ID']}
+      onCloseEditForm={() => closeEditForm()} 
+      record={record}
+      onEdit={(record) => editRecord(record)}
+      recordType='Module'
+    />
+    )
+  }
 
   // View
   return (
@@ -50,10 +63,15 @@ function Users() {
             onCloseEditForm={() => closeEditForm()} 
             record={record}
             onEdit={(record) => editRecord(record)}
-          />
-          : 
-          <User onIsEditing={() => selectId(record.UserID)} isEditing={isEditing} record={record} key={record.UserID}>
-            
+            />
+            : 
+          <User 
+            onIsEditing={() => selectId(record.UserID)} 
+            isEditing={isEditing} 
+            record={record} 
+            key={record.UserID}
+            openEditForm={(record) => openEditForm(record)}
+          >  
           </User>    
         ))  
       }
