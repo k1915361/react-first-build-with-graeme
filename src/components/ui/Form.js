@@ -1,41 +1,48 @@
 import { useState } from "react";
 import "./Form.css";
 import Tooltip from "./Tooltip";
-import { UsersPage, ListofUsers } from "../../data/users";
+import { UsersPage, ListofUsers } from "../../model/datafiles/users";
 
 function Form(props) {
   // Properties
   let image, name, level, code, lId, id;
-
-  if (props.module) {
-    let m = props.module;
-    image = m.ModuleImageURL;
-    name = m.ModuleName;
-    level = m.ModuleLevel;
-    code = m.ModuleCode;
-    lId = m.moduleleaderID;
-    id = m.ModuleID;
+  const recordType = props.recordType; // 'Module' or 'User'
+  const idType = props.recordType+'ID'; // 'Module' or 'User' + 'ID'
+  if (props.record) {
+    let r = props.record;
+    // image = r.recordType+ImageURL;
+    // name = r.recordType+Name;
+    // level = r.recordType+Level;
+    // code = r.recordType+Code;
+    // lId = r.recordType+leaderID;
+    // id = r.recordType+ID;
+    
+    image = r[recordType+'ImageURL'];
+    name = r[recordType+'Name'];
+    level = r[recordType+'Level'];
+    code = r[recordType+'Code'];
+    lId = r[recordType+'leaderID'];
+    id = r[recordType+'ID'];
   }
 
   // States
-  const [module, setModule] = useState('');
+  const [record, setRecord] = useState('');
 
   // Methods
   // UsersPage();
-  
 
   const handleAdd = (e) => {
-    setModule({...module, ['ModuleID']: props.onGetNewModuleID()})
-    handleAddModule(module);
+    setRecord({...record, [recordType+'ID']: props.onGetNewRecordID()})
+    handleAddRecord(record);
   };
 
   const handleWhichSubmit = (e) => {
     e.preventDefault();
-    props.module ? handleEdit(module) : handleAdd(e);
+    props.record ? handleEdit(record) : handleAdd(e);
   };
 
-  const handleEdit = (module) => {
-    props.onEdit(module);
+  const handleEdit = (record) => {
+    props.onEdit(record);
     closeEditForm();
   };
 
@@ -43,24 +50,24 @@ function Form(props) {
     props.onCloseEditForm();
   };
 
-  const handleAddModule = (module) => {
-    if (handleModuleValidations(module)) {
-      props.onAddModule(module);
+  const handleAddRecord = (record) => {
+    if (handleRecordValidations(record)) {
+      props.onAddRecord(record);
     }
   };
 
   const getTitleTooltipMessage = () => {
-    return props.tooltipTitle ? props.tooltipTitle : "Add Module Form";
+    return props.tooltipTitle ? props.tooltipTitle : "Add "+ recordType +" Form";
   };
   const getAddEditTooltipMessage = () => {
-    return props.tooltipEdit ? props.tooltipEdit : "Add Module";
+    return props.tooltipEdit ? props.tooltipEdit : "Add "+ recordType;
   };
   const getTitle = () => {
     return props.title ? props.title : "Add";
   };
 
   // if (code && "" === ModuleCode) {
-    // setModule({...module, 
+    // setModule({...record, 
     //   ['ModuleCode']:code,
     //   ['ModuleName']:name,
     //   ['ModuleLevel']:level,
@@ -72,18 +79,18 @@ function Form(props) {
   const autoFillEditForm_ = () => {
     if (
       code &&
-      code !== module.ModuleCode &&
-      name !== module.ModuleName &&
-      level !== module.ModuleLevel &&
-      image !== module.ModuleImageURL &&
-      id !== module.ModuleID
+      code !== record[recordType+'Code'] &&
+      name !== record[recordType+'Name'] &&
+      level !== record[recordType+'Level'] &&
+      image !== record[recordType+'ImageURL'] &&
+      id !== record[recordType+'ID']
     ) {
-      setModule({...module, 
-        ['ModuleCode']:code,
-        ['ModuleName']:name,
-        ['ModuleLevel']:level,
-        ['ModuleImageURL']:image,
-        ['ModuleID']:id,    
+      setRecord({...record, 
+        [recordType+'Code']:code,
+        [recordType+'Name']:name,
+        [recordType+'Level']:level,
+        [recordType+'ImageURL']:image,
+        [recordType+'ID']:id,    
     })
     }
   };
@@ -114,15 +121,15 @@ function Form(props) {
     }
   };
 
-  const handleModuleValidations = (module) => {
+  const handleRecordValidations = (record) => {
     let message = '';
-    if (!handleModuleNameValidation(module.ModuleName)) {
+    if (!handleModuleNameValidation(record[recordType+'Name'])) {
       message += 'Name is Invalid, e.g. Computing'
     }
-    else if (!handleModuleLevelValidation(module.ModuleLevel)) {
+    else if (!handleModuleLevelValidation(record[recordType+'Level'])) {
       message += 'Level is Not Selected'      
     } 
-    else if (!handleModuleCodeValidation(module.ModuleCode)){
+    else if (!handleModuleCodeValidation(record[recordType+'Code'])){
       message += 'Code is Invalid, e.g. CI0123';
     }
     if(message){
@@ -135,7 +142,7 @@ function Form(props) {
   };
 
   const handleValueChange = (target) => {
-    setModule({ ...module, [target.id]: target.value });
+    setRecord({ ...record, [target.id]: target.value });
   };
 
   const TooltipInput = (id, message, value, placeholder) => {
@@ -163,6 +170,8 @@ function Form(props) {
   // VIEW
   var moduleLevels = [3, 4, 5, 6, 7];
 
+  console.log(record)
+
   return (
     <div className="form">
       {tooltip(
@@ -173,17 +182,17 @@ function Form(props) {
       <form onSubmit={handleWhichSubmit}>
         
         {TooltipInput(
-          'ModuleImageURL',
-          "Module Image URL",
-          module.ModuleImageURL,
+          recordType+'ImageURL',
+          recordType+" Image URL",
+          record[recordType+'ImageURL'],
           "Image"
         )}
 
         {TooltipInput(
           'ModuleName',
-          handleModuleNameValidation(module.ModuleName) 
+          handleModuleNameValidation(record[recordType+'Name']) 
           ? "Module Name" : "Module Name e.g. Database",
-          module.ModuleName, 
+          record[recordType+'Name'], 
           'Name'
         )}
 
@@ -191,10 +200,10 @@ function Form(props) {
           'Select Module Level',
           <select
             id={'ModuleLevel'}
-            value={module.ModuleLevel}
-            defaultValue={module.ModuleLevel ? module.ModuleLevel : 3}
-            selected={module.ModuleLevel ? module.ModuleLevel : 3}
-            placeholder={module.ModuleLevel ? module.ModuleLevel : "Level"}
+            value={record[recordType+'Level']}
+            defaultValue={record[recordType+'Level'] ? record[recordType+'Level'] : 3}
+            selected={record[recordType+'Level'] ? record[recordType+'Level'] : 3}
+            placeholder={record[recordType+'Level'] ? record[recordType+'Level'] : "Level"}
             onChange={(e) => handleValueChange(e.target)}
           >
             {moduleLevels.map((l) => (
@@ -205,16 +214,16 @@ function Form(props) {
         
         {TooltipInput(
           'ModuleCode',
-          handleModuleCodeValidation(module.ModuleCode) ? "Module Code" : "Module Code e.g. CI0123",
-          module.ModuleCode,
+          handleModuleCodeValidation(record[recordType+'Code']) ? recordType+" Code" : recordType+" Code e.g. CI0123",
+          record[recordType+'Code'],
           "Code",
         )}
 
         {tooltip(
           "Select Module Leader",
           <select
-            id='ModuleLeaderId'
-            value={module.ModuleLeaderId}
+            id={recordType+'LeaderId'}
+            value={record[recordType+'LeaderId']}
             onChange={(e) => handleValueChange(e.target)}
           >
             {ListofUsers ? (

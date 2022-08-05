@@ -8,11 +8,12 @@ export default function Edit(props) {
     return (
         <div className='edit' >
             <Form 
-                module={props.module}
+                record={props.record}
                 onCloseEditForm={onCloseEditForm}
-                onEdit={(module) => props.onEdit(module)}   
-                tooltipTitle='Edit Module Form'
-                tooltipEdit='Edit Module'
+                onEdit={(record) => props.onEdit(record)}   
+                tooltipTitle={'Edit '+props.recordType+' Form'}
+                tooltipEdit={'Edit '+ props.recordType}
+                recordType={props.recordType}
                 title='Edit'
             />
         </div>

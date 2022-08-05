@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { apiRequest } from '../api/apiRequest';
 import Card from './Card';
 import Tooltip from './Tooltip';
+import tableOfUsers from '../../model/datafiles/tableOfUsers'
 // import Form from './FormReuse';
 
 function User() {
@@ -10,7 +11,7 @@ function User() {
   const API_URL = 'https://my.api.mockaroo.com/';
   const API_KEY = '?key=bb6adbc0';
   
-  // States
+  // Statesw
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser ] = useState('');
 
@@ -87,8 +88,12 @@ function User() {
   }
 
   // View
-  const User = ListOfUsers[0];
-    
+  const User = !ListOfUsers[0] && tableOfUsers[0]
+  // User = !User && setListOfUsers(tableOfUsers)
+  // const User = ListOfUsers[0];
+
+  // console.log(User)
+  
   if (User) {
     if (user === ''){
       setUser(User);

@@ -1,7 +1,7 @@
 import './Users.sass';
-import tableOfUsers from '../../data/tableOfUsers'
+import tableOfUsers from '../../model/datafiles/tableOfUsers'
 import User from './User';
-import { UsersPage , ListofUsers as users } from '../../data/users'
+import { UsersPage , ListofUsers as users } from '../../model/datafiles/users'
 import { useState } from 'react';
 import Edit from './Edit';
 
@@ -14,7 +14,6 @@ function Users() {
   const [ editing, setEditing ] = useState(null);
   const [ records, setRecords ] = useState(tableOfUsers)
   
-  // console.log(users)
   // Context
 
   // Methods

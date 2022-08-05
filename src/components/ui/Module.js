@@ -4,7 +4,7 @@ import './Module.css';
 import Tooltip from './Tooltip';
 
 function Module(props) {
- const module = props.module;
+ const record = props.record;
  
   const tooltip = (message, children) => {
     return (
@@ -23,24 +23,24 @@ function Module(props) {
 
  return (
  <div className='module'>
-  <Card key={module.ModuleID}>
-   <img src={module.ModuleImageURL} alt=''></img>
-   <p>{module.ModuleName}</p>
+  <Card key={record.ModuleID}>
+   <img src={record.ModuleImageURL} alt=''></img>
+   <p>{record.ModuleName}</p>
    {tooltip('Level',
-      paragraph('moduleLevel',module.ModuleLevel)
+      paragraph('moduleLevel',record.ModuleLevel)
     )
    }
    {tooltip('Code',
-      paragraph('moduleCode',module.ModuleCode)
+      paragraph('moduleCode',record.ModuleCode)
     )
    }
    <div className='icons'>
     <DeleteIcon 
       onIconClick={props.onIconClick} 
-      onSelectModule={() => props.onSelectDeleteModule()} 
+      onSelectModule={() => props.onSelectDeleteRecord()} 
     />
     <EditIcon
-      onSelectModule={() => props.onSelectEditModule()}
+      onSelectModule={() => props.onSelectEditRecord()}
     />
     <FavouriteIcon 
       onUnfavourite={() => props.onUnfavourite()}

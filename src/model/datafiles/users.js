@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { apiRequest } from '../components/api/apiRequest.js';
+import { apiRequest } from '../../components/api/apiRequest.js';
 
 let ListofUsers;
 

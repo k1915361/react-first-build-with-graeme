@@ -8,7 +8,7 @@ import Backdrop from './Backdrop';
 import Modal from './Modal';
 import Module from './Module';
 import { apiRequestPost } from '../api/apiRequestPost';
-
+// import router from '../../router/modules-router'
 
 function Modules() {
   // Properties
@@ -169,21 +169,24 @@ function Modules() {
           <Edit 
             key={module.ModuleID}
             onCloseEditForm={() => closeEditForm()} 
-            module={module}
+            record={module}
             onEdit={(module) => editModule(module)}
+            recordType='Module'
           />
           :
           <Module 
             key={module.ModuleID}
-            module={module}
+            record={module}
 
             onIconClick={deleteHandler} 
-            onSelectDeleteModule={() => doSelectModule(module.ModuleID)} 
+            onSelectDeleteRecord={() => doSelectModule(module.ModuleID)} 
 
-            onSelectEditModule={() => selectEditModule(module.ModuleID)}
+            onSelectEditRecord={() => selectEditModule(module.ModuleID)}
 
             onUnfavourite={() => removeFavourite(module.ModuleID)}
-            onFavourite={() => addFavourite(module.ModuleID)}     
+            onFavourite={() => addFavourite(module.ModuleID)}   
+            
+            recordType = 'Module'
           ></Module>
         ))
       : 
@@ -197,8 +200,8 @@ function Modules() {
       }
       {modalIsOpen && <Backdrop onBackdrop={closeModalHandler}/>}
       <Form 
-        onAddModule={(module) => addModule(module)} 
-        onGetNewModuleID={() => getNewModuleID()}
+        onAddRecord={(module) => addModule(module)} 
+        onGetNewRecordID={() => getNewModuleID()}
         onCloseEditForm={() => null}
       />
       </div>
