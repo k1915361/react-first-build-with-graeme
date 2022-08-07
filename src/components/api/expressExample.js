@@ -73,9 +73,30 @@ const port = process.env.PORT || 3000
 app.listen(3000, () => console.log('Listening on port ${port}...'))
 
 /*
- https://www.youtube.com/watch?v=pKd0Rpw7O48 57:00
+https://www.youtube.com/watch?v=pKd0Rpw7O48 57:00
 
- set PORT=5000
- nodemon expressExample.js
+set PORT=5000
+nodemon expressExample.js
 
- */
+*/
+
+/*
+ function expressExamples() {
+  
+  // app.use(express.json());
+
+  // app.use(function(req, res, next) {
+
+  //   res.header("Access-Control-Allow-Origin", "*");
+  
+  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  
+  //   next();
+  
+  //   });
+  
+  // app.use(express.json());
+}
+
+
+*/ 

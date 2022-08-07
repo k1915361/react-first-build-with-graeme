@@ -20,29 +20,16 @@ export async function apiRequest(apiURL, endpoint, key, method = "GET", body = n
   return { success: true, response: await response.json() };
   else return { success: false, response: response };
   
+  /*
+  
   apiRequest.get = apiRequest(apiURL, endpoint, key, body, method = "GET")
   apiRequest.post = apiRequest(apiURL, endpoint, key, body, method = "POST")
   apiRequest.put = apiRequest(apiURL, endpoint, key, body, method = "PUT")
   apiRequest.delete = apiRequest(apiURL, endpoint, key, body, method = "DELETE")
   apiRequest.patch = apiRequest(apiURL, endpoint, key, body, method = "PATCH")
-
+  
+  */ 
   
 }
 
 
-function expressExamples() {
-  
-  // app.use(express.json());
-
-  // app.use(function(req, res, next) {
-
-  //   res.header("Access-Control-Allow-Origin", "*");
-  
-  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  
-  //   next();
-  
-  //   });
-  
-  // app.use(express.json());
-}

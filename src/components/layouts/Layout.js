@@ -1,6 +1,6 @@
-import Header from './Header';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import Header from './Header.js';
+import Navbar from './Navbar.js';
+import Footer from './Footer.js';
 
 import './Layout.css';
 

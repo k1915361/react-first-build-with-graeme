@@ -1,19 +1,35 @@
 import './Users.sass';
-import tableOfUsers from '../../model/datafiles/tableOfUsers'
-import User from './User';
-import { UsersPage , ListofUsers as users } from '../../model/datafiles/users'
+import tableOfUsers from '../../model/datafiles/tableOfUsers.js'
+import User from './User.js';
+// import { UserList, LoadingMessage } from '../../model/datafiles/users.js'
 import { useState } from 'react';
-import Edit from './Edit';
+import Edit from './Edit.js';
+import { Records, LoadingMessage } from '../../model/datafiles/getRecords';
 
 function Users() {
   // Properties
   // const records = tableOfUsers
+  const endPoint = 'Users'
+  const method = 'GET'
+  const getRecords = Records(endPoint, method)
+  const loadingMessage = LoadingMessage && LoadingMessage
 
   // States
   const [ selectedId , selectId ] = useState();
   const [ editing, setEditing ] = useState(null);
   const [ records, setRecords ] = useState(tableOfUsers)
   const recordType = 'user'
+
+  // Methods
+  
+  console.log(getRecords)
+
+  // console.log(UserList())
+  // console.log(UserList)
+
+  // console.log(UserList && UserList)
+
+  // console.log(editing)
 
   // Context
 

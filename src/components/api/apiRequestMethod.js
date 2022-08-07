@@ -6,7 +6,7 @@
 // body: defaults to null if not specified. (Use this later when you want to update records.)
 // -----------------------------------------------------------------------
 
-export async function apiRequestPost(apiURL, endpoint, key, body, method = "GET") {
+export async function apiRequestPost(apiURL, endpoint, key, body, method) {
 
   // Build fetch parameters
   let requestObj = { method: method }; // *GET, POST, PUT, DELETE, etc.

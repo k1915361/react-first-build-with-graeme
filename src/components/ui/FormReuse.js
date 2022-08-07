@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Form.css";
-import Tooltip from "./Tooltip";
-import { UsersPage, ListofUsers } from "../../data/itemLeader";
+import Tooltip from "./Tooltip.js";
+import { UsersPage, ListofUsers } from "../../data/itemLeader.js";
 
 function FormReuse(props) {
   

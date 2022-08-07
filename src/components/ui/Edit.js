@@ -1,5 +1,5 @@
 import './Edit.css'
-import Form from './Form'
+import Form from './Form.js'
 
 export default function Edit(props) {
     const onCloseEditForm = () => {

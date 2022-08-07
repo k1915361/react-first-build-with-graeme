@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './Icon.css';
-import Tooltip from './Tooltip';
+import Tooltip from './Tooltip.js';
 
 function DeleteIcon(props) {
     function handle() {

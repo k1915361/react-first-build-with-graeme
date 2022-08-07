@@ -1,5 +1,5 @@
-import Modules from '../ui/Modules';
-import User from '../ui/UserCurrent';
+import Modules from '../ui/Modules.js';
+import User from '../ui/UserCurrent.js';
 
 function Home() {
     

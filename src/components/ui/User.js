@@ -1,22 +1,18 @@
 import './User.scss';
-import { useEffect, useState } from 'react';
-import { apiRequest } from '../api/apiRequest';
-import Card from './Card';
-import Tooltip from './Tooltip';
-// import Form from './FormReuse';
+import { useState } from 'react';
+// import { apiRequest } from '../api/apiRequest.js';
+import Card from './Card.js';
+import Tooltip from './Tooltip.js';
+// import Form from './FormReuse.js';
 
 function User(props) {
   // Properties
-  const API_URL = 'https://my.api.mockaroo.com/';
-  const API_KEY = '?key=bb6adbc0';
   
   // States
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser ] = useState('');
 
   const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
-  
-  
 
   // Methods
   const handleTextChangeTEST = (target) => {
@@ -27,14 +23,6 @@ function User(props) {
     return (
         <input id={id} type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChangeTEST(e.target)}/>
     )
-  }
-
-  const TooltipDiv = (message, children) => {
-    return <Tooltip message={message}>
-        <div onClick={() => setIsEditing(true)}>
-            {children}
-        </div>
-    </Tooltip>
   }
 
   const TooltipInput = (id, message, value) => {

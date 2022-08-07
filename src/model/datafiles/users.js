@@ -1,40 +1,31 @@
-import { useState, useEffect } from 'react';
+import { Records, RecordList, LoadingMessage } from './getRecords.js'
 
-import { apiRequest } from '../../components/api/apiRequest.js';
+let UserList;
 
-let ListofUsers;
+function Users() {
+  // Properties
+  
+  const endPoint = 'Users'
+  const method = 'GET'
 
+  // Methods
+  Records(endPoint, method)
+  
+  // Hooks
 
-function UsersPage() {
-    // Properties
-    const API_URL = 'https://my.api.mockaroo.com/';
-    const API_KEY = '?key=bb6adbc0';
-    
-    // Hooks
-    const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
-    const [ListOfUsers, setListOfUsers] = useState(null);
-
-    loadingMessage.at(0);
-
-    useEffect(() => { fetchUsers()}, []);
-
-    // Context
-    const fetchUsers = async () => {
-
-        const outcome = await apiRequest(API_URL, 'Users', API_KEY);
-
-        if (outcome.success) setListOfUsers (outcome.response);
-
-        else setLoadingMessage(`Error ${outcome.response.status}: Module Leaders could not be found.`);
-
-    }
-
-    ListofUsers = ListOfUsers;
+  return ( RecordList && RecordList )
 }
+
+const endPoint = 'Users'
+const method = 'GET'
+
+// Methods
+Records(endPoint, method)
+
+// export { Users as UserList, LoadingMessage };
+export { RecordList as UserList, LoadingMessage };
 
 export function Listof_Users() {
-    if(ListofUsers) 
-        return ListofUsers
+  if(UserList) 
+    return UserList
 }
-
-export { UsersPage, ListofUsers };

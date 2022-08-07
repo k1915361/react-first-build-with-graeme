@@ -1,17 +1,22 @@
 import './Modules.css'
 import { useState, useEffect } from 'react';
 import { apiRequest } from '../api/apiRequest.js';
-import Favourites from '../pages/Favourites';
-import Form from './Form';
-import Edit from './Edit';
-import Backdrop from './Backdrop';
-import Modal from './Modal';
-import Module from './Module';
-import { apiRequestPost } from '../api/apiRequestPost';
-// import router from '../../router/modules-router'
+import Favourites from '../pages/Favourites.js';
+import Form from './Form.js';
+import Edit from './Edit.js';
+import Backdrop from './Backdrop.js';
+import Modal from './Modal.js';
+import Module from './Module.js';
+// import { apiRequestPost } from '../api/apiRequestPost.js';
+import { Records, LoadingMessage } from '../../model/datafiles/getRecords.js'
 
 function Modules() {
   // Properties
+  const endPoint = 'Modules'
+  const method = 'GET'
+  const records = Records(endPoint, method)
+  const loadingMessage = LoadingMessage && LoadingMessage
+
   const [ modalIsOpen, setModalIsOpen ] = useState(false);
   const [ selectedModuleId , selectModuleId ] = useState();
   
@@ -20,7 +25,11 @@ function Modules() {
   const [ favourites, setFavourites ] = useState([]);
   const [ editingModule, setEditingModule ] = useState(null);
 
+  
+  !modules && records != null && setModules( records )
+
   // Methods
+
   const deleteModule = (moduleId) => {
     const newModules = modules.filter((each) => each.ModuleID !== moduleId)
     setModules(newModules); 
@@ -61,9 +70,9 @@ function Modules() {
   }
 
   const editModule = (module) => {
-    const id = module.ModuleID
+    const targetId = module.ModuleID
     const newModules = modules.map(m => {
-        if(m.ModuleID === id) {
+        if(m.ModuleID === targetId) {
             return module
         }
         return m;
@@ -82,61 +91,6 @@ function Modules() {
 
   const doSelectModule = (moduleId) => {
     selectModuleId(moduleId);
-  }
-  
-  // Properties
-  const API_URL = 'https://my.api.mockaroo.com/';
-  const API_KEY = '?key=bb6adbc0';
-
-  // Hooks
-  const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
-
-  // Props
-  const testModule = JSON.stringify({
-    "ModuleID":11,
-    "ModuleName":"Games Programming",
-    "ModuleCode":"CI6655",
-    "ModuleLevel":4,
-    "ModuleLeaderID":77,
-    "ModuleImageURL":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
-  })
-
-  // Context
-  const postTest = async () => {
-    const outcome = await apiRequestPost(API_URL, 'Modules', API_KEY, testModule, "POST");
-
-    if (outcome.success) 
-      setModules (outcome.response);
-    else 
-      setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
-    console.log(loadingMessage +' loadng mssg')
-  }
-  // postTest()
-
-  useEffect(() => { fetchModules() }, []);
-
-  const fetchModules = async () => {
-    const outcome = await apiRequest(API_URL, 'Modules', API_KEY);
-
-    if (outcome.success) 
-      setModules (outcome.response);
-    else 
-      setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
-  }
-
-  const editModuleAnotherWay = (property, value) => {
-      editModule({...module, property : value})
-  }
-  
-  const postModule2 = () => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify({ title: 'React POST Request Example' })
-    };
-    fetch(`${API_URL}Modules${API_KEY}`, requestOptions)
-    .then(response => response.json())
-    .then(data => this.setState({ postId: data.id }));
   }
   
   // View

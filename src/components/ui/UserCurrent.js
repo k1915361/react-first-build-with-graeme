@@ -1,10 +1,10 @@
 import './User.scss';
 import { useEffect, useState } from 'react';
-import { apiRequest } from '../api/apiRequest';
-import Card from './Card';
-import Tooltip from './Tooltip';
-import tableOfUsers from '../../model/datafiles/tableOfUsers'
-// import Form from './FormReuse';
+import { apiRequest } from '../api/apiRequest.js';
+import Card from './Card.js';
+import Tooltip from './Tooltip.js';
+import tableOfUsers from '../../model/datafiles/tableOfUsers.js'
+// import Form from './FormReuse.js';
 
 function User() {
   // Properties
@@ -31,6 +31,7 @@ function User() {
       
   }
   
+  // console.log(ListOfUsers && 'ListOfUsers')
 
   // Methods
   const handleTextChangeTEST = (target) => {
@@ -41,14 +42,6 @@ function User() {
     return (
       <input id={id} type='text' placeholder={value} defaultValue={value} onChange={(e) => handleTextChangeTEST(e.target)}/>
     )
-  }
-
-  const TooltipDiv = (message, children) => {
-    return <Tooltip message={message}>
-      <div onClick={() => setIsEditing(true)}>
-        {children}
-      </div>
-    </Tooltip>
   }
 
   const TooltipInput = (id, message, value) => {
@@ -88,12 +81,7 @@ function User() {
   }
 
   // View
-  // const User = !ListOfUsers[0] && tableOfUsers[0]
   const User = tableOfUsers[0]
-  // User = !User && setListOfUsers(tableOfUsers)
-  // const User = ListOfUsers[0];
-
-  // console.log(User)
   
   if (User) {
     if (user === ''){

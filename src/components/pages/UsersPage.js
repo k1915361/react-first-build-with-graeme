@@ -1,4 +1,4 @@
-import Users from '../ui/Users';
+import Users from '../ui/Users.js';
 
 function UsersPage() {
   return (

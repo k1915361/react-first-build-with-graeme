@@ -1,38 +1,48 @@
 import { useState } from "react";
 import "./Form.css";
-import Tooltip from "./Tooltip";
-import { UsersPage, ListofUsers } from "../../model/datafiles/users";
+import Tooltip from "./Tooltip.js";
+// import { UserList, ListofUsers } from "../../model/datafiles/users.js";
+import tableOfUsers from '../../model/datafiles/tableOfUsers.js'
 
 function Form(props) {
   // Properties
   let image, name, level, code, lId, id;
   const recordType = props.recordType; // 'Module' or 'User'
-  const idType = props.recordType+'ID'; // 'Module' or 'User' + 'ID'
+  
+  // MODULE SPECIFIC, MOVE TO MODULES.
+  const strID = recordType+'ID'; // 'Module' or 'User' + 'ID'
+  const strImageURL = recordType+'Image'; //  'ImageURL'
+  const strName = recordType+'Name'; 
+  const strLevel = recordType+'Level'; 
+  const strCode = recordType+'Code'; 
+  const strLeaderID = recordType+'LeaderID'; 
+
   if (props.record) {
-    let r = props.record;
-    // image = r.recordType+ImageURL;
-    // name = r.recordType+Name;
-    // level = r.recordType+Level;
-    // code = r.recordType+Code;
-    // lId = r.recordType+leaderID;
-    // id = r.recordType+ID;
+    const r = props.record;
     
-    image = r[recordType+'ImageURL'];
-    name = r[recordType+'Name'];
-    level = r[recordType+'Level'];
-    code = r[recordType+'Code'];
-    lId = r[recordType+'leaderID'];
-    id = r[recordType+'ID'];
+    image = r[strImageURL];
+    name = r[strName];
+    level = r[strLevel];
+    code = r[strCode];
+    lId = r[strLeaderID];
+    id = r[strID];
   }
 
+  const ListofUsers = tableOfUsers
+  
+  // UserList()
+  // ListofUsers
+  
   // States
   const [record, setRecord] = useState('');
-
+  
   // Methods
-  // UsersPage();
+  const editProperty = (property, value) => {
+    setRecord({ ...record, [property]: value })
+  }
 
   const handleAdd = (e) => {
-    setRecord({...record, [recordType+'ID']: props.onGetNewRecordID()})
+    setRecord({...record, [strID]: props.onGetNewRecordID()})
     handleAddRecord(record);
   };
 
@@ -65,15 +75,15 @@ function Form(props) {
   const getTitle = () => {
     return props.title ? props.title : "Add";
   };
-
+  
   const autoFillEditForm_anotherVersion = () => {
-    if (code && "" === record[recordType+'Code']) {
+    if (code && "" === record[strID]) {
       setRecord({...record, 
-        [recordType+'Code']:code,
-        [recordType+'Name']:name,
-        [recordType+'Level']:level,
-        [recordType+'ImageURL']:image,
-        [recordType+'ID']:id,
+        [strID]:code,
+        [strName]:name,
+        [strLevel]:level,
+        [strImageURL]:image,
+        [strID]:id,
         }
       )
     }
@@ -82,18 +92,18 @@ function Form(props) {
   const autoFillEditForm_ = () => {
     if (
       code &&
-      code !== record[recordType+'Code'] &&
-      name !== record[recordType+'Name'] &&
-      level !== record[recordType+'Level'] &&
-      image !== record[recordType+'ImageURL'] &&
-      id !== record[recordType+'ID']
+      code !== record[strID] &&
+      name !== record[strName] &&
+      level !== record[strLevel] &&
+      image !== record[strImageURL] &&
+      id !== record[strID]
     ) {
       setRecord({...record, 
-        [recordType+'Code']:code,
-        [recordType+'Name']:name,
-        [recordType+'Level']:level,
-        [recordType+'ImageURL']:image,
-        [recordType+'ID']:id,    
+        [strID]:code,
+        [strName]:name,
+        [strLevel]:level,
+        [strImageURL]:image,
+        [strID]:id,    
     })
     }
   };
@@ -126,13 +136,13 @@ function Form(props) {
 
   const handleRecordValidations = (record) => {
     let message = '';
-    if (!handleModuleNameValidation(record[recordType+'Name'])) {
+    if (!handleModuleNameValidation(record[strName])) {
       message += 'Name is Invalid, e.g. Computing'
     }
-    else if (!handleModuleLevelValidation(record[recordType+'Level'])) {
+    else if (!handleModuleLevelValidation(record[strLevel])) {
       message += 'Level is Not Selected'      
     } 
-    else if (!handleModuleCodeValidation(record[recordType+'Code'])){
+    else if (!handleModuleCodeValidation(record[strID])){
       message += 'Code is Invalid, e.g. CI0123';
     }
     if(message){
@@ -183,17 +193,17 @@ function Form(props) {
       <form onSubmit={handleWhichSubmit}>
         
         {TooltipInput(
-          recordType+'ImageURL',
+          strImageURL,
           recordType+" Image URL",
-          record[recordType+'ImageURL'],
+          record[strImageURL],
           "Image"
         )}
 
         {TooltipInput(
           'ModuleName',
-          handleModuleNameValidation(record[recordType+'Name']) 
+          handleModuleNameValidation(record[strName]) 
           ? "Module Name" : "Module Name e.g. Database",
-          record[recordType+'Name'], 
+          record[strName], 
           'Name'
         )}
 
@@ -201,10 +211,10 @@ function Form(props) {
           'Select Module Level',
           <select
             id={'ModuleLevel'}
-            value={record[recordType+'Level']}
-            defaultValue={record[recordType+'Level'] ? record[recordType+'Level'] : 3}
-            selected={record[recordType+'Level'] ? record[recordType+'Level'] : 3}
-            placeholder={record[recordType+'Level'] ? record[recordType+'Level'] : "Level"}
+            value={record[strLevel]}
+            defaultValue={record[strLevel] ? record[strLevel] : 3}
+            selected={record[strLevel] ? record[strLevel] : 3}
+            placeholder={record[strLevel] ? record[strLevel] : "Level"}
             onChange={(e) => handleValueChange(e.target)}
           >
             {moduleLevels.map((l) => (
@@ -214,9 +224,9 @@ function Form(props) {
         )}
         
         {TooltipInput(
-          recordType+'Code',
-          handleModuleCodeValidation(record[recordType+'Code']) ? recordType+" Code" : recordType+" Code e.g. CI0123",
-          record[recordType+'Code'],
+          strID,
+          handleModuleCodeValidation(record[strID]) ? recordType+" Code" : recordType+" Code e.g. CI0123",
+          record[strID],
           "Code",
         )}
 

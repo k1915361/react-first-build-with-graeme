@@ -1,7 +1,7 @@
-import Card from './Card';
-import { DeleteIcon, EditIcon, FavouriteIcon } from './Icon';
+import Card from './Card.js';
+import { DeleteIcon, EditIcon, FavouriteIcon } from './Icon.js';
 import './Module.css';
-import Tooltip from './Tooltip';
+import Tooltip from './Tooltip.js';
 
 function Module(props) {
  const record = props.record;
@@ -24,7 +24,7 @@ function Module(props) {
  return (
  <div className='module'>
   <Card key={record.ModuleID}>
-   <img src={record.ModuleImageURL} alt=''></img>
+   <img src={record.ModuleImage} alt=''></img>
    <p>{record.ModuleName}</p>
    {tooltip('Level',
       paragraph('moduleLevel',record.ModuleLevel)
