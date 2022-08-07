@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Form.css";
 import Tooltip from "./Tooltip.js";
-// import { UserList, ListofUsers } from "../../model/datafiles/users.js";
+import { Records, LoadingMessage } from "../../model/datafiles/getRecords";
 import tableOfUsers from '../../model/datafiles/tableOfUsers.js'
 
 function Form(props) {
@@ -11,12 +11,12 @@ function Form(props) {
   
   // MODULE SPECIFIC, MOVE TO MODULES.
   const strID = recordType+'ID'; // 'Module' or 'User' + 'ID'
-  const strImageURL = recordType+'Image'; //  'ImageURL'
+  const strImageURL = recordType+'Image'; //  
   const strName = recordType+'Name'; 
   const strLevel = recordType+'Level'; 
   const strCode = recordType+'Code'; 
   const strLeaderID = recordType+'LeaderID'; 
-
+  
   if (props.record) {
     const r = props.record;
     
@@ -28,7 +28,11 @@ function Form(props) {
     id = r[strID];
   }
 
-  const ListofUsers = tableOfUsers
+  const endPoint = 'Users'
+  const method = 'GET'
+  const records = Records(endPoint, method)
+  
+  const ListofUsers = records && records
   
   // UserList()
   // ListofUsers
@@ -79,10 +83,11 @@ function Form(props) {
   const autoFillEditForm_anotherVersion = () => {
     if (code && "" === record[strID]) {
       setRecord({...record, 
-        [strID]:code,
+        [strCode]:code,
         [strName]:name,
         [strLevel]:level,
         [strImageURL]:image,
+        [strLeaderID]:lId,
         [strID]:id,
         }
       )
@@ -92,17 +97,18 @@ function Form(props) {
   const autoFillEditForm_ = () => {
     if (
       code &&
-      code !== record[strID] &&
+      code !== record[strCode] &&
       name !== record[strName] &&
       level !== record[strLevel] &&
       image !== record[strImageURL] &&
       id !== record[strID]
     ) {
       setRecord({...record, 
-        [strID]:code,
+        [strCode]:code,
         [strName]:name,
         [strLevel]:level,
         [strImageURL]:image,
+        [strLeaderID]:lId,
         [strID]:id,    
     })
     }
@@ -142,7 +148,7 @@ function Form(props) {
     else if (!handleModuleLevelValidation(record[strLevel])) {
       message += 'Level is Not Selected'      
     } 
-    else if (!handleModuleCodeValidation(record[strID])){
+    else if (!handleModuleCodeValidation(record[strCode])){
       message += 'Code is Invalid, e.g. CI0123';
     }
     if(message){
@@ -165,6 +171,7 @@ function Form(props) {
           id={id}
           type="text"
           placeholder={placeholder}
+          // value={value}
           defaultValue={value}
           onChange={(e) => handleValueChange(e.target)}
         />
@@ -184,7 +191,7 @@ function Form(props) {
   var moduleLevels = [3, 4, 5, 6, 7];
 
   return (
-    <div className="form">
+    <div className="form" key={id}>
       {tooltip(
         getTitleTooltipMessage(),
         <div className="title">{getTitle()}</div>
@@ -212,7 +219,7 @@ function Form(props) {
           <select
             id={'ModuleLevel'}
             value={record[strLevel]}
-            defaultValue={record[strLevel] ? record[strLevel] : 3}
+            // defaultValue={record[strLevel] ? record[strLevel] : 3}
             selected={record[strLevel] ? record[strLevel] : 3}
             placeholder={record[strLevel] ? record[strLevel] : "Level"}
             onChange={(e) => handleValueChange(e.target)}
@@ -224,15 +231,16 @@ function Form(props) {
         )}
         
         {TooltipInput(
-          strID,
-          handleModuleCodeValidation(record[strID]) ? recordType+" Code" : recordType+" Code e.g. CI0123",
-          record[strID],
+          strCode,
+          handleModuleCodeValidation(record[strCode]) ? recordType+" Code" : recordType+" Code e.g. CI0123",
+          record[strCode],
           "Code",
         )}
 
         {tooltip(
           "Select Module Leader",
           <select
+            key={recordType+'LeaderId'}  
             id={recordType+'LeaderId'}
             value={record[recordType+'LeaderId']}
             onChange={(e) => handleValueChange(e.target)}
