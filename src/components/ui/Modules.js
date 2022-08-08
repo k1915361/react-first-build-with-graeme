@@ -9,6 +9,7 @@ import Modal from './Modal.js';
 import Module from './Module.js';
 // import { apiRequestPost } from '../api/apiRequestPost.js';
 import { Records, LoadingMessage } from '../../model/datafiles/getRecords.js'
+import { API } from '../../model/datafiles/DBapi.js'
 
 function Modules() {
   // Properties
@@ -26,9 +27,20 @@ function Modules() {
   const [ favourites, setFavourites ] = useState([]);
   const [ editingModule, setEditingModule ] = useState(null);
   
+  // useEffect((records) => { fetchRecords() } , [])
+
+  // const fetchRecords = async (records) => {
+  //   await records && setModules(records)
+  // }
+
   // !modules && records && setModules( records )
 
   // Methods
+
+  const api = (method, record) => {
+    console.log(record)
+    API(endPoint, method, record)
+  }
 
   const deleteModule = (moduleId) => {
     const newModules = modules.filter((each) => each.ModuleID !== moduleId)
@@ -81,6 +93,25 @@ function Modules() {
     setModules(newModules);
   }
 
+  const getModules_ = () => {
+    api('get')
+  }
+  const getModule_ = (record) => {
+    const targetId = record.ModuleID
+    api('get',targetId)
+  }
+  const editModule_ = (record) => {
+    const targetId = record.ModuleID
+    api('put', record)
+  }
+  const deleteModule_ = (record) => {
+    const targetId = record.ModuleID
+    api('delete', targetId)
+  }
+  const addModule_ = (module, record) => {
+    api('post', record)
+  }
+
   const closeModalHandler = () => {
     setModalIsOpen(false);
   }
@@ -124,7 +155,7 @@ function Modules() {
             key={module.ModuleID}
             onCloseEditForm={() => closeEditForm()} 
             record={module}
-            onEdit={(module) => editModule(module)}
+            onEdit={(module) => editModule_(module)}
             recordType='Module'
           />
           :
@@ -148,13 +179,13 @@ function Modules() {
       }
       {modalIsOpen && 
         <Modal 
-          onConfirm={() => deleteModule(selectedModuleId)} 
+          onConfirm={() => deleteModule_(selectedModuleId)} 
           onClose={closeModalHandler} 
         />
       }
       {modalIsOpen && <Backdrop onBackdrop={closeModalHandler}/>}
       <Form 
-        onAddRecord={(module) => addModule(module)} 
+        onAddRecord={(module) => addModule_(module)} 
         onGetNewRecordID={() => getNewModuleID()}
         onCloseEditForm={() => null}
         recordType = 'Module'

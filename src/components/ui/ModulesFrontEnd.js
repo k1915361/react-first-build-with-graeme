@@ -14,7 +14,7 @@ function Modules() {
   // Properties
   const endPoint = 'Modules'
   const method = 'GET'
-  const records = Records(endPoint, method)
+  const records = API(endPoint, method)
   const loadingMessage = LoadingMessage && LoadingMessage
 
   const [ modalIsOpen, setModalIsOpen ] = useState(false);

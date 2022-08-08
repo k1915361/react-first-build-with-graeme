@@ -132,7 +132,7 @@ function Form(props) {
   };
 
   const handleModuleLevelValidation = (level) => {
-    console.log(level ? level : `''`)
+    console.log(level ? `` : ``)
     if (level) {
       return true;
     } else {
@@ -218,8 +218,8 @@ function Form(props) {
           'Select Module Level',
           <select
             id={'ModuleLevel'}
-            value={record[strLevel]}
-            // defaultValue={record[strLevel] ? record[strLevel] : 3}
+            // value={record[strLevel]}
+            defaultValue={record[strLevel] ? record[strLevel] : 3}
             selected={record[strLevel] ? record[strLevel] : 3}
             placeholder={record[strLevel] ? record[strLevel] : "Level"}
             onChange={(e) => handleValueChange(e.target)}
