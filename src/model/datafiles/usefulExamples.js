@@ -53,19 +53,29 @@ export default function App() {
     "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
   }
   
-  delete record.Image
+  delete record.ModuleImage
 
-  const renderObject = () => {
-    return ( 
-      Object.entries(record).map(([key, value]) => {
+  const getEntries = (object, Key, Value) => {
+    return (
+      Object.entries(object).map(([key, value]) => {
         return (
-          <div key={key}>
-            {key.replace('Module', "")}: {value}
+          <div>
+            {Key(key)}: {value}    
           </div>
         )
       })
     )
   }
+
+  const renderObject = () => {
+    return ( 
+      getEntries(
+        record, 
+        (key) => key.replace('Module', "")
+      ) 
+    )
+  }
+
   const renderObject2 = () => {
     return ( 
       JSON.stringify(record)

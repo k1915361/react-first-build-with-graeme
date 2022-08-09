@@ -9,14 +9,17 @@ function Form(props) {
   let image, name, level, code, lId, id;
   const recordType = props.recordType; // 'Module' or 'User'
   
-  // MODULE SPECIFIC, MOVE TO MODULES.
+
+  //    MODULE SPECIFIC, MOVE TO MODULES
   const strID = recordType+'ID'; // 'Module' or 'User' + 'ID'
   const strImageURL = recordType+'Image'; //  
   const strName = recordType+'Name'; 
   const strLevel = recordType+'Level'; 
   const strCode = recordType+'Code'; 
   const strLeaderID = recordType+'LeaderID'; 
+  //            MOVE TO MODULES
   
+
   if (props.record) {
     const r = props.record;
     
@@ -47,6 +50,7 @@ function Form(props) {
 
   const handleAdd = (e) => {
     setRecord({...record, [strID]: props.onGetNewRecordID()})
+    console.log(record)
     handleAddRecord(record);
   };
 
@@ -242,11 +246,12 @@ function Form(props) {
             key={recordType+'LeaderId'}  
             id={recordType+'LeaderId'}
             value={record[recordType+'LeaderId']}
+            defaultValue={record[recordType+'LeaderId']}
             onChange={(e) => handleValueChange(e.target)}
           >
             {ListofUsers ? (
               ListofUsers.map((u) => (
-                <option key={u.UserID}>
+                <option value={parseInt(u.UserID)} key={u.UserID}>
                   {u.UserFirstname} {u.UserLastname}
                 </option>
               ))

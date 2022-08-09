@@ -88,20 +88,35 @@ function Modules() {
     setModules(newModules);
   }
 
+  const c = new Object()
+  c.log = (object) => {
+    console.log(object)
+  }
 
   const endpointStr = 'Modules'
   const accessor = new Accessor({endpointStr})
 
   const handleAdd = async (newModule) => {
     const outcome = await accessor.create(newModule);
+    // console.log(outcome)
+  }
+  
+  const loadModules = () => {
+    ;
+  }
+  const buildErrorModal = () => {
+    ;
   }
 
+
   const handleModify = async (targetModule) => {
-    // console.log(JSON.stringify(null));
     const outcome = await accessor.update(targetModule.ModuleID, targetModule);
-    // outcome.success
-      // ? loadModules()
-      // : buildErrorModal("Add Modify Delete module error", outcome.response);
+    
+    c.log(outcome)
+
+    outcome.success
+    ? loadModules()
+    : buildErrorModal("Add Modify Delete module error", outcome.response);
   }
 
   const handleDelete = async (id) => {
@@ -124,15 +139,6 @@ function Modules() {
 
     // API(endPoint_, "PUT", record)
     
-    // record = {
-    //   "ModuleID":1,
-    //   "ModuleName":"Games Programming",
-    //   "ModuleCode":"CI2277",
-    //   "ModuleLevel":4,
-    //   "ModuleLeaderID":1,
-    //   "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
-    // }
-    
     delete record.ModuleImage
     
     handleModify(record)
@@ -146,8 +152,17 @@ function Modules() {
     handleDelete(recordID)
   }
   const addModule_ = (record) => {
-    API(endPoint, method, record)
+    // API(endPoint, method, record)
     // apiRecord("POST", record)
+    
+    record.ModuleLeaderId = (parseInt(record.ModuleLeaderId))
+    record.ModuleLevel = (parseInt(record.ModuleLevel))
+    // record.ModuleImageURL = record.ModuleImage
+    // delete record.ModuleImage
+    
+    console.log(record)
+
+    handleAdd(record)
   }
 
   const closeModalHandler = () => {
