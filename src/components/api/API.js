@@ -9,10 +9,10 @@ API.delete = (endpoint) => apiCall(endpoint, 'DELETE', null);
 
 export const apiCall = async (endpoint, method, body) => {
 
-  const API_URL = 'localhost:5000/api/'
+  const API_URL = 'http://localhost:5000/api/'
   const API_KEY = ''
 
-  console.log(endpoint, method, body )
+  console.log(API_URL+endpoint, method, body )
 
   // Build request object
   let requestObj = { method: method }; // *GET, POST, PUT, DELETE, etc.
@@ -20,13 +20,14 @@ export const apiCall = async (endpoint, method, body) => {
     ...requestObj,
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(body)
+    // body: body
   };
 
   // Call API and return response object
   try {
     const endpointAddress = API_URL + endpoint + API_KEY;
     const response = await fetch(endpointAddress, requestObj);
-    // console.log(response)
+    console.log(response)
     if ((response.status >= 200) && (response.status <= 299))
       return { success: true, response: await response.json() };
     else return { success: false, response: response };

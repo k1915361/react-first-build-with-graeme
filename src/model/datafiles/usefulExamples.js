@@ -39,3 +39,44 @@ Object.entries(items).forEach(item => {
 for (const item of Object.entries(items)) {
   console.log(item)
 }
+
+
+
+// https://stackoverflow.com/questions/45100477/how-to-render-a-object-in-react
+export default function App() {
+  let record = {
+    "ModuleID":1,
+    "ModuleName":"Games Programming",
+    "ModuleCode":"CI2277",
+    "ModuleLevel":4,
+    "ModuleLeaderID":1,
+    "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
+  }
+  
+  delete record.Image
+
+  const renderObject = () => {
+    return ( 
+      Object.entries(record).map(([key, value]) => {
+        return (
+          <div key={key}>
+            {key.replace('Module', "")}: {value}
+          </div>
+        )
+      })
+    )
+  }
+  const renderObject2 = () => {
+    return ( 
+      JSON.stringify(record)
+    )
+  }
+
+  return(
+    <div>
+      MODULE
+      {renderObject()}
+    </div>
+  )
+    
+}

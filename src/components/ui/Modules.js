@@ -124,6 +124,17 @@ function Modules() {
 
     // API(endPoint_, "PUT", record)
     
+    // record = {
+    //   "ModuleID":1,
+    //   "ModuleName":"Games Programming",
+    //   "ModuleCode":"CI2277",
+    //   "ModuleLevel":4,
+    //   "ModuleLeaderID":1,
+    //   "ModuleImage":"https://images.freeimages.com/images/small-previews/9b8/electronic-components-2-1242738.jpg"
+    // }
+    
+    delete record.ModuleImage
+    
     handleModify(record)
 
     // postcode()
