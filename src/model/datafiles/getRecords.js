@@ -33,4 +33,4 @@ function Records(endPoint, method, body = null) {
   return recordList && recordList
 }
 
-export { Records as Records , LoadingMessage };
+export { Records , LoadingMessage };

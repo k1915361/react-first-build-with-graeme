@@ -10,10 +10,13 @@ import Module from './Module.js';
 // import { apiRequestPost } from '../api/apiRequestPost.js';
 import { Records, LoadingMessage } from '../../model/datafiles/getRecords.js'
 import { API } from '../../model/datafiles/DBapi.js'
+import { apiRequest as postcode } from '../../components/api/Postcode.js'
+import Accessor from '../../model/Accessor.js'
 
 function Modules() {
   // Properties
-  const endPoint = 'Modules'
+  const endPoint = "Modules"
+  const endPointSlash = "Modules/"
   const method = 'GET'
   const records = Records(endPoint, method)
   const loadingMessage = LoadingMessage && LoadingMessage
@@ -27,20 +30,12 @@ function Modules() {
   const [ favourites, setFavourites ] = useState([]);
   const [ editingModule, setEditingModule ] = useState(null);
   
-  // useEffect((records) => { fetchRecords() } , [])
+  
 
-  // const fetchRecords = async (records) => {
-  //   await records && setModules(records)
-  // }
-
-  // !modules && records && setModules( records )
 
   // Methods
 
-  const api = (method, record) => {
-    console.log(record)
-    API(endPoint, method, record)
-  }
+  
 
   const deleteModule = (moduleId) => {
     const newModules = modules.filter((each) => each.ModuleID !== moduleId)
@@ -93,23 +88,55 @@ function Modules() {
     setModules(newModules);
   }
 
+
+  const endpointStr = 'Modules'
+  const accessor = new Accessor({endpointStr})
+
+  const handleAdd = async (newModule) => {
+    const outcome = await accessor.create(newModule);
+  }
+
+  const handleModify = async (targetModule) => {
+    // console.log(JSON.stringify(null));
+    const outcome = await accessor.update(targetModule.ModuleID, targetModule);
+    // outcome.success
+      // ? loadModules()
+      // : buildErrorModal("Add Modify Delete module error", outcome.response);
+  }
+
+  const handleDelete = async (id) => {
+    const outcome = await accessor.delete(id);
+  }
+
+
+
   const getModules_ = () => {
-    api('get')
+    API(endPoint, "GET")
   }
   const getModule_ = (record) => {
-    const targetId = record.ModuleID
-    api('get',targetId)
+    const id = record.ModuleID
+    const endPoint_ = endPointSlash + id    
+    API(endPoint_, "GET", record)
   }
   const editModule_ = (record) => {
-    const targetId = record.ModuleID
-    api('put', record)
+    const id = record.ModuleID
+    const endPoint_ = endPointSlash + id    
+
+    // API(endPoint_, "PUT", record)
+    
+    handleModify(record)
+
+    // postcode()
   }
-  const deleteModule_ = (record) => {
-    const targetId = record.ModuleID
-    api('delete', targetId)
+  function deleteModule_(recordID) {
+    const endPoint_ = endPointSlash + recordID    
+    // API(endPoint_, "DELETE")
+    
+    handleDelete(recordID)
   }
-  const addModule_ = (module, record) => {
-    api('post', record)
+  const addModule_ = (record) => {
+    API(endPoint, method, record)
+    // apiRecord("POST", record)
   }
 
   const closeModalHandler = () => {

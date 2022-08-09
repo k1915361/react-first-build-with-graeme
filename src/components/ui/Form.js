@@ -132,7 +132,6 @@ function Form(props) {
   };
 
   const handleModuleLevelValidation = (level) => {
-    console.log(level ? `` : ``)
     if (level) {
       return true;
     } else {
