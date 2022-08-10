@@ -6,18 +6,17 @@ import tableOfUsers from '../../model/datafiles/tableOfUsers.js'
 
 function Form(props) {
   // Properties
-  let image, name, level, code, lId, id;
-  const recordType = props.recordType; // 'Module' or 'User'
+  let image, name, level, code, leaderId, id;
+  const recordType = props.recordType; // 'Module' 'User'
   
-
-  //    MODULE SPECIFIC, MOVE TO MODULES
+  //  MOVE TO MODULES
   const strID = recordType+'ID'; // 'Module' or 'User' + 'ID'
-  const strImageURL = recordType+'Image'; //  
+  const strImageURL = recordType+'ImageURL';   
   const strName = recordType+'Name'; 
   const strLevel = recordType+'Level'; 
   const strCode = recordType+'Code'; 
   const strLeaderID = recordType+'LeaderID'; 
-  //            MOVE TO MODULES
+  //  MOVE TO MODULES
   
 
   if (props.record) {
@@ -27,7 +26,7 @@ function Form(props) {
     name = r[strName];
     level = r[strLevel];
     code = r[strCode];
-    lId = r[strLeaderID];
+    leaderId = r[strLeaderID];
     id = r[strID];
   }
 
@@ -50,7 +49,7 @@ function Form(props) {
 
   const handleAdd = (e) => {
     setRecord({...record, [strID]: props.onGetNewRecordID()})
-    console.log(record)
+    // console.log(record)
     handleAddRecord(record);
   };
 
@@ -83,20 +82,6 @@ function Form(props) {
   const getTitle = () => {
     return props.title ? props.title : "Add";
   };
-  
-  const autoFillEditForm_anotherVersion = () => {
-    if (code && "" === record[strID]) {
-      setRecord({...record, 
-        [strCode]:code,
-        [strName]:name,
-        [strLevel]:level,
-        [strImageURL]:image,
-        [strLeaderID]:lId,
-        [strID]:id,
-        }
-      )
-    }
-  }
 
   const autoFillEditForm_ = () => {
     if (
@@ -112,7 +97,7 @@ function Form(props) {
         [strName]:name,
         [strLevel]:level,
         [strImageURL]:image,
-        [strLeaderID]:lId,
+        [strLeaderID]:leaderId,
         [strID]:id,    
     })
     }
@@ -235,7 +220,9 @@ function Form(props) {
         
         {TooltipInput(
           strCode,
-          handleModuleCodeValidation(record[strCode]) ? recordType+" Code" : recordType+" Code e.g. CI0123",
+          handleModuleCodeValidation(record[strCode]) 
+            ? recordType+" Code" 
+            : recordType+" Code e.g. CI0123",
           record[strCode],
           "Code",
         )}
@@ -243,10 +230,10 @@ function Form(props) {
         {tooltip(
           "Select Module Leader",
           <select
-            key={recordType+'LeaderId'}  
-            id={recordType+'LeaderId'}
-            value={record[recordType+'LeaderId']}
-            defaultValue={record[recordType+'LeaderId']}
+            key={strLeaderID}  
+            id={strLeaderID}
+            value={record[strLeaderID]}
+            defaultValue={record[strLeaderID]}
             onChange={(e) => handleValueChange(e.target)}
           >
             {ListofUsers ? (

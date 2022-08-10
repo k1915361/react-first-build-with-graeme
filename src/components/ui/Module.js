@@ -24,7 +24,7 @@ function Module(props) {
  return (
  <div className='module'>
   <Card key={record.ModuleID}>
-   <img src={record.ModuleImage} alt=''></img>
+   <img src={record.ModuleImageURL} alt=''></img>
    <p>{record.ModuleName}</p>
    {tooltip('Level',
       paragraph('moduleLevel',record.ModuleLevel)

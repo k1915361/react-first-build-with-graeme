@@ -1,49 +1,60 @@
 import './Modules.css'
 import { useState, useEffect } from 'react';
-import { apiRequest } from '../api/apiRequest.js';
 import Favourites from '../pages/Favourites.js';
 import Form from './Form.js';
 import Edit from './Edit.js';
 import Backdrop from './Backdrop.js';
 import Modal from './Modal.js';
 import Module from './Module.js';
-// import { apiRequestPost } from '../api/apiRequestPost.js';
 import { Records, LoadingMessage } from '../../model/datafiles/getRecords.js'
-import { API } from '../../model/datafiles/DBapi.js'
-import { apiRequest as postcode } from '../../components/api/Postcode.js'
 import Accessor from '../../model/Accessor.js'
 
 function Modules() {
-  // Properties
-  const endPoint = "Modules"
-  const endPointSlash = "Modules/"
+  // PROPERTIES
+  const endpointStr = 'Modules'
   const method = 'GET'
-  const records = Records(endPoint, method)
   const loadingMessage = LoadingMessage && LoadingMessage
-
+  const accessor = new Accessor({endpointStr})
+  const records = Records(endpointStr, method)
+  // const modules = records && records
+  let consoleLogTest
+  
   const [ modalIsOpen, setModalIsOpen ] = useState(false);
   const [ selectedModuleId , selectModuleId ] = useState();
   
-  // Hooks
-  const modules = records && records
+  // HOOKS
   const [ moduless, setModules ] = useState(null);
   const [ favourites, setFavourites ] = useState([]);
   const [ editingModule, setEditingModule ] = useState(null);
-  
-  
+  const [ test, setTest ] = useState()
 
+  const recordName = 'Module'
+  const id_ = `${recordName}ID`; 
+  const name_ = `${recordName}Name`; 
+  const code_ = `${recordName}Code`; 
+  const level_ = `${recordName}Level`; 
+  const leaderid_ = `${recordName}LeaderID`; 
+  const image_ = `${recordName}ImageURL`;   
 
-  // Methods
+  const record = 'example record'
+  const id = record[id_]
+  const name = record[name_]
+  const code = record[code_]
+  const level = record[level_]
+  const leaderid = record[leaderid_]
+  const image = record[image_]
 
-  
-
-  const deleteModule = (moduleId) => {
-    const newModules = modules.filter((each) => each.ModuleID !== moduleId)
-    setModules(newModules); 
+  let data
+  const didMount = () => {
+    accessor.list().then((result) => { setTest(result.response) } )
   }
-  const addModule = (module) => {
-    setModules([...modules, module]); 
-  }
+
+  useEffect(() => { didMount() }, [  ] )
+
+  const modules = test && test
+
+  // METHODS
+  // consoleLogTest = test 
 
   const closeEditForm = () => {
     setEditingModule(null);
@@ -63,108 +74,47 @@ function Modules() {
 
   const removeFavourite = (moduleId) => {
     moduleId = getIndex(moduleId);
-    const newFavourites = favourites.filter(each => each.ModuleID !== moduleId);
+    const newFavourites = favourites.filter(each => each[id_] !== moduleId);
 
     setFavourites(newFavourites);
   }
 
   const getIndex = (id) => {
-    return modules.findIndex(module => module.ModuleID === id)+1;
+    return modules.findIndex(module => module[id_] === id)+1;
   }
 
   const getNewModuleID = () => {
     return (modules.length)+1;
   }
-
-  const editModule = (module) => {
-    const targetId = module.ModuleID
-    const newModules = modules.map(m => {
-        if(m.ModuleID === targetId) {
-            return module
-        }
-        return m;
-    });
-
-    setModules(newModules);
-  }
-
-  const c = new Object()
-  c.log = (object) => {
-    console.log(object)
-  }
-
-  const endpointStr = 'Modules'
-  const accessor = new Accessor({endpointStr})
-
-  const handleAdd = async (newModule) => {
-    const outcome = await accessor.create(newModule);
-    // console.log(outcome)
-  }
   
-  const loadModules = () => {
-    ;
-  }
-  const buildErrorModal = () => {
-    ;
-  }
-
-
-  const handleModify = async (targetModule) => {
-    const outcome = await accessor.update(targetModule.ModuleID, targetModule);
+  const loadModules = () => { ;}
+  const buildErrorModal = () => { ;}
+  
+  const handleAdd = async (record) => {
+    consoleLogTest = await accessor.create(record)
+      // .then((response) => console.log(response.result));
     
-    c.log(outcome)
+    // console.log( consoleLogTest.response.text() )
+    // console.log( consoleLogTest.response.result )
+    
+    
+    didMount()
+  }
 
-    outcome.success
-    ? loadModules()
-    : buildErrorModal("Add Modify Delete module error", outcome.response);
+  const handleModify = async (record) => {
+    consoleLogTest = await accessor.update(record[id_], record);
+    
+    consoleLogTest.success
+      ? loadModules()
+      : buildErrorModal("Add Modify Delete module error", consoleLogTest.response);
+    didMount()
   }
 
   const handleDelete = async (id) => {
-    const outcome = await accessor.delete(id);
+    consoleLogTest = await accessor.delete(id);
+    didMount()
   }
-
-
-
-  const getModules_ = () => {
-    API(endPoint, "GET")
-  }
-  const getModule_ = (record) => {
-    const id = record.ModuleID
-    const endPoint_ = endPointSlash + id    
-    API(endPoint_, "GET", record)
-  }
-  const editModule_ = (record) => {
-    const id = record.ModuleID
-    const endPoint_ = endPointSlash + id    
-
-    // API(endPoint_, "PUT", record)
-    
-    delete record.ModuleImage
-    
-    handleModify(record)
-
-    // postcode()
-  }
-  function deleteModule_(recordID) {
-    const endPoint_ = endPointSlash + recordID    
-    // API(endPoint_, "DELETE")
-    
-    handleDelete(recordID)
-  }
-  const addModule_ = (record) => {
-    // API(endPoint, method, record)
-    // apiRecord("POST", record)
-    
-    record.ModuleLeaderId = (parseInt(record.ModuleLeaderId))
-    record.ModuleLevel = (parseInt(record.ModuleLevel))
-    // record.ModuleImageURL = record.ModuleImage
-    // delete record.ModuleImage
-    
-    console.log(record)
-
-    handleAdd(record)
-  }
-
+  
   const closeModalHandler = () => {
     setModalIsOpen(false);
   }
@@ -177,22 +127,43 @@ function Modules() {
     selectModuleId(moduleId);
   }
   
+  consoleLogTest && console.log( consoleLogTest )
+
+  const renderModule = (data) => {
+    return (
+      <Module 
+        key={data[id_]}
+        record={data}
+
+        onIconClick={deleteHandler} 
+        onSelectDeleteRecord={() => doSelectModule(data[id_])} 
+
+        onSelectEditRecord={() => selectEditModule(data[id_])}
+
+        onUnfavourite={() => removeFavourite(data[id_])}
+        onFavourite={() => addFavourite(data[id_])}   
+        
+        recordType = 'Module'
+      ></Module>
+    )
+  }
+
   // View
   return (
     <div className='modules'>
       <Favourites>
         {favourites.map((favourite) => (
           <Module 
-            key={favourite.ModuleID}
-            module={favourite}
+            key={favourite[id_]}
+            record={favourite}
 
             onIconClick={deleteHandler} 
-            onSelectDeleteModule={() => doSelectModule(favourite.ModuleID)} 
+            onSelectDeleteRecord={() => doSelectModule(favourite[id_])} 
 
-            onSelectEditModule={() => selectEditModule(favourite.ModuleID)}
+            onSelectEditRecord={() => selectEditModule(favourite[id_])}
 
-            onUnfavourite={() => addFavourite(favourite.ModuleID)}
-            onFavourite={() => removeFavourite(favourite.ModuleID)}     
+            onUnfavourite={() => addFavourite(favourite[id_])}
+            onFavourite={() => removeFavourite(favourite[id_])}     
           >
           </Module>    
         ))}
@@ -203,42 +174,59 @@ function Modules() {
       {modules 
       ? 
         modules.map((module) => (
-          isEditing(module.ModuleID) ? 
+          isEditing(module[id_]) ? 
           <Edit 
-            key={module.ModuleID}
+            key={module[id_]}
             onCloseEditForm={() => closeEditForm()} 
             record={module}
-            onEdit={(module) => editModule_(module)}
+            onEdit={(module) => handleModify(module)}
             recordType='Module'
           />
           :
           <Module 
-            key={module.ModuleID}
+            key={module[id_]}
             record={module}
 
             onIconClick={deleteHandler} 
-            onSelectDeleteRecord={() => doSelectModule(module.ModuleID)} 
+            onSelectDeleteRecord={() => doSelectModule(module[id_])} 
 
-            onSelectEditRecord={() => selectEditModule(module.ModuleID)}
+            onSelectEditRecord={() => selectEditModule(module[id_])}
 
-            onUnfavourite={() => removeFavourite(module.ModuleID)}
-            onFavourite={() => addFavourite(module.ModuleID)}   
+            onUnfavourite={() => removeFavourite(module[id_])}
+            onFavourite={() => addFavourite(module[id_])}   
             
             recordType = 'Module'
           ></Module>
         ))
       : 
-        loadingMessage
+        <div>
+        <Module 
+          key={null}
+          record={
+            {'ModuleName':`Example Record UI. ${LoadingMessage}`}
+          }
+
+          onIconClick={deleteHandler} 
+          onSelectDeleteRecord={() => doSelectModule()} 
+
+          onSelectEditRecord={() => selectEditModule()}
+
+          onUnfavourite={() => removeFavourite()}
+          onFavourite={() => addFavourite()}   
+          
+          recordType = 'Module'
+        ></Module>
+        </div>
       }
       {modalIsOpen && 
         <Modal 
-          onConfirm={() => deleteModule_(selectedModuleId)} 
+          onConfirm={() => handleDelete(selectedModuleId)} 
           onClose={closeModalHandler} 
         />
       }
       {modalIsOpen && <Backdrop onBackdrop={closeModalHandler}/>}
       <Form 
-        onAddRecord={(module) => addModule_(module)} 
+        onAddRecord={(module) => handleAdd(module)} 
         onGetNewRecordID={() => getNewModuleID()}
         onCloseEditForm={() => null}
         recordType = 'Module'

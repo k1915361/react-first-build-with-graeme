@@ -33,7 +33,7 @@
 } */
 
 @keyframes tooltipDelay {
-    0%    {  }
+    0%    { pointer-events: none; }
     20%   {  }
     80%   { 
         color: transparent; 
