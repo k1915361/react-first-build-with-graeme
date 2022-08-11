@@ -5,6 +5,7 @@ import User from './User.js';
 import { useState } from 'react';
 import Edit from './Edit.js';
 import { Records, LoadingMessage } from '../../model/datafiles/getRecords';
+import Accessor from '../../model/Accessor.js'
 
 function Users() {
   // Properties
@@ -19,6 +20,18 @@ function Users() {
   const [ editing, setEditing ] = useState(null);
   const [ records, setRecords ] = useState(tableOfUsers)
   const recordType = 'user'
+
+  const usersEndPointStr = 'Users'
+  const accessor = new Accessor({usersEndPointStr})
+  const didMount = () => {
+    accessor.list().then((result) => { setTest(result.response) } )
+  }
+
+  useEffect(() => { didMount() }, [  ] )
+
+  const modules = test && test
+
+  modules && console.log( modules )
 
   // Methods
   
