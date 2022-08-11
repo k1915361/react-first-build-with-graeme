@@ -8,6 +8,7 @@ import Modal from './Modal.js';
 import Module from './Module.js';
 import { Records, LoadingMessage } from '../../model/datafiles/getRecords.js'
 import Accessor from '../../model/Accessor.js'
+import Tooltip from './Tooltip';
 
 function Modules() {
   // PROPERTIES
@@ -26,6 +27,8 @@ function Modules() {
   const [ moduless, setModules ] = useState(null);
   const [ favourites, setFavourites ] = useState([]);
   const [ editingModule, setEditingModule ] = useState(null);
+  const [ isFavouriteShow, setIsFavouriteShow ] = useState(null);
+  
   const [ test, setTest ] = useState()
 
   const recordName = 'Module'
@@ -129,7 +132,7 @@ function Modules() {
   
   consoleLogTest && console.log( consoleLogTest )
 
-  const renderModule = (data) => {
+  const renderModule = (data, isFavourite) => {
     return (
       <Module 
         key={data[id_]}
@@ -140,8 +143,16 @@ function Modules() {
 
         onSelectEditRecord={() => selectEditModule(data[id_])}
 
-        onUnfavourite={() => removeFavourite(data[id_])}
-        onFavourite={() => addFavourite(data[id_])}   
+        onUnfavourite = {() => 
+          isFavourite 
+            ? null
+            : removeFavourite(data[id_])
+        }
+        onFavourite = {() => 
+          isFavourite 
+            ? removeFavourite(data[id_]) 
+            : addFavourite(data[id_])
+        }
         
         recordType = 'Module'
       ></Module>
@@ -151,25 +162,18 @@ function Modules() {
   // View
   return (
     <div className='modules'>
-      <Favourites>
-        {favourites.map((favourite) => (
-          <Module 
-            key={favourite[id_]}
-            record={favourite}
-
-            onIconClick={deleteHandler} 
-            onSelectDeleteRecord={() => doSelectModule(favourite[id_])} 
-
-            onSelectEditRecord={() => selectEditModule(favourite[id_])}
-
-            onUnfavourite={() => addFavourite(favourite[id_])}
-            onFavourite={() => removeFavourite(favourite[id_])}     
-          >
-          </Module>    
+      <favourites >
+        <Tooltip message='Click to Open & Close Favourites'>
+          <div className='title' onClick={() => { setIsFavouriteShow(!isFavouriteShow) }}>FAVOURITES</div>
+        </Tooltip>
+        {
+        isFavouriteShow &&
+        favourites.map((favourite) => (
+          renderModule(favourite, true)    
         ))}
-      </Favourites>
+      </favourites>
       
-      MODULES
+      <div className='title'>MODULES</div>
       <div className='cardContainer'>
       {modules 
       ? 
@@ -183,39 +187,11 @@ function Modules() {
             recordType='Module'
           />
           :
-          <Module 
-            key={module[id_]}
-            record={module}
-
-            onIconClick={deleteHandler} 
-            onSelectDeleteRecord={() => doSelectModule(module[id_])} 
-
-            onSelectEditRecord={() => selectEditModule(module[id_])}
-
-            onUnfavourite={() => removeFavourite(module[id_])}
-            onFavourite={() => addFavourite(module[id_])}   
-            
-            recordType = 'Module'
-          ></Module>
+          renderModule(module)
         ))
       : 
         <div>
-        <Module 
-          key={null}
-          record={
-            {'ModuleName':`Example Record UI. ${LoadingMessage}`}
-          }
-
-          onIconClick={deleteHandler} 
-          onSelectDeleteRecord={() => doSelectModule()} 
-
-          onSelectEditRecord={() => selectEditModule()}
-
-          onUnfavourite={() => removeFavourite()}
-          onFavourite={() => addFavourite()}   
-          
-          recordType = 'Module'
-        ></Module>
+        {renderModule({'ModuleName':`Example Record UI. ${LoadingMessage}`})}
         </div>
       }
       {modalIsOpen && 

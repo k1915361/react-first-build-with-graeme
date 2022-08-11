@@ -6,6 +6,12 @@ header {
     display: flex;
 }
 
+header .login img{
+  width: 12%;
+  /* filter: invert(1); */
+  margin-left: 10px;
+}
+
 header a img{
     filter:opacity(10%);
     /* filter: invert(1); */

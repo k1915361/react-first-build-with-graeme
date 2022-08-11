@@ -8,15 +8,25 @@
     margin-top: 40px;
     padding-inline: 20px;
     */
-     position: absolute;
-      /* static   relative  fixed   absolute  sticky  */ 
+    position: absolute;
+    /* static   relative  fixed   absolute  sticky  */ 
     /* background-color: rgb(0, 0, 0); */
     /* color: rgb(255, 255, 255); */
+    /* right:0%; */
+    /* left:20%; */
     
     font-weight: bolder;
     z-index: 1;
     pointer-events: none;
     
+}
+
+.login .message {
+  font-size:small;
+  width: 25% ;
+  right:2%;
+  overflow-wrap: break-word;
+  /* left:-20%; */
 }
 
 /* .tooltip {
