@@ -3,11 +3,15 @@ import "./Form.css";
 import Tooltip from "./Tooltip.js";
 import { Records, LoadingMessage } from "../../model/datafiles/getRecords";
 import tableOfUsers from '../../model/datafiles/tableOfUsers.js'
+import Accessor from '../../model/Accessor.js'
+
 
 function Form(props) {
   // Properties
   let image, name, level, code, leaderId, id;
   const recordType = props.recordType; // 'Module' 'User'
+  const usersEndPointStr = 'Users'
+  const userAccessor = new Accessor({usersEndPointStr})
   
   //  MOVE TO MODULES
   const strID = recordType+'ID'; // 'Module' or 'User' + 'ID'
@@ -18,7 +22,17 @@ function Form(props) {
   const strLeaderID = recordType+'LeaderID'; 
   //  MOVE TO MODULES
   
+  let data
+  const didMount = () => {
+    userAccessor.list().then((result) => { setTest(result.response) } )
+  }
 
+  useEffect(() => { didMount() }, [  ] )
+
+  const modules = test && test
+
+  modules && console.log( modules )
+  
   if (props.record) {
     const r = props.record;
     
