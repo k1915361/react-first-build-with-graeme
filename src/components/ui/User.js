@@ -17,93 +17,98 @@ function User(props) {
   const typeid_ = `${recordName}UsertypeID`; 
   const level_ = `${recordName}Level`; 
   const image_ = `${recordName}ImageURL`;
-  const tooltipMessage = {
+  const message = {
     [image_]: 'Image',
     [fname_]: 'First Name',
     [lname_]: 'Last Name',
     [email_]: 'Email',
     [password_]: 'Password',
-    [registered_]: 'Registered',
+    [registered_]: 'Registered State',
+    [registered_+true]: 'Registered',
+    [registered_+false]: 'Not Registered',
     [typeid_]: 'Type ID',
     [level_]: 'Level 3 - 7' ,
   }
-  const isRegisteredMessage_ = {
-    true: 'Registered',
-    false: 'Not Registered'
-  }
-
+  
   // States
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser ] = useState('');
-
   const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
 
   // Methods
-  const handleTextChangeTEST = (target) => {
-    setUser({...user, [target.id]: target.value})
-  }
-
-  const renderTextInput = (id, value) => {
-    return (
-      <input 
-        id={id} 
-        type='text' 
-        placeholder={value.toString()} 
-        defaultValue={value} 
-        onChange={(e) => handleTextChangeTEST(e.target)}
-      />
-    )
-  }
-  
   const renderParagraph = (value) => {
     return (
       <p>{value}</p>
     )
   }
 
-  const renderWhich = (id, value) => {
+  const handleTextChangeTEST = (target) => {
+    setUser({...user, [target.id]: target.value})
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e)
+    setUser(...user, e);
+  }
+
+  const renderWhich = (prop, value) => {
+    value = prop === registered_ ? message[prop+user[prop]] : value
+    prop === registered_ && console.log( message[prop+user[prop]])
+
     return (
-      id === image_ 
+      prop === image_ 
       ? renderImage(value) 
       : renderParagraph( value )
     )
   }
 
-  const TooltipInput = (id) => {
-    const value = (id === registered_ 
-    ? isRegisteredMessage_[user[id]] 
-    : user[id])
-    const message = tooltipMessage[id]
-    console.log(isRegisteredMessage_[(user[id])])
+  const renderTextInput = (prop, value) => {
+    return (
+      <input 
+        prop={prop} 
+        type='text' 
+        placeholder={prop === registered_ ? message[prop+user[prop]]: value} 
+        defaultValue={value} 
+        onChange={(e) => handleTextChangeTEST(e.target)}
+      />
+    )
+  }
 
-    return renderTooltip( message, 
+  const TooltipInput = (prop) => {
+    const value = user[prop];
+    const message_ = prop === registered_ ? message[prop+user[prop]] : message[prop]  ;    
+
+    return renderTooltip( message_, 
       renderOnClickSetIsEditing(
         isEditing 
-        ? id === registered_ 
-        ? renderRegisterdOption(id, value) 
-        : renderTextInput(id, value)
-        : renderWhich(id, value)
+        ? (prop === registered_ ? renderRegisterdOption(prop, value) : renderTextInput(prop, value)) : renderWhich(prop, value)
       )
     )
   }
 
-  const renderSelect = (id, value, children) => {
-    return <select  
-      id={id}
-      value={value}
-      // defaultValue={value}
-      onChange={(e) => handleTextChangeTEST(e.target)}
-    >
-      {children}
-    </select>
+  const renderSelect = (prop, value, children) => {
+    return (
+      <select  
+        prop={prop}
+        value={value}
+        onChange={(e) => handleTextChangeTEST(e.target)}
+      >
+        <option value={false} >Not Registered</option> 
+        <option value={true} >Registered</option>
+        {/* {children} */}
+      </select>
+    )
   }
     
-  const renderRegisterdOption = (id, value) => {
-    return renderSelect(id, value,
-      <>
-        <option value={false} >Not Registered</option> 
-        <option value={true} >Registered</option> 
-      </>
+  const renderRegisterdOption = (prop, value) => {
+    return (
+      renderSelect(prop, value,
+        <>
+          <option value={false} >Not Registered</option> 
+          <option value={true} >Registered</option> 
+        </>
+      )
     )
   }
 
@@ -124,17 +129,7 @@ function User(props) {
       <img className='userThumbnail' src={value} alt=''/>
     )
   }
-
-  const isRegisteredMessage = (registered) => {
-    return registered ? 'Registered' : 'Not Registered'
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(e)
-    setUser(...user, e);
-  }
-
+  
   // View
   const User = props.record;
   
@@ -154,17 +149,6 @@ function User(props) {
                 {TooltipInput(email_) }
                 {TooltipInput(password_) }
                 {TooltipInput(registered_) }
-                <select  
-                  id={user[id_]}
-                  value={user[registered_]}
-                  // defaultValue={value}
-                  onChange={(e) => handleTextChangeTEST(e.target)}
-                >
-                  <option value={false} >Not Registered</option> 
-                  <option value={true} >Registered</option> 
-                </select>
-
-
                 {TooltipInput(typeid_) }
                 {TooltipInput(level_)}
                 {isEditing && 
