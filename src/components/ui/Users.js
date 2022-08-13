@@ -53,7 +53,6 @@ function Users() {
   // Methods
   const handleAdd = async (record) => {
     consolelog = await accessor.create(record);
-    // console.log( consolelog.response.text() )    
     didMount()
   }
 
@@ -94,11 +93,11 @@ function Users() {
   const openEditForm = (record) => {
     return (
     <Edit 
-      key={record[recordType+'ID']}
-      onCloseEditForm={() => closeEditForm()} 
       record={record}
+      onCloseEditForm={() => closeEditForm()} 
       onEdit={(record) => handleModify(record)}
-      recordType='Module'
+      key={record[id_]}
+      recordType='User'
     />
     )
   }
@@ -115,10 +114,11 @@ function Users() {
           isEditing(record.UserID) 
           ? 
           <Edit
-            key={record[id_]}
-            onCloseEditForm={() => closeEditForm()} 
             record={record}
+            onCloseEditForm={() => closeEditForm()} 
             onEdit={(record) => handleModify(record)}
+            key={record[id_]}
+            recordType='User'      
           />
             : 
           <User 

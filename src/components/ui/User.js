@@ -17,6 +17,20 @@ function User(props) {
   const typeid_ = `${recordName}UsertypeID`; 
   const level_ = `${recordName}Level`; 
   const image_ = `${recordName}ImageURL`;
+  const tooltipMessage = {
+    [image_]: 'Image',
+    [fname_]: 'First Name',
+    [lname_]: 'Last Name',
+    [email_]: 'Email',
+    [password_]: 'Password',
+    [registered_]: 'Registered',
+    [typeid_]: 'Type ID',
+    [level_]: 'Level 3 - 7' ,
+  }
+  const isRegisteredMessage_ = {
+    true: 'Registered',
+    false: 'Not Registered'
+  }
 
   // States
   const [isEditing, setIsEditing] = useState(false);
@@ -40,47 +54,56 @@ function User(props) {
       />
     )
   }
-
-  
-  const getMessage = (id) => {
-    return (
-      id === image_ ? 'Image' :
-      id === fname_ ? 'First Name' :
-      id === lname_ ? 'Last Name' : 
-      id === email_ ? 'Email' : 
-      id === password_ ? 'Password' : 
-      id === registered_ ? 'Registered' : 
-      id === typeid_ ? 'Type ID' : 
-      id === level_ ? 'Level 3 - 7' : 
-      null
-    )
-  }
   
   const renderParagraph = (value) => {
     return (
       <p>{value}</p>
     )
   }
-  
+
   const renderWhich = (id, value) => {
-    console.log(id)
     return (
-      id === image_ ? renderImage(value) : 
-      renderParagraph( id === registered_ ? 
-        isRegisteredMessage(value) : value )
+      id === image_ 
+      ? renderImage(value) 
+      : renderParagraph( value )
     )
   }
 
   const TooltipInput = (id) => {
-    const value = user[id]
-    const message = getMessage(id)
+    const value = (id === registered_ 
+    ? isRegisteredMessage_[user[id]] 
+    : user[id])
+    const message = tooltipMessage[id]
+    console.log(isRegisteredMessage_[(user[id])])
 
     return renderTooltip( message, 
       renderOnClickSetIsEditing(
         isEditing 
-        ? renderTextInput(id, value)
+        ? id === registered_ 
+        ? renderRegisterdOption(id, value) 
+        : renderTextInput(id, value)
         : renderWhich(id, value)
       )
+    )
+  }
+
+  const renderSelect = (id, value, children) => {
+    return <select  
+      id={id}
+      value={value}
+      // defaultValue={value}
+      onChange={(e) => handleTextChangeTEST(e.target)}
+    >
+      {children}
+    </select>
+  }
+    
+  const renderRegisterdOption = (id, value) => {
+    return renderSelect(id, value,
+      <>
+        <option value={false} >Not Registered</option> 
+        <option value={true} >Registered</option> 
+      </>
     )
   }
 
@@ -108,79 +131,42 @@ function User(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(e)
     setUser(...user, e);
   }
 
   // View
   const User = props.record;
   
-
-  if (User) {
-    if (user === ''){
-      setUser(User);
-    }
-    if (
-      User.UserImageURL !== user.UserImageURL && 
-      User.UserFirstname !== user.UserFirstname && 
-      User.UserLastname !== user.UserLastname && 
-      User.UserEmail !== user.UserEmail && 
-      User.UserPassword !== user.UserPassword && 
-      User.UserRegistered !== user.UserRegistered && 
-      User.UserUsertypeID !== user.UserUsertypeID && 
-      User.UserLevel !== user.UserLevel 
-      ) {
-      setUser(User);
-    }
-  }
+  User && user === '' && setUser(User);
     
   // VIEW
   return (
-    <div>
+    <div >
       {renderTooltip('To Edit, Click on Card',
-        <div className='user'>
+        <div className='user' >
           {User ? 
             <Card>
               <form onSubmit={(e) => handleSubmit(e)}>
-                {TooltipInput(
-                  image_,
-                  'Image',
-                  user.UserImageURL
-                )}
-                {TooltipInput(
-                  fname_,
-                  'First Name',
-                  user.UserFirstname
-                )}
-                {TooltipInput(
-                  lname_,
-                  'Last Name',
-                  user.UserLastname
-                )}
-                {TooltipInput(
-                  email_,
-                  'Email',
-                  user.UserEmail
-                )}
-                {TooltipInput(
-                  password_,
-                  'Password',
-                  user.UserPassword
-                )}
-                {TooltipInput(
-                  registered_,
-                  `${user[registered_]}`,
-                  isRegisteredMessage(user[registered_])
-                )}
-                {TooltipInput(
-                  typeid_,
-                  'Type ID',
-                  user.UserUsertypeID
-                )}
-                {TooltipInput(
-                  level_,
-                  'Level 3 - 7',
-                  user.UserLevel
-                )}
+                {TooltipInput(image_) }
+                {TooltipInput(fname_) }
+                {TooltipInput(lname_) }
+                {TooltipInput(email_) }
+                {TooltipInput(password_) }
+                {TooltipInput(registered_) }
+                <select  
+                  id={user[id_]}
+                  value={user[registered_]}
+                  // defaultValue={value}
+                  onChange={(e) => handleTextChangeTEST(e.target)}
+                >
+                  <option value={false} >Not Registered</option> 
+                  <option value={true} >Registered</option> 
+                </select>
+
+
+                {TooltipInput(typeid_) }
+                {TooltipInput(level_)}
                 {isEditing && 
                   <>
                   <button onClick={() => setIsEditing(!isEditing)}>X</button>
