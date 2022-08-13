@@ -11,5 +11,13 @@ nav div.navItem:hover {
     box-shadow: 0px 0px 21px 0px #f4cdd3;
     /* background-color: #f4cdd3; */
 }
-nav div.navItem a { color: white; text-decoration: none;}
-nav div.navItem a.navSelected { color: black;}
+nav div.navItem a { 
+    color: rgb(184, 184, 184); 
+    text-decoration: none;
+}
+nav div.navItem a.navSelected { 
+    color: black;
+}
+nav div.navItem a:hover { 
+    color: black;
+}

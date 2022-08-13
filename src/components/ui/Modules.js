@@ -56,8 +56,29 @@ function Modules() {
 
   const modules = test && test
 
-  // METHODS
-  // consoleLogTest = test 
+  // METHODS 
+  const loadModules = () => { ;}
+  const buildErrorModal = () => { ;}
+  
+  const handleAdd = async (record) => {
+    consoleLogTest = await accessor.create(record);
+    // console.log( consoleLogTest.response.text() )    
+    didMount()
+  }
+
+  const handleModify = async (record) => {
+    consoleLogTest = await accessor.update(record[id_], record);
+    
+    consoleLogTest.success
+      ? loadModules()
+      : buildErrorModal("Add Modify Delete module error", consoleLogTest.response);
+    didMount()
+  }
+
+  const handleDelete = async (id) => {
+    consoleLogTest = await accessor.delete(id);
+    didMount()
+  }
 
   const closeEditForm = () => {
     setEditingModule(null);
@@ -88,34 +109,6 @@ function Modules() {
 
   const getNewModuleID = () => {
     return (modules.length)+1;
-  }
-  
-  const loadModules = () => { ;}
-  const buildErrorModal = () => { ;}
-  
-  const handleAdd = async (record) => {
-    consoleLogTest = await accessor.create(record)
-      // .then((response) => console.log(response.result));
-    
-    // console.log( consoleLogTest.response.text() )
-    // console.log( consoleLogTest.response.result )
-    
-    
-    didMount()
-  }
-
-  const handleModify = async (record) => {
-    consoleLogTest = await accessor.update(record[id_], record);
-    
-    consoleLogTest.success
-      ? loadModules()
-      : buildErrorModal("Add Modify Delete module error", consoleLogTest.response);
-    didMount()
-  }
-
-  const handleDelete = async (id) => {
-    consoleLogTest = await accessor.delete(id);
-    didMount()
   }
   
   const closeModalHandler = () => {
@@ -162,7 +155,7 @@ function Modules() {
   // View
   return (
     <div className='modules'>
-      <favourites >
+      <div className='favourites'> 
         <Tooltip message='Click to Open & Close Favourites'>
           <div className='title' onClick={() => { setIsFavouriteShow(!isFavouriteShow) }}>FAVOURITES</div>
         </Tooltip>
@@ -171,7 +164,7 @@ function Modules() {
         favourites.map((favourite) => (
           renderModule(favourite, true)    
         ))}
-      </favourites>
+      </div>
       
       <div className='title'>MODULES</div>
       <div className='cardContainer'>

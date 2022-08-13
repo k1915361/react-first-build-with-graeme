@@ -17,17 +17,6 @@ function Users() {
   const accessor = new Accessor({endpointStr})
   const recordType = 'user'
   
-  const recordName = 'Users'
-  const id_ = `${recordName}ID`; 
-  const fname_ = `${recordName}Firstname`; 
-  const lname_ = `${recordName}Lastname`; 
-  const email_ = `${recordName}Email`; 
-  const password_ = `${recordName}Password`; 
-  const registered_ = `${recordName}Registered`; 
-  const typeid_ = `${recordName}UsertypeID`; 
-  const level_ = `${recordName}Level`; 
-  const image_ = `${recordName}ImageURL`;
-
   // States
   const [ selectedId , selectId ] = useState();
   const [ editing, setEditing ] = useState(null);
@@ -51,26 +40,6 @@ function Users() {
   // Context
 
   // Methods
-  const handleAdd = async (record) => {
-    consolelog = await accessor.create(record);
-    // console.log( consolelog.response.text() )    
-    didMount()
-  }
-
-  const handleModify = async (record) => {
-    consolelog = await accessor.update(record[id_], record);
-    
-    consolelog.success
-      ? didMount()
-      : console.log(consolelog.response);
-    console.log(record, 'asdfg')
-  }
-
-  const handleDelete = async (id) => {
-    consolelog = await accessor.delete(id);
-    didMount()
-  }
-
   const isEditing = (id) => {
     return id === selectedId;
   }
@@ -97,7 +66,7 @@ function Users() {
       key={record[recordType+'ID']}
       onCloseEditForm={() => closeEditForm()} 
       record={record}
-      onEdit={(record) => handleModify(record)}
+      onEdit={(record) => editRecord(record)}
       recordType='Module'
     />
     )
@@ -105,7 +74,7 @@ function Users() {
 
   consolelog && console.log( consolelog )
 
-
+  
   // View
   return (
     <div className='cardContainer'>
@@ -115,11 +84,11 @@ function Users() {
           isEditing(record.UserID) 
           ? 
           <Edit
-            key={record[id_]}
+            key={record.UserID}
             onCloseEditForm={() => closeEditForm()} 
             record={record}
-            onEdit={(record) => handleModify(record)}
-          />
+            onEdit={(record) => editRecord(record)}
+            />
             : 
           <User 
             onIsEditing={() => selectId(record.UserID)} 

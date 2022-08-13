@@ -12,7 +12,7 @@ export const apiCall = async (endpoint, method, body) => {
   const API_URL = 'http://localhost:5000/api/'
   const API_KEY = ''
 
-  // console.log(JSON.stringify(body) )
+  console.log( API_URL + endpoint + API_KEY,  JSON.stringify(body) )
 
   // Build request object
   let requestObj = { method: method }; // *GET, POST, PUT, DELETE, etc.

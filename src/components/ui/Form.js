@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Form.css";
 import Tooltip from "./Tooltip.js";
 import { Records, LoadingMessage } from "../../model/datafiles/getRecords";
@@ -22,6 +22,7 @@ function Form(props) {
   const strLeaderID = recordType+'LeaderID'; 
   //  MOVE TO MODULES
   
+  const { test, setTest } = useState()
   let data
   const didMount = () => {
     userAccessor.list().then((result) => { setTest(result.response) } )

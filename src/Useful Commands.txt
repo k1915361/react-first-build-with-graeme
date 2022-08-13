@@ -6,5 +6,6 @@ dir *react-first-build-with-graeme*.* /s
 code .
 
 Ctrl + P            (search)
-Ctrl + Shft + f     (indent)
+Ctrl + Shft + f     (search)
+Shft + Alt + F      (indent)
 Ctrl + K Ctrl + D   (find)

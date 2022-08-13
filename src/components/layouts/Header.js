@@ -1,4 +1,4 @@
-import './Header.css';
+import './Header.scss';
 import './Footer.css';
 import { Link } from 'react-router-dom';
 import tableOfUsers from '../../model/datafiles/tableOfUsers';
@@ -23,7 +23,7 @@ function Header() {
           <h1>React First Build</h1>
         </Link>
         <div className="login">
-          <p>Welcome Aang!</p>
+          <p>Welcome John Doe!</p>
           <Tooltip message={JSON.stringify(user) } >
             <img src={image} alt="Icon showing group" />
           </Tooltip>
