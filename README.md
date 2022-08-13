@@ -1,14 +1,13 @@
 # Learning React 
 
-![image](https://user-images.githubusercontent.com/67165821/175753806-8f35fedc-7494-4823-bff8-e33f57abdc39.png)
+![image](https://user-images.githubusercontent.com/67165821/184511191-2a058501-1062-4019-9005-578c08f950e6.png)
+![image](https://user-images.githubusercontent.com/67165821/184511161-8fa0f756-1976-4d9f-989f-878a7982d34c.png)
+
 
 Learning and exploring ReactJS.
 
-App with interactive university module cards.
+App with interactive university module, user, staff, student cards.
 
+Using React, Node, Express JS, working alongside with "first-api" repository.
 
-Now working on:
-- Edit details of each module
-- Try to Prevent repeated Calling of the class UsersPage from moduleLeader.js 
-- While also seperate the database access (UsersPage) and component files (Form)
-- Find useEffect alternative for this.
+Client side data Syncs with Server side data with modification, add, delete interaction of the data. 
