@@ -13,5 +13,4 @@ Using React, Node, Express JS, working alongside with "first-api" repository.
 Client side data Syncs with Server side data with modification, add, delete interaction of the data. 
 
 Now Todo
-- Finish users page backend interaction
 - Learn how to authenticate with user register
