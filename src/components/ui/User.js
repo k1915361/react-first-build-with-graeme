@@ -18,6 +18,7 @@ function User(props) {
   const level_ = `${recordName}Level`; 
   const image_ = `${recordName}ImageURL`;
   const message = {
+    [id_]: 'ID',
     [image_]: 'Image',
     [fname_]: 'First Name',
     [lname_]: 'Last Name',
@@ -26,14 +27,17 @@ function User(props) {
     [registered_]: 'Registered State',
     [registered_+true]: 'Registered',
     [registered_+false]: 'Not Registered',
-    [typeid_]: 'Type ID',
+    [typeid_]: 'User Type ID',
     [level_]: 'Level 3 - 7' ,
   }
+  const User = props.record;
   
   // States
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser ] = useState('');
   const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
+  
+  User && user === '' && setUser(User);
 
   // Methods
   const renderParagraph = (value) => {
@@ -42,19 +46,28 @@ function User(props) {
     )
   }
 
+  const renderRegistered = () => {
+    return (
+      <p>{message[registered_+user[registered_]]}</p>
+    )
+  }
+
   const handleTextChangeTEST = (target) => {
+    console.log(target.id, target.value)
     setUser({...user, [target.id]: target.value})
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e)
-    setUser(...user, e);
+
+    // setUser(...user, e);
+    props.onEdit(user);
   }
 
   const renderWhich = (prop, value) => {
     value = prop === registered_ ? message[prop+user[prop]] : value
-    prop === registered_ && console.log( message[prop+user[prop]])
+    // prop === registered_ && console.log( message[prop+user[prop]])
 
     return (
       prop === image_ 
@@ -66,11 +79,12 @@ function User(props) {
   const renderTextInput = (prop, value) => {
     return (
       <input 
+        id={prop}   
         prop={prop} 
         type='text' 
         placeholder={prop === registered_ ? message[prop+user[prop]]: value} 
         defaultValue={value} 
-        onChange={(e) => handleTextChangeTEST(e.target)}
+        onChange={(e) => {handleTextChangeTEST(e.target); console.log(e.target.id)}}
       />
     )
   }
@@ -90,6 +104,7 @@ function User(props) {
   const renderSelect = (prop, value, children) => {
     return (
       <select  
+        id={prop}  
         prop={prop}
         value={value}
         onChange={(e) => handleTextChangeTEST(e.target)}
@@ -130,10 +145,6 @@ function User(props) {
     )
   }
   
-  // View
-  const User = props.record;
-  
-  User && user === '' && setUser(User);
     
   // VIEW
   return (
@@ -142,23 +153,35 @@ function User(props) {
         <div className='user' >
           {User ? 
             <Card>
-              <form onSubmit={(e) => handleSubmit(e)}>
-                {TooltipInput(image_) }
-                {TooltipInput(fname_) }
-                {TooltipInput(lname_) }
-                {TooltipInput(email_) }
-                {TooltipInput(password_) }
-                {TooltipInput(registered_) }
-                {TooltipInput(typeid_) }
-                {TooltipInput(level_)}
-                {isEditing && 
-                  <>
+                
+              {isEditing 
+              ? 
+                <form 
+                  onSubmit={(e) => {handleSubmit(e); }}
+                >
+                  {TooltipInput(image_) }
+                  {TooltipInput(fname_) }
+                  {TooltipInput(lname_) }
+                  {TooltipInput(email_) }
+                  {TooltipInput(password_) }
+                  {TooltipInput(registered_) }
+                  {TooltipInput(typeid_) }
+                  {TooltipInput(level_)}
                   <button onClick={() => setIsEditing(!isEditing)}>X</button>
-                  <button type="submit" onClick={() => {setIsEditing(!isEditing)}}>O
-                  </button>
-                  </>
-                }
-              </form>
+                  <button type="submit" onClick={() => {setIsEditing(!isEditing); props.onEdit(user)}}>O</button>
+                </form>
+                :
+                <div onClick={() =>setIsEditing(true)}>
+                  {renderImage(user[image_])}
+                  {renderParagraph(user[fname_])}
+                  {renderParagraph(user[lname_])}
+                  {renderParagraph(user[email_])}
+                  {renderParagraph(user[password_])}
+                  {renderRegistered(user[registered_])}
+                  {renderParagraph(user[typeid_])}
+                  {renderParagraph(user[level_])}
+                </div>
+              }
             </Card>    
           : 
             loadingMessage

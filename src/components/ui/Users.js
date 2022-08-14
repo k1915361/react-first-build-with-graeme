@@ -17,7 +17,7 @@ function Users() {
   const accessor = new Accessor({endpointStr})
   const recordType = 'user'
   
-  const recordName = 'Users'
+  const recordName = 'User'
   const id_ = `${recordName}ID`; 
   const fname_ = `${recordName}Firstname`; 
   const lname_ = `${recordName}Lastname`; 
@@ -58,12 +58,10 @@ function Users() {
 
   const handleModify = async (record) => {
     consolelog = await accessor.update(record[id_], record);
-    
-    consolelog.success
-      ? didMount()
-      : console.log(consolelog.response);
-    console.log(record, 'asdfg')
-  }
+
+    consolelog.success ? didMount() : console.log(consolelog.response);
+    console.log(record, "");
+  };
 
   const handleDelete = async (id) => {
     consolelog = await accessor.delete(id);
@@ -124,6 +122,7 @@ function Users() {
           <User 
             onIsEditing={() => selectId(record.UserID)} 
             isEditing={isEditing} 
+            onEdit={(record) => handleModify(record)}
             record={record} 
             key={record.UserID}
             openEditForm={(record) => openEditForm(record)}
