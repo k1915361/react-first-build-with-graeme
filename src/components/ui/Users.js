@@ -1,7 +1,5 @@
 import './Users.sass';
-import tableOfUsers from '../../model/datafiles/tableOfUsers.js'
 import User from './User.js';
-// import { UserList, LoadingMessage } from '../../model/datafiles/users.js'
 import { useState, useEffect } from 'react';
 import Edit from './Edit.js';
 import { Records, LoadingMessage } from '../../model/datafiles/getRecords';
@@ -34,54 +32,35 @@ function Users() {
 
   const [ test, setTest ] = useState()
   
-  const didMount = () => {
-    accessor.list().then((result) => { 
-      setTest(result.response) 
-    } )
+  const didMount = async () => {
+    await accessor.list().then((result) => { setTest(result.response) } )
   }
   
   useEffect(() => { didMount() }, [  ] )
-
-  const [ recordss, setRecords ] = useState(test)
   
-  let records = test
-  let consolelog = test && test
-
-
+  const records = test 
+  
   // Context
 
   // Methods
+  const handleModify = async (record) => {
+    const outcome = await accessor.update(record[id_], record);
+
+    outcome.success ? didMount() : console.log(outcome.response);
+  };
+
   const handleAdd = async (record) => {
-    consolelog = await accessor.create(record);
+    const outcome = await accessor.create(record);
     didMount()
   }
 
-  const handleModify = async (record) => {
-    consolelog = await accessor.update(record[id_], record);
-
-    consolelog.success ? didMount() : console.log(consolelog.response);
-    console.log(record, "");
-  };
-
   const handleDelete = async (id) => {
-    consolelog = await accessor.delete(id);
+    const outcome = await accessor.delete(id);
     didMount()
   }
 
   const isEditing = (id) => {
     return id === selectedId;
-  }
-  
-  const editRecord = (record) => {
-    const id = record.UserID
-    const newRecords = records.map(r => {
-        if(r.UserID === id) {
-            return record
-        }
-        return r;
-    });
-
-    setRecords(newRecords);
   }
 
   const closeEditForm = () => {
@@ -100,13 +79,10 @@ function Users() {
     )
   }
 
-  consolelog && console.log( consolelog )
-
-
   // View
   return (
     <div className='cardContainer'>
-      <div className='title'>Users</div>
+      {/* <div className='title'>Users</div> */}
       {
         records && records.map((record) => (
           isEditing(record.UserID) 

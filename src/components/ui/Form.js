@@ -2,16 +2,17 @@ import { useState, useEffect } from "react";
 import "./Form.css";
 import Tooltip from "./Tooltip.js";
 import { Records, LoadingMessage } from "../../model/datafiles/getRecords";
-import tableOfUsers from '../../model/datafiles/tableOfUsers.js'
-import Accessor from '../../model/Accessor.js'
+import tableOfUsers from '../../model/datafiles/tableOfUsers.js';
+import Accessor from '../../model/Accessor.js';
 
 
 function Form(props) {
   // Properties
   let image, name, level, code, leaderId, id;
   const recordType = props.recordType; // 'Module' 'User'
-  const usersEndPointStr = 'Users'
-  const userAccessor = new Accessor({usersEndPointStr})
+  const usersEndPointStr = 'Users';
+  const endpointStr = 'Users';
+  const userAccessor = new Accessor({endpointStr});
   
   //  MOVE TO MODULES
   const strID = recordType+'ID'; // 'Module' or 'User' + 'ID'
@@ -22,17 +23,15 @@ function Form(props) {
   const strLeaderID = recordType+'LeaderID'; 
   //  MOVE TO MODULES
   
-  const { test, setTest } = useState()
+  const [ test, setTest ] = useState()
   let data
-  const didMount = () => {
-    userAccessor.list().then((result) => { setTest(result.response) } )
+  const didMount = async () => {
+    await userAccessor.list().then((result) => { setTest(result.response) } )
   }
 
   useEffect(() => { didMount() }, [  ] )
 
-  const modules = test && test
-
-  modules && console.log( modules )
+  const modules = test 
   
   if (props.record) {
     const r = props.record;
@@ -49,10 +48,7 @@ function Form(props) {
   const method = 'GET'
   const records = Records(endPoint, method)
   
-  const ListofUsers = records && records
-  
-  // UserList()
-  // ListofUsers
+  const ListofUsers = records
   
   // States
   const [record, setRecord] = useState('');
@@ -119,48 +115,12 @@ function Form(props) {
   };
   autoFillEditForm_();
 
-  const handleModuleCodeValidation = (code) => {
-    if (code && code.trim().match(/^[A-Z]{2}[0-9]{4}$/g)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const handleModuleNameValidation = (name) => {
-    if (name && name.match(/^[A-z]{2,}/)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const handleModuleLevelValidation = (level) => {
-    if (level) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const onValidation = (module) => {
+    return props.onValidation(module);
+  }
 
   const handleRecordValidations = (record) => {
-    let message = '';
-    if (!handleModuleNameValidation(record[strName])) {
-      message += 'Name is Invalid, e.g. Computing'
-    }
-    else if (!handleModuleLevelValidation(record[strLevel])) {
-      message += 'Level is Not Selected'      
-    } 
-    else if (!handleModuleCodeValidation(record[strCode])){
-      message += 'Code is Invalid, e.g. CI0123';
-    }
-    if(message){
-      window.alert(message)
-      return false;
-    }
-    else {
-      return true;
-    }
+    return props.onValidation(record);
   };
 
   const handleValueChange = (target) => {
@@ -211,7 +171,7 @@ function Form(props) {
 
         {TooltipInput(
           'ModuleName',
-          handleModuleNameValidation(record[strName]) 
+          onValidation(record) 
           ? "Module Name" : "Module Name e.g. Database",
           record[strName], 
           'Name'
@@ -221,10 +181,8 @@ function Form(props) {
           'Select Module Level',
           <select
             id={'ModuleLevel'}
-            // value={record[strLevel]}
-            defaultValue={record[strLevel] ? record[strLevel] : 3}
-            selected={record[strLevel] ? record[strLevel] : 3}
-            placeholder={record[strLevel] ? record[strLevel] : "Level"}
+            value={record[strLevel]}
+            placeholder={record ? record[strLevel] : "Level"}
             onChange={(e) => handleValueChange(e.target)}
           >
             {moduleLevels.map((l) => (
@@ -235,7 +193,7 @@ function Form(props) {
         
         {TooltipInput(
           strCode,
-          handleModuleCodeValidation(record[strCode]) 
+          onValidation(record) 
             ? recordType+" Code" 
             : recordType+" Code e.g. CI0123",
           record[strCode],
@@ -248,7 +206,6 @@ function Form(props) {
             key={strLeaderID}  
             id={strLeaderID}
             value={record[strLeaderID]}
-            defaultValue={record[strLeaderID]}
             onChange={(e) => handleValueChange(e.target)}
           >
             {ListofUsers ? (

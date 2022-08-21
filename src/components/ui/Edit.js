@@ -11,6 +11,7 @@ export default function Edit(props) {
         record={props.record}
         onCloseEditForm={onCloseEditForm}
         onEdit={(record) => props.onEdit(record)}
+        onValidation={(module) => props.onValidation(module)}
         tooltipTitle={'Edit ' + props.recordType + ' Form'}
         tooltipEdit={'Edit ' + props.recordType}
         recordType={props.recordType}

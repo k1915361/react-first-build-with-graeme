@@ -1,6 +1,5 @@
 import './Modules.css'
 import { useState, useEffect } from 'react';
-import Favourites from '../pages/Favourites.js';
 import Form from './Form.js';
 import Edit from './Edit.js';
 import Backdrop from './Backdrop.js';
@@ -18,7 +17,6 @@ function Modules() {
   const accessor = new Accessor({endpointStr})
   const records = Records(endpointStr, method)
   // const modules = records && records
-  let consoleLogTest
   
   const [ modalIsOpen, setModalIsOpen ] = useState(false);
   const [ selectedModuleId , selectModuleId ] = useState();
@@ -48,35 +46,63 @@ function Modules() {
   const image = record[image_]
 
   let data
-  const didMount = () => {
-    accessor.list().then((result) => { setTest(result.response) } )
+  const didMount = async () => {
+    await accessor.list().then((result) => { setTest(result.response) } )
   }
 
   useEffect(() => { didMount() }, [  ] )
 
-  const modules = test && test
+  const modules = test
 
   // METHODS 
-  const loadModules = () => { ;}
+  const loadModules = () => didMount()
   const buildErrorModal = () => { ;}
   
+  const isValid = (module) => {
+    return handleModuleCodeValidation(module.ModuleCode) &&
+    handleModuleNameValidation(module.ModuleName) &&
+    handleModuleLevelValidation(module.ModuleLevel) 
+     ? true 
+     : false
+  }
+  const handleModuleCodeValidation = (code) => {
+    if (code && code.trim().match(/^[A-Z]{2}[0-9]{4}$/g)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const handleModuleNameValidation = (name) => {
+    if (name && name.match(/^[A-z]{2,}/)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const handleModuleLevelValidation = (level) => {
+    if (level) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  
   const handleAdd = async (record) => {
-    consoleLogTest = await accessor.create(record);
-    // console.log( consoleLogTest.response.text() )    
+    console.log( await accessor.create(record));
     didMount()
   }
 
   const handleModify = async (record) => {
-    consoleLogTest = await accessor.update(record[id_], record);
+    const outcome = await accessor.update(record[id_], record);
+    const o = outcome;
     
-    consoleLogTest.success
+    outcome.success
       ? loadModules()
-      : buildErrorModal("Add Modify Delete module error", consoleLogTest.response);
-    didMount()
+      : buildErrorModal("Add Modify Delete module error", console.log(await outcome.response));
   }
 
   const handleDelete = async (id) => {
-    consoleLogTest = await accessor.delete(id);
+    const outcome = await accessor.delete(id);
     didMount()
   }
 
@@ -122,8 +148,6 @@ function Modules() {
   const doSelectModule = (moduleId) => {
     selectModuleId(moduleId);
   }
-  
-  consoleLogTest && console.log( consoleLogTest )
 
   const renderModule = (data, isFavourite) => {
     return (
@@ -173,6 +197,7 @@ function Modules() {
         modules.map((module) => (
           isEditing(module[id_]) ? 
           <Edit 
+            onValidation={(module) => isValid(module)}
             key={module[id_]}
             onCloseEditForm={() => closeEditForm()} 
             record={module}
@@ -196,6 +221,7 @@ function Modules() {
       {modalIsOpen && <Backdrop onBackdrop={closeModalHandler}/>}
       <Form 
         onAddRecord={(module) => handleAdd(module)} 
+        onValidation={(module) => isValid(module)}
         onGetNewRecordID={() => getNewModuleID()}
         onCloseEditForm={() => null}
         recordType = 'Module'

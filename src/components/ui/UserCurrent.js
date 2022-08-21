@@ -4,12 +4,15 @@ import { apiRequest } from '../api/apiRequest.js';
 import Card from './Card.js';
 import Tooltip from './Tooltip.js';
 import tableOfUsers from '../../model/datafiles/tableOfUsers.js'
+import Accessor from '../../model/Accessor.js'
 // import Form from './FormReuse.js';
 
 function User() {
   // Properties
   const API_URL = 'https://my.api.mockaroo.com/';
   const API_KEY = '?key=bb6adbc0';
+  const endpointStr = 'Users'
+  const accessor = new Accessor({endpointStr})
   
   // Statesw
   const [isEditing, setIsEditing] = useState(false);
@@ -17,6 +20,8 @@ function User() {
 
   const [loadingMessage, setLoadingMessage] = useState("Loading records ...");
   const [ListOfUsers, setListOfUsers] = useState([]);
+
+  const [ test, setTest ] = useState()
 
   // Context
   useEffect(() => { fetchUsers() }, []);
@@ -30,7 +35,11 @@ function User() {
     else setLoadingMessage(`Error ${outcome.response.status}: Modules could not be found.`);
       
   }
-  
+  const didMount = async () => {
+    await accessor.list().then((result) => { setTest(result.response) } )
+  }
+//   useEffect(() => { didMount() }, [  ] )
+
   // console.log(ListOfUsers && 'ListOfUsers')
 
   // Methods

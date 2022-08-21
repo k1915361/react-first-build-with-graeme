@@ -2,8 +2,8 @@ import API from '../components/api/API.js';
 
 class Accessor {
   constructor(props){  
-    this.endpointStr = props.endpointStr 
-    this.getEndpoint = (id) => { return `${props.endpointStr}/${id}` }
+    this.endpointStr = props.endpointStr;
+    this.getEndpoint = (id) => `${props.endpointStr}/${id}`
   }
 
   create = (record) =>      API.post( this.endpointStr, record );
