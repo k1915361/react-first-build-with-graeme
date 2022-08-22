@@ -4,44 +4,48 @@ import Tooltip from "./Tooltip.js";
 import { Records, LoadingMessage } from "../../model/datafiles/getRecords";
 import tableOfUsers from '../../model/datafiles/tableOfUsers.js';
 import Accessor from '../../model/Accessor.js';
+import Input from "./Input";
+import InputSelect from "./InputSelect";
 
 
 function Form(props) {
   // Properties
-  let image, name, level, code, leaderId, id;
+  let image, name, level, code, leaderId, id, leaderName;
   const recordType = props.recordType; // 'Module' 'User'
   const usersEndPointStr = 'Users';
   const endpointStr = 'Users';
   const userAccessor = new Accessor({endpointStr});
   
   //  MOVE TO MODULES
-  const strID = recordType+'ID'; // 'Module' or 'User' + 'ID'
-  const strImageURL = recordType+'ImageURL';   
-  const strName = recordType+'Name'; 
-  const strLevel = recordType+'Level'; 
-  const strCode = recordType+'Code'; 
-  const strLeaderID = recordType+'LeaderID'; 
+  const id_ = recordType+'ID'; // 'Module' or 'User' + 'ID'
+  const imageurl_ = recordType+'ImageURL';   
+  const name_ = recordType+'Name'; 
+  const level_ = recordType+'Level'; 
+  const code_ = recordType+'Code'; 
+  const leaderid_ = recordType+'LeaderID'; 
+  const leadername_ = recordType+'LeaderName'; 
   //  MOVE TO MODULES
   
-  const [ test, setTest ] = useState()
-  let data
+  const [ moduleLeaders, setModuleLeaders ] = useState()
+  
   const didMount = async () => {
-    await userAccessor.list().then((result) => { setTest(result.response) } )
+    await userAccessor.list().then((result) => { setModuleLeaders(result.response) } )
   }
 
   useEffect(() => { didMount() }, [  ] )
 
-  const modules = test 
+  const users = moduleLeaders
   
   if (props.record) {
     const r = props.record;
     
-    image = r[strImageURL];
-    name = r[strName];
-    level = r[strLevel];
-    code = r[strCode];
-    leaderId = r[strLeaderID];
-    id = r[strID];
+    image = r[imageurl_];
+    name = r[name_];
+    level = r[level_];
+    code = r[code_];
+    leaderId = r[leaderid_];
+    id = r[id_];
+    leaderName = r[leadername_];
   }
 
   const endPoint = 'Users'
@@ -51,22 +55,18 @@ function Form(props) {
   const ListofUsers = records
   
   // States
-  const [record, setRecord] = useState('');
+  const [record, setRecord] = useState(props.record ? props.record : '');
   
   // Methods
-  const editProperty = (property, value) => {
-    setRecord({ ...record, [property]: value })
-  }
-
-  const handleAdd = (e) => {
-    setRecord({...record, [strID]: props.onGetNewRecordID()})
-    // console.log(record)
+  const handleAdd = (event) => {
+    setRecord({...record, [id_]: props.onGetNewRecordID()})
     handleAddRecord(record);
   };
 
-  const handleWhichSubmit = (e) => {
-    e.preventDefault();
-    props.record ? handleEdit(record) : handleAdd(e);
+  const handleWhichSubmit = (event) => {
+    event.preventDefault();
+    const { ModuleYearID, ModuleYearName, ModuleLeaderName, ...rest } = record
+    props.record ? handleEdit(rest) : handleAdd(event);
   };
 
   const handleEdit = (record) => {
@@ -84,9 +84,6 @@ function Form(props) {
     }
   };
 
-  const getTitleTooltipMessage = () => {
-    return props.tooltipTitle ? props.tooltipTitle : "Add "+ recordType +" Form";
-  };
   const getAddEditTooltipMessage = () => {
     return props.tooltipEdit ? props.tooltipEdit : "Add "+ recordType;
   };
@@ -94,144 +91,100 @@ function Form(props) {
     return props.title ? props.title : "Add";
   };
 
-  const autoFillEditForm_ = () => {
-    if (
-      code &&
-      code !== record[strCode] &&
-      name !== record[strName] &&
-      level !== record[strLevel] &&
-      image !== record[strImageURL] &&
-      id !== record[strID]
-    ) {
-      setRecord({...record, 
-        [strCode]:code,
-        [strName]:name,
-        [strLevel]:level,
-        [strImageURL]:image,
-        [strLeaderID]:leaderId,
-        [strID]:id,    
-    })
-    }
-  };
-  autoFillEditForm_();
-
-  const onValidation = (module) => {
-    return props.onValidation(module);
-  }
+//   const autoFillEditForm_ = () => {
+//     if (
+//       code &&
+//       code !== record[strCode] &&
+//       name !== record[strName] &&
+//       level !== record[strLevel] &&
+//       image !== record[strImageURL] &&
+//       id !== record[strID]
+//     ) {
+//       setRecord({...record, 
+//         [strCode]:code,
+//         [strName]:name,
+//         [strLevel]:level,
+//         [strImageURL]:image,
+//         [strLeaderID]:leaderId,
+//         [strID]:id,    
+//     })
+//     }
+//   };
+//   autoFillEditForm_();
 
   const handleRecordValidations = (record) => {
     return props.onValidation(record);
   };
 
-  const handleValueChange = (target) => {
+  const handleValueChange = (event) => {
+    const target = event.target
     setRecord({ ...record, [target.id]: target.value });
   };
-
-  const TooltipInput = (id, message, value, placeholder) => {
-    return (
-      <Tooltip message={message}>
-        <input
-          id={id}
-          type="text"
-          placeholder={placeholder}
-          // value={value}
-          defaultValue={value}
-          onChange={(e) => handleValueChange(e.target)}
-        />
-      </Tooltip>
-    );
-  };
-
-  const tooltip = (message, children) => {
-    return (
-      <Tooltip message={message}>
-        {children}
-      </Tooltip>
-    )
-  }
 
   // VIEW
   var moduleLevels = [3, 4, 5, 6, 7];
 
   return (
     <div className="form" key={id}>
-      {tooltip(
-        getTitleTooltipMessage(),
-        <div className="title">{getTitle()}</div>
-      )}
+      
+    <Tooltip message={props.recordType +' '+props.formTitle+' Form'}>
+       <div className="title" message={props.recordType +' '+props.formTitle}>{getTitle()}</div>
+    </Tooltip>
 
       <form onSubmit={handleWhichSubmit}>
-        
-        {TooltipInput(
-          strImageURL,
-          recordType+" Image URL",
-          record[strImageURL],
-          "Image"
-        )}
 
-        {TooltipInput(
-          'ModuleName',
-          onValidation(record) 
-          ? "Module Name" : "Module Name e.g. Database",
-          record[strName], 
-          'Name'
-        )}
+        <Input
+         id={imageurl_}
+         defaultValue={record[imageurl_]}
+         onHandleValueChange={(event) => handleValueChange(event)} 
+         placeholder='Image URL'
+        />
 
-        {tooltip(
-          'Select Module Level',
-          <select
-            id={'ModuleLevel'}
-            value={record[strLevel]}
-            placeholder={record ? record[strLevel] : "Level"}
-            onChange={(e) => handleValueChange(e.target)}
-          >
-            {moduleLevels.map((l) => (
-              <option key={l}>{l}</option>
-            ))}
-          </select>          
-        )}
-        
-        {TooltipInput(
-          strCode,
-          onValidation(record) 
-            ? recordType+" Code" 
-            : recordType+" Code e.g. CI0123",
-          record[strCode],
-          "Code",
-        )}
+        <Input
+         id={name_}
+         defaultValue={record[name_]}
+         onHandleValueChange={(event) => handleValueChange(event)} 
+         placeholder='Name'
+        />
 
-        {tooltip(
-          "Select Module Leader",
-          <select
-            key={strLeaderID}  
-            id={strLeaderID}
-            value={record[strLeaderID]}
-            onChange={(e) => handleValueChange(e.target)}
-          >
-            {ListofUsers ? (
-              ListofUsers.map((u) => (
-                <option value={parseInt(u.UserID)} key={u.UserID}>
-                  {u.UserFirstname} {u.UserLastname}
-                </option>
-              ))
-            ) : (
-              <option>Loading Module Leaders</option>
-            )}
-          </select>
-        )}
+        <InputSelect
+         message='Select Module Level'
+         levels={moduleLevels}
+         value={record[level_]}
+         onKey={(l) => {return l}}
+         onChange={(event) => handleValueChange(event)}
+         visibleValue={l => l}
+         id={level_}
+         />
 
-        {tooltip(
-          "Cancel",
-          <button className="button" onClick={closeEditForm}>
-            X
-          </button>
-        )}
+        <Input
+         id={code_}
+         message='Code CI4005'
+         defaultValue={record[code_]}
+         onHandleValueChange={(event) => handleValueChange(event)} 
+         placeholder='Code'
+        />
 
-        {tooltip(
-          getAddEditTooltipMessage(),
-          <button className="button">+</button>
-        )}
+        <InputSelect
+         message='Select Module Leader'
+         levels={moduleLeaders}
+         id={leaderid_}
+         value={record[leaderid_]}
+         onKey={(u) => {return parseInt(u.UserID)}}
+         onChange={(event) => handleValueChange(event)}
+         visibleValue={(u) => u.UserFirstname +' '+ u.UserLastname}
+        />
+
+        <Tooltip message={"Cancel"}>
+            <button className="button" onClick={closeEditForm}>X</button>
+        </Tooltip>
+
+        <Tooltip message={getAddEditTooltipMessage()}>
+            <button className="button">+</button>    
+        </Tooltip>
+
       </form>
+      
     </div>
   );
 }

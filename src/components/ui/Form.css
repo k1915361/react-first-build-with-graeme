@@ -1,9 +1,9 @@
 .form {
-    box-shadow: 0px 0px 1px 1px rgb(226, 226, 226);
+    /* box-shadow: 0px 0px 1px 1px rgb(226, 226, 226); */
     border-radius: 10px;
     width: 150px;
-    margin: 2px;
     text-align: center;
+    /* margin: 2px; */
     
     /* inline-size: 200px; */
 }

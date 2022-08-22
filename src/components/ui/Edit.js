@@ -14,6 +14,7 @@ export default function Edit(props) {
         onValidation={(module) => props.onValidation(module)}
         tooltipTitle={'Edit ' + props.recordType + ' Form'}
         tooltipEdit={'Edit ' + props.recordType}
+        formTitle='Edit'
         recordType={props.recordType}
         title='Edit'
       />

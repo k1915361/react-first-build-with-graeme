@@ -6,9 +6,9 @@
     border-radius: 10px;
     /* width: 200px; */
     height: 99%;
-    width: auto;
+    /* width: auto; */
     margin: 1px;
-    transition: width 0.3s;
+    /* transition: width 0.3s; */
     font-weight:bolder;
     inline-size: 150px;
     font-size: 80%;

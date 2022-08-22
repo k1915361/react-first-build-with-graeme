@@ -58,7 +58,19 @@ function Modules() {
   const loadModules = () => didMount()
   const buildErrorModal = () => { ;}
   
+  const isSubmissionValid = (module) => {
+    alert(
+     !handleModuleCodeValidation(module.ModuleCode) && 
+     'Module Code (e.g. CI3000)'+
+     !handleModuleNameValidation(module.ModuleCode) && 
+     ', Module Name (e.g. Computing)'+
+     !handleModuleLevelValidation(module.ModuleCode) && 
+     'and Module Level (e.g. 3) is invalid'
+    );
+  } 
+
   const isValid = (module) => {
+    
     return handleModuleCodeValidation(module.ModuleCode) &&
     handleModuleNameValidation(module.ModuleName) &&
     handleModuleLevelValidation(module.ModuleLevel) 
@@ -225,6 +237,7 @@ function Modules() {
         onGetNewRecordID={() => getNewModuleID()}
         onCloseEditForm={() => null}
         recordType = 'Module'
+        formTitle = 'Add'
       />
       </div>
     </div>

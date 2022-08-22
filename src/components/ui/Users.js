@@ -30,7 +30,7 @@ function Users() {
   const [ selectedId , selectId ] = useState();
   const [ editing, setEditing ] = useState(null);
 
-  const [ test, setTest ] = useState()
+  const [ test, setTest ] = useState([])
   
   const didMount = async () => {
     await accessor.list().then((result) => { setTest(result.response) } )
