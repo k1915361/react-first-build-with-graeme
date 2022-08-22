@@ -195,15 +195,21 @@ function Modules() {
         <Tooltip message='Click to Open & Close Favourites'>
           <div className='title' onClick={() => { setIsFavouriteShow(!isFavouriteShow) }}>FAVOURITES</div>
         </Tooltip>
+        
+        <div className='cardsContainer'>
         {
         isFavouriteShow &&
-        favourites.map((favourite) => (
-          renderModule(favourite, true)    
-        ))}
+        (favourites.length !== 0
+        ?   favourites.map((favourite) => (
+                renderModule(favourite, true)    
+            ))
+        :   renderModule({'ModuleName':`No Favourites. Empty card.`}))
+        }
+        </div>
       </div>
       
       <div className='title'>MODULES</div>
-      <div className='cardContainer'>
+      <div className='cardsContainer'>
       {modules 
       ? 
         modules.map((module) => (

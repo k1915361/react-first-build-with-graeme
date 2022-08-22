@@ -142,6 +142,7 @@ function Form(props) {
 
         <Input
          id={name_}
+         message={'Minimum 8 letters ex. Computing'}
          defaultValue={record[name_]}
          onHandleValueChange={(event) => handleValueChange(event)} 
          placeholder='Name'
